@@ -1,7 +1,7 @@
 <template>
     <div>
-        22
-        <bag-app-footer></bag-app-footer>
+        223
+        <div v-html="data.content"></div>
     </div>
 </template>
 
@@ -10,6 +10,21 @@ const colorMode = useColorMode()
 definePageMeta({
     layout: 'desktop-base'
 })
+
+const data = await useHttp({
+    url:'/admin/content/find',
+    method:"post",
+    body: {
+        id: '202310180M7123N18212T143S1E2L1Z1P40201'
+    }
+})
+console.log(data)
+// const res = await useAsyncData('getContent', () => useFetch('/admin/content/find', {
+//     body: {
+//         id: '1'
+//     }
+// }))
+
 </script>
 
 <style>

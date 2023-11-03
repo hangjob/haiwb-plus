@@ -12,12 +12,12 @@
         </div>
         <div class="flex flex-row border-b border-solid border-slate-50 pb-2 px-[12px] items-center mt-2">
             <div class="flex group items-center pr-2 hover:bg-[#22c55e] rounded-[10px] bg-slate-100">
-                <div class="rounded-[50%] mr-1 bg-white w-[22px] h-[22px] flex items-center justify-center">
+                <div class="rounded-[50%] mr-1  border border-solid border-slate-50 bg-white w-[22px] h-[22px] flex items-center justify-center">
                     <svg class="bag-icon stroke-2 mr-[2px] group-hover:text-[#22c55e]" aria-hidden="true">
                         <use xlink:href="#haiwb-biaoqian"></use>
                     </svg>
                 </div>
-                <span class="text-[12px] group-hover:text-white">品茗科技</span>
+                <span class="text-[12px] group-hover:text-white">品茗科22技</span>
             </div>
             <div class="flex justify-end flex-1 items-center">
                 <svg class="bag-icon stroke-2 mr-[5px]" aria-hidden="true">
@@ -26,8 +26,8 @@
                 <span class="text-[14px]">品茗</span>
             </div>
         </div>
-        <div class="flex justify-between py-[12px] px-[12px]">
-            <div class="rounded-[5px] text-[16px] flex flex-row items-center bg-[#8881] px-[5px] py-[4px]">
+        <div class="flex items-center justify-between py-[12px] px-[12px]">
+            <div class="rounded-[3px] text-[16px] flex flex-row items-center bg-[#8881] px-[5px] py-[5px]">
                 <svg class="bag-icon stroke-2 mr-[2px]" aria-hidden="true">
                     <use xlink:href="#haiwb-kafei"></use>
                 </svg>

@@ -10,7 +10,7 @@
                 <UInput
                     icon="i-heroicons-magnifying-glass-20-solid" size="xs" color="white" :trailing="false"
                     placeholder="Search..."
-                    @change.k
+                    @keyup.enter="handleSearch"
                 />
             </div>
         </div>
@@ -54,20 +54,37 @@
             <AppArticleCardRich></AppArticleCardRich>
         </div>
         <div class="mt-5 grid grid-cols-12 gap-4">
-            <div class="col-1 col-span-12 2xl:col-span-6 xl:col-span-4">
+            <div class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6">
                 <AppArticleCardStock/>
             </div>
-            <div class="col-span-12 2xl:col-span-6 xl:col-span-4">
+            <div class="col-span-12 2xl:col-span-6 xl:col-span-6">
                 <AppArticleCardStock/>
             </div>
-            <div class="col-span-12 2xl:col-span-6 xl:col-span-4">
+            <div class="col-span-12 2xl:col-span-6 xl:col-span-6">
                 <AppArticleCardStock/>
             </div>
         </div>
     </main>
 </template>
 <script setup lang="ts">
-
+const toast = useToast()
 const appBag = useApp()
 const data = '# ddd'
+const handleSearch = () => {
+    toast.add({
+        id: 'update_downloaded',
+        title: '正在搜索中...',
+        description: 'It will be installed on restart. Restart now?',
+        icon: 'i-octicon-desktop-download-24',
+        timeout: 5000,
+        actions: [{
+            label: '没有找到数据',
+            click: () => {
+
+            }
+        }]
+    })
+    // navigateTo('/home')
+}
+
 </script>

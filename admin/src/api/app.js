@@ -10,6 +10,12 @@ tpl.forEach((item) => {
     }
 })
 
+tpl.forEach((item) => {
+    apis[`/admin/content/${item}`] = (params) => {
+        return  axios.post(`/admin/content/${item}`, params)
+    }
+})
+
 axios.apis = apis;
 
 export default apis;
