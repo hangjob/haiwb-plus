@@ -1,6 +1,6 @@
 'use strict';
 module.exports = app => {
-    const { STRING, INTEGER, DATE, TEXT } = app.Sequelize;
+    const { STRING, INTEGER, DATE, TEXT, BOOLEAN } = app.Sequelize;
     return app.model.define('tpt_content',
         {
             id: {
@@ -8,10 +8,21 @@ module.exports = app => {
                 primaryKey: true,
             },
             title: STRING(32),
-            icon: STRING(64),
             keys: STRING(255),
-            pid: STRING(64),
+            uid: STRING(128),
             des: STRING(255),
             content: TEXT('long'),
+            like: INTEGER(11), // 点赞
+            banner: STRING(500),
+            cover: STRING(128), // 封面图
+            download: STRING(500),
+            views: INTEGER(11),
+            seo: STRING(500),
+            nav_id: STRING(128), // 导航ID
+            router: STRING(32), // 别名路由
+            sort: INTEGER(11),
+            genre_ids: STRING(500),
+            langue: INTEGER(11), // 语言
+            shows: BOOLEAN, // 是否显示
         });
 };

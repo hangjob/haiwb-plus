@@ -7,6 +7,7 @@
     "framework": "egg-bag-framework"
   },
   "dependencies": {
+    "ali-oss": "^6.18.1",
     "egg": "^3",
     "egg-jwt": "^3.1.7",
     "egg-model": "^1.0.3",

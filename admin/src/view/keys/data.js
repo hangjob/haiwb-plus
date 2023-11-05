@@ -7,37 +7,31 @@ const createColumns = ({compHandle}) => {
             type: "selection",
         },
         {
-            title: "菜单名称",
+            title: "ID",
+            key: "id",
+            align: "center",
+            ellipsis: true,
+            width: 250
+        },
+        {
+            title: "关键词名称",
             key: "title",
             align: "center",
             ellipsis: true,
+            width: 300
         },
         {
-            title: "路由",
-            key: "path",
+            title: "关键词描述",
+            key: "des",
             align: "center",
             ellipsis: true,
-            width: 160
-        },
-        {
-            title: "路径",
-            key: "file",
-            align: "center",
-            ellipsis: true,
-            width: 160
-        },
-        {
-            title: "图标",
-            key: "icon",
-            align: "center",
-            ellipsis: true
         },
         {
             title: "是否显示",
             key: "shows",
             align: "center",
             ellipsis: true,
-            width: 100,
+            width: 200,
             render(row) {
                 return h(NSwitch, {
                     defaultValue: row.shows
@@ -45,34 +39,10 @@ const createColumns = ({compHandle}) => {
             }
         },
         {
-            title: "是否缓存",
-            key: "keepAlive",
-            align: "center",
-            ellipsis: true,
-            width: 100,
-            render(row) {
-                return h(NSwitch, {
-                    defaultValue: row.keepAlive
-                })
-            }
-        },
-        {
-            title: "是否固定",
-            key: "tabFix",
-            align: "center",
-            ellipsis: true,
-            width: 100,
-            render(row) {
-                return h(NSwitch, {
-                    defaultValue: row.tabFix
-                })
-            }
-        },
-        {
             title: "操作",
             key: "actions",
             align: "center",
-            width: 130,
+            width: 200,
             render(row) {
                 return h("div", [
                     h(NButton,
@@ -155,6 +125,24 @@ const tableSize = [
     }
 ]
 
+
+const emailOptions = ["@gmail.com", "@163.com", "@qq.com"]
+
+const jobOptions = [
+    {label: "前端开发", value: "前端开发"},
+    {label: "前端架构师", value: "前端架构师"},
+    {label: "UI设计师", value: "UI设计师"},
+    {label: "产品经理", value: "产品经理"},
+    {label: "后端开发", value: "后端开发"},
+    {label: "测试工程师", value: "测试工程师"},
+    {label: "运维工程师", value: "运维工程师"},
+    {label: "3D模型开发", value: "3D模型开发"},
+    {label: "全栈开发", value: "全栈开发"},
+    {label: "场景设计师", value: "场景设计师"},
+    {label: "IOS开发", value: "IOS开发"},
+    {label: "Android开发", value: "Android开发"}
+]
+
 const tagOptions = [
     {label: "管理员", value: "admin"},
     {label: "测试人员", value: "test"},
@@ -166,5 +154,7 @@ export {
     createColumns,
     treeData,
     tableSize,
+    emailOptions,
+    jobOptions,
     tagOptions
 }

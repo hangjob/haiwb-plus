@@ -14,6 +14,7 @@ class CommonController extends Controller {
         const token = await ctx.helper.generateToken({ da: 1 });
         ctx.body = ctx.resultData({ data: token });
     }
+
 }
 
 module.exports = CommonController;

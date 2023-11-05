@@ -13,6 +13,16 @@ class BaseController extends Controller {
         }
     }
 
+    async page() {
+        try {
+            const params = this.ctx.request.body;
+            const data = await this.ctx.service.base.page(this.modelName, { params });
+            this.ctx.body = this.ctx.resultData({ data });
+        } catch (err) {
+            this.ctx.body = this.ctx.resultData({ msg: err.errors || err.toString() });
+        }
+    }
+
     async create() {
         try {
             const params = this.ctx.request.body;

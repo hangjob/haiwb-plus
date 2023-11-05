@@ -5,6 +5,7 @@
             "error",
             4
         ],
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "spaced-comment": "off"
     }
 }

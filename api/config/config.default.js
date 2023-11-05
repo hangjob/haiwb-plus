@@ -39,6 +39,16 @@ module.exports = appInfo => {
         },
     };
 
+    config.multipart = {
+        mode: 'file',
+        fileSize: '3mb', // 接收文件大小
+        whitelist: [ // 允许接收的文件类型
+            '.png',
+            '.jpg',
+            '.webp',
+            '.gif',
+        ],
+    };
 
     return {
         ...config,

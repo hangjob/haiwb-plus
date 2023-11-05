@@ -1,6 +1,6 @@
 import {axios} from "vue-bag-admin"
 
-const tpl = ['list', 'create', 'find', 'update', 'destroy', 'increment', 'bulkCreate'];
+const tpl = ['list', 'page', 'create', 'find', 'update', 'destroy', 'increment', 'bulkCreate'];
 
 const apis = {}
 
@@ -15,6 +15,13 @@ tpl.forEach((item) => {
         return  axios.post(`/admin/content/${item}`, params)
     }
 })
+
+tpl.forEach((item) => {
+    apis[`/admin/keys/${item}`] = (params) => {
+        return  axios.post(`/admin/keys/${item}`, params)
+    }
+})
+
 
 axios.apis = apis;
 

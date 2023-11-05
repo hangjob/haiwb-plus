@@ -14,12 +14,17 @@
                         label-width="auto"
                         require-mark-placement="right-hanging"
                     >
-                        <n-form-item label="菜单名称" path="content">
-                            <n-input type="textarea" v-model:value="compData.from.content"
-                                     placeholder="请输入菜单名称"/>
+                        <n-form-item label="名称" path="title">
+                            <n-input v-model:value="compData.from.title" placeholder="请输入关键词名称"/>
                         </n-form-item>
-                        <n-form-item label="内容" path="contnet">
-                            <iframe style="border: 1px solid #dddddd;border-radius: 4px" id="authIframe" height="600px" width="100%" src="https://mdnice.haiwb.com/" frameborder="0"></iframe>
+                        <n-form-item label="描述" path="des">
+                            <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入关键词描述"/>
+                        </n-form-item>
+                        <n-form-item label="是否显示" path="shows">
+                            <n-switch :round="false" v-model:value="compData.from.shows">
+                                <template #checked>是</template>
+                                <template #unchecked>否</template>
+                            </n-switch>
                         </n-form-item>
                     </n-form>
                     <template #action>
@@ -34,22 +39,27 @@
     </n-grid>
 </template>
 <script>
-import {defineComponent, reactive, computed, ref,onMounted} from "vue"
-import {tagOptions} from "./data"
+import {defineComponent, reactive, computed, ref} from "vue"
 import {useMessage} from "naive-ui"
 import apis from "@/api/app.js";
-import {useRoute} from "vue-router"
-
+import {firstToUpper} from "@/utils"
 export default defineComponent({
     setup() {
         const formRef = ref(null)
         const message = useMessage()
-        const route = useRoute()
         const compData = reactive({
             from: {
-                content: null
+                title: null,
+                des: null,
+                shows: true,
             },
-            rules: {},
+            rules: {
+                title: {
+                    required: true,
+                    trigger: ["blur", "input"],
+                    message: "请输入关键词名称"
+                },
+            },
             pidOptions: []
         })
         const compHandle = reactive({
@@ -57,33 +67,22 @@ export default defineComponent({
                 e.preventDefault()
                 formRef.value?.validate((errors) => {
                     if (!errors) {
-                        message.success("数据校验通过")
-                        apis['/admin/content/update']({id: route.params.id, ...compData.from})
+                        compData.from.title = firstToUpper(compData.from.title)
+                        apis['/admin/keys/create']({...compData.from})
                     }
                 })
             }
         })
-        apis['/admin/content/find']({id: route.params.id}).then((res) => {
-            console.log(res)
-            Object.keys(compData.from).forEach((key) => {
-                compData.from[key] = res.data[key]
-            })
-        })
-
-        onMounted(()=>{
-            window.addEventListener('message', function (e) {
-                try {
-                    console.log(e.data.content)
-                } catch (error) {
-                    console.log(error)
+        apis['/admin/keys/list']().then((res) => {
+            const pidOptions = res.data.map((item) => {
+                return {
+                    ...item,
+                    label: item.title,
+                    value: item.id,
                 }
             })
-            let authIframe = document.getElementById('authIframe')
-            authIframe.addEventListener('load', function (e) {
-                authIframe.contentWindow.postMessage({conent:'1'}, 'http://127.0.0.1:3000/')
-            })
+            compData.pidOptions = pidOptions.filter((item)=>item.shows)
         })
-
         return {
             compData,
             compHandle,

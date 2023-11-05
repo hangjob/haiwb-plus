@@ -7,4 +7,5 @@ module.exports = app => {
     require('./router/web')(app);
     require('./router/admin')(app);
     require('./router/common')(app);
+    require('./router/upload')(app);
 };

@@ -3,9 +3,6 @@
         <n-grid-item span="24 m:24 l:24">
             <n-space :wrap-item="false">
                 <n-card :segmented="{content: true,footer: 'soft'}" header-style="font-size:14px;" title="添加菜单">
-                    <template #header-extra>
-                        古人学问无遗力，少壮工夫老始成
-                    </template>
                     <n-form
                         ref="formRef"
                         :model="compData.from"
@@ -36,7 +33,7 @@
                         </n-form-item>
                         <n-form-item label="图标" path="icon">
                             <n-input-group>
-                                <n-input readonly v-model:value="compData.from.icon" placeholder="请选择图标"/>
+                                <n-input v-model:value="compData.from.icon" placeholder="请选择图标"/>
                                 <n-button type="primary" ghost>选择图标</n-button>
                             </n-input-group>
                         </n-form-item>
@@ -90,6 +87,7 @@ export default defineComponent({
                 icon: null,
                 shows: true,
                 pid: null,
+                httpFile:null,
                 keepAlive: false,
                 tabFix: false,
             },
@@ -117,22 +115,24 @@ export default defineComponent({
                 e.preventDefault()
                 formRef.value?.validate((errors) => {
                     if (!errors) {
-                        message.success("数据校验通过")
+                        apis['/admin/menu/update']({id: route.params.id, ...compData.from})
                     }
                 })
             }
         })
-        apis['/admin/menu/find']({id:route.params.id}).then((res) => {
-            console.log(res)
-            compData.pidOptions = res.data.map((item) => {
+        apis['/admin/menu/list']().then((res) => {
+            const pidOptions = res.data.map((item) => {
                 return {
+                    ...item,
                     label: item.title,
-                    value: item.id
+                    value: item.id,
                 }
             })
-            const [data] = res.data.filter((item) => String(item.id) === route.params.id)
+            compData.pidOptions = pidOptions.filter((item)=>item.shows)
+        })
+        apis['/admin/menu/find']({id:route.params.id}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
-                compData.from[key] = data[key]
+                compData.from[key] = res.data[key]
             })
         })
         return {

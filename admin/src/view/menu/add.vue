@@ -114,18 +114,20 @@ export default defineComponent({
                 e.preventDefault()
                 formRef.value?.validate((errors) => {
                     if (!errors) {
-                        message.success("数据校验通过")
+                        apis['/admin/menu/create']({...compData.from})
                     }
                 })
             }
         })
         apis['/admin/menu/list']().then((res) => {
-            compData.pidOptions = res.data.map((item) => {
+            const pidOptions = res.data.map((item) => {
                 return {
+                    ...item,
                     label: item.title,
-                    value: item.id
+                    value: item.id,
                 }
             })
+            compData.pidOptions = pidOptions.filter((item)=>item.shows)
         })
         return {
             compData,
