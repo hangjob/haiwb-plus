@@ -22,6 +22,22 @@ tpl.forEach((item) => {
     }
 })
 
+tpl.forEach((item) => {
+    apis[`/admin/nav/${item}`] = (params) => {
+        return  axios.post(`/admin/nav/${item}`, params)
+    }
+})
+
+
+apis[`/upload/images`] = (params)=>{
+    let config = {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    }
+    return axios.post(`/upload/images`, params ,config)
+}
+
 
 axios.apis = apis;
 

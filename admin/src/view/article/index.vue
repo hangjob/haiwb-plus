@@ -100,8 +100,9 @@
 <script>
 import {defineComponent, reactive, ref} from "vue"
 import {useMessage} from "naive-ui"
-import {createColumns, treeData, tableSize} from "./data"
+import {createColumns} from "./data"
 import {useRouter} from "vue-router"
+import {tableSize} from "@/enum"
 import apis from "@/api/app.js";
 import {object} from "pm-utils"
 
@@ -116,7 +117,6 @@ export default defineComponent({
             tableSizeValue: "medium",
             tableSize,
             loading: true,
-            treeData,
             columns: [],
             sourceColumns: [],
             columnsOptions: [],
@@ -136,7 +136,9 @@ export default defineComponent({
                 })
             },
             del(row) {
-                message.success(`模拟演示，删除成功，${row.id}`)
+                apis['/admin/content/destroy']({id:row.id}).then(()=>{
+                    compHandle.getTableData()
+                })
             },
             dels() {
                 if (compData.checkedRowKeys.length) {

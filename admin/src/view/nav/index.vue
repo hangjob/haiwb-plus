@@ -100,7 +100,7 @@
 <script>
 import {defineComponent, reactive, ref} from "vue"
 import {useMessage} from "naive-ui"
-import {createColumns, treeData, tableSize} from "./data"
+import {createColumns, tableSize} from "./data"
 import {useRouter} from "vue-router"
 import apis from "@/api/app.js";
 import {object} from "pm-utils"
@@ -115,7 +115,6 @@ export default defineComponent({
             tableSizeValue: "medium",
             tableSize,
             loading: true,
-            treeData,
             columns: [],
             sourceColumns: [],
             columnsOptions: [],
@@ -128,8 +127,8 @@ export default defineComponent({
         const compHandle = reactive({
             getTableData() {
                 compData.loading = true
-                apis['/admin/menu/list']().then((res) => {
-                    compData.tableData = object.toTree({arr: res.data})
+                apis['/admin/nav/page']().then((res) => {
+                    compData.tableData = object.toTree({arr: res.data.rows})
                 }).finally(() => {
                     compData.loading = false
                 })
@@ -145,10 +144,10 @@ export default defineComponent({
                 }
             },
             edit(row) {
-                router.push("/menu/edit/" + row.id)
+                router.push("/nav/edit/" + row.id)
             },
             add() {
-                router.push("/menu/add")
+                router.push("/nav/add")
             },
             check(rowKeys) {
                 compData.checkedRowKeys = rowKeys
