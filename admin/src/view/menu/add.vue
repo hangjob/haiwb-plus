@@ -72,63 +72,23 @@
 </template>
 <script>
 import {defineComponent, reactive, computed, ref} from "vue"
-import {useMessage} from "naive-ui"
 import apis from "@/api/app.js";
-
+import useComponent from "@/view/menu/useComponent.js"
 export default defineComponent({
     setup() {
         const formRef = ref(null)
-        const message = useMessage()
-        const compData = reactive({
-            from: {
-                title: null,
-                path: null,
-                file: null,
-                icon: null,
-                shows: true,
-                pid: null,
-                keepAlive: false,
-                tabFix: false,
-            },
-            rules: {
-                title: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入菜单名称"
-                },
-                path: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入菜单路由"
-                },
-                file: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入文件路径"
-                }
-            },
-            pidOptions: []
-        })
-        const compHandle = reactive({
-            validate(e) {
-                e.preventDefault()
-                formRef.value?.validate((errors) => {
-                    if (!errors) {
-                        apis['/admin/menu/create']({...compData.from})
-                    }
-                })
-            }
-        })
-        apis['/admin/menu/list']().then((res) => {
-            const pidOptions = res.data.map((item) => {
-                return {
-                    ...item,
-                    label: item.title,
-                    value: item.id,
+
+        const {compData,compHandle} = useComponent()
+
+        compHandle.validate = (e)=>{
+            e.preventDefault()
+            formRef.value?.validate((errors) => {
+                if (!errors) {
+                    apis['/admin/menu/create']({...compData.from})
                 }
             })
-            compData.pidOptions = pidOptions.filter((item)=>item.shows)
-        })
+        }
+
         return {
             compData,
             compHandle,

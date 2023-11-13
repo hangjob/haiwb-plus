@@ -41,38 +41,27 @@ import {tagOptions} from "./data"
 import {useMessage} from "naive-ui"
 import apis from "@/api/app.js";
 import {useRoute} from "vue-router"
+import useComponent from "@/view/keys/useComponent.js";
+import {firstToUpper} from "@/utils/index.js";
 
 export default defineComponent({
     setup() {
         const formRef = ref(null)
-        const message = useMessage()
         const route = useRoute()
-        const compData = reactive({
-            from: {
-                title: null,
-                des: null,
-                shows: true,
-            },
-            rules: {
-                title: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入关键词名称"
-                },
-            },
-            pidOptions: []
-        })
-        const compHandle = reactive({
-            validate(e) {
-                e.preventDefault()
-                formRef.value?.validate((errors) => {
-                    if (!errors) {
-                        compData.from.title = compData.from.title.toLowerCase()
-                        apis['/admin/keys/update']({id: route.params.id, ...compData.from})
-                    }
-                })
-            }
-        })
+        const {compData,compHandle} = useComponent()
+
+        compHandle.validate = (e)=> {
+            e.preventDefault()
+            formRef.value?.validate((errors) => {
+                if (!errors) {
+                    compData.from.title = firstToUpper(compData.from.title)
+                    apis['/admin/keys/update']({id: route.params.id, ...compData.from}).then((res)=>{
+                        compHandle.back()
+                    })
+                }
+            })
+        }
+
         apis['/admin/keys/find']({id:route.params.id}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
                 compData.from[key] = res.data[key]

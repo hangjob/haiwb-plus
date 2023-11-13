@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div
+            <NuxtLink
                 class="max-sm:basis-full  max-sm:mt-2  max-md:basis-full max-md:mt-2 max-lg:basis-full max-lg:mt-2 basis-4/12 ">
                 <div
                     class="overflow-hidden rounded-[6px] bg-white sm-thumbnail md-thumbnail lg-thumbnail h-40"
@@ -66,7 +66,7 @@
                     <nuxt-img fit="cover" class="w-full h-full object-cover" loading="lazy"
                               src="https://www.vipbic.com/uploads/20230923/466ccd86b419fbd0da712aa7532bee06.jpg"></nuxt-img>
                 </div>
-            </div>
+            </NuxtLink>
         </div>
     </div>
 </template>
@@ -76,6 +76,10 @@ const props = defineProps({
         type: String,
         default: 'flex-row'
     },
+    content:{
+        type: Object,
+        default:{}
+    }
 })
 const compData = reactive({
     classFhumbnail: 'thumbnail-right',

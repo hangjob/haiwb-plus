@@ -34,11 +34,28 @@
                         <n-form-item label="描述" path="des">
                             <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入描述"/>
                         </n-form-item>
+                        <n-form-item label="icon" path="icon">
+                            <n-input v-model:value="compData.from.icon" placeholder="请输入icon"/>
+                        </n-form-item>
                         <n-form-item label="封面图" path="cover">
                             <n-input-group>
                                 <n-input v-model:value="compData.from.cover" placeholder="请输入封面图"/>
-                                <n-button type="primary" ghost>上传图片</n-button>
+                                <n-upload
+                                    abstract
+                                    :default-file-list="[]"
+                                    action=""
+                                    :custom-request="compHandle.coverCustomRequest"
+                                >
+                                    <n-button-group>
+                                        <n-upload-trigger #="{ handleClick }" abstract>
+                                            <n-button @click="handleClick">
+                                                上传图片
+                                            </n-button>
+                                        </n-upload-trigger>
+                                    </n-button-group>
+                                </n-upload>
                             </n-input-group>
+                            <upload-image v-model:url="compData.from.cover" ref="uploadImageRef"></upload-image>
                         </n-form-item>
                         <n-form-item label="是否显示" path="shows">
                             <n-switch :round="false" v-model:value="compData.from.shows">
@@ -60,73 +77,37 @@
 </template>
 <script>
 import {defineComponent, reactive, computed, ref} from "vue"
-import {useMessage} from "naive-ui"
 import apis from "@/api/app.js";
 import {useRoute} from "vue-router";
+import useComponent from "@/view/nav/useComponent.js";
 
 export default defineComponent({
     setup() {
         const formRef = ref(null)
-        const message = useMessage()
         const route = useRoute()
-        const compData = reactive({
-            from: {
-                title: null,
-                pid:null,
-                router:null,
-                des:null,
-                cover:null,
-                shows:true
-            },
-            rules: {
-                title: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入Web菜单名称"
-                },
-                path: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入菜单路由"
-                },
-                file: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入文件路径"
-                }
-            },
-            pidOptions: []
-        })
-        const compHandle = reactive({
-            validate(e) {
-                e.preventDefault()
-                formRef.value?.validate((errors) => {
-                    if (!errors) {
-                        apis['/admin/nav/update']({id: route.params.id,...compData.from})
-                    }
-                })
-            }
-        })
-        apis['/admin/nav/list']().then((res) => {
-            const pidOptions = res.data.map((item) => {
-                return {
-                    ...item,
-                    label: item.title,
-                    value: item.id,
+        const {compData,compHandle,uploadImageRef} = useComponent()
+        compHandle.validate = (e)=>{
+            e.preventDefault()
+            formRef.value?.validate((errors) => {
+                if (!errors) {
+                    apis['/admin/nav/update']({id: route.params.id,...compData.from}).then(()=>{
+                        compHandle.back()
+                    })
                 }
             })
-            compData.pidOptions = pidOptions.filter((item)=>item.shows)
-        })
+        }
 
         apis['/admin/nav/find']({id:route.params.id}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
                 compData.from[key] = res.data[key]
             })
+            compHandle.getPidOptions()
         })
         return {
             compData,
             compHandle,
-            formRef
+            formRef,
+            uploadImageRef
         }
     }
 })

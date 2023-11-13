@@ -20,8 +20,14 @@ const tableSize = [
     {label: "较大",value: "large",}
 ]
 
+const originOptions = [
+    { label: "请选择",value: null,},
+    { label: "vipbic",value: "www.vipbic.com",},
+]
+
 export {
     langueOptions,
     tableSize,
-    labelOptions
+    labelOptions,
+    originOptions
 }

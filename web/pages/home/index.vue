@@ -20,6 +20,8 @@
 </template>
 <script setup lang="ts">
 definePageMeta({
-    layout: 'desktop-base'
+    layout: 'base'
 })
+const route = useRoute()
+
 </script>

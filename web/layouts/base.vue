@@ -20,12 +20,7 @@
             </div>
             <div class="col-span-11 xl:col-span-11 2xl:col-span-3">
                 <div class="bg-white rounded-[20px] p-[30px]">
-                    <div class="mb-8">
-                        <AppSidebarCardFull/>
-                    </div>
-                    <div>
-                        <AppSidebarGange/>
-                    </div>
+                    <slot name="sidebar" />
                 </div>
             </div>
         </div>

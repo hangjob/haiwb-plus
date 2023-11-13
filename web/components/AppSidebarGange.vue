@@ -73,9 +73,11 @@ const compData = {
 const onSwiper = (swiper: any) => {
     compData.swiper = swiper;
     compData.next = function () {
+        alert(1)
         swiper.slideNext()
     }
     compData.prev = function () {
+        alert(2)
         swiper.slidePrev()
     }
 };

@@ -1,7 +1,7 @@
 <template>
     <div>
         223
-        <div v-html="data.content"></div>
+        <div v-html="data"></div>
     </div>
 </template>
 

@@ -73,63 +73,24 @@ import {tagOptions} from "./data"
 import {useMessage} from "naive-ui"
 import apis from "@/api/app.js";
 import {useRoute} from "vue-router"
+import useComponent from "@/view/menu/useComponent.js";
 
 export default defineComponent({
     setup() {
         const formRef = ref(null)
-        const message = useMessage()
         const route = useRoute()
-        const compData = reactive({
-            from: {
-                title: null,
-                path: null,
-                file: null,
-                icon: null,
-                shows: true,
-                pid: null,
-                httpFile:null,
-                keepAlive: false,
-                tabFix: false,
-            },
-            rules: {
-                title: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入菜单名称"
-                },
-                path: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入菜单路由"
-                },
-                file: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入文件路径"
-                }
-            },
-            pidOptions: []
-        })
-        const compHandle = reactive({
-            validate(e) {
-                e.preventDefault()
-                formRef.value?.validate((errors) => {
-                    if (!errors) {
-                        apis['/admin/menu/update']({id: route.params.id, ...compData.from})
-                    }
-                })
-            }
-        })
-        apis['/admin/menu/list']().then((res) => {
-            const pidOptions = res.data.map((item) => {
-                return {
-                    ...item,
-                    label: item.title,
-                    value: item.id,
+        const {compData,compHandle} = useComponent()
+
+        compHandle.validate = (e)=>{
+            e.preventDefault()
+            formRef.value?.validate((errors) => {
+                if (!errors) {
+                    apis['/admin/menu/update']({id: route.params.id, ...compData.from}).then(()=>{
+                        compHandle.back()
+                    })
                 }
             })
-            compData.pidOptions = pidOptions.filter((item)=>item.shows)
-        })
+        }
         apis['/admin/menu/find']({id:route.params.id}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
                 compData.from[key] = res.data[key]

@@ -1,30 +1,66 @@
 import {axios} from "vue-bag-admin"
+import {utils} from "pm-utils"
 
-const tpl = ['list', 'page', 'create', 'find', 'update', 'destroy', 'increment', 'bulkCreate'];
+function unusualResult(result){
+    const {config,data} = result;
+    if(data?.msg && config.hint){
+        if(utils.dataType(data?.msg) === 'array'){
+            window.$message.warning(data?.msg[0].message)
+        }else{
+            window.$message.warning(data?.msg)
+        }
+    }
+    return result
+}
+
+
+axios.interceptors.response.use(response => {
+    return unusualResult(response);
+}, error => {
+    return Promise.reject(unusualResult(error));
+})
+
+
+const tpls = [
+    {url:'list'},
+    {url:'page'},
+    {url:'find'},
+    {url:'increment'},
+    {url:'bulkCreate'},
+    {url:'create',config:{hint:true}},
+    {url:'destroy',config:{hint:true}},
+    {url:'update',config:{hint:true}}
+];
 
 const apis = {}
 
-tpl.forEach((item) => {
-    apis[`/admin/menu/${item}`] = (params) => {
-        return  axios.post(`/admin/menu/${item}`, params)
+tpls.forEach((item) => {
+    apis[`/admin/menu/${item.url}`] = (params) => {
+        return  axios.post(`/admin/menu/${item.url}`, params, item.config || {})
     }
 })
 
-tpl.forEach((item) => {
-    apis[`/admin/content/${item}`] = (params) => {
-        return  axios.post(`/admin/content/${item}`, params)
+tpls.forEach((item) => {
+    apis[`/admin/content/${item.url}`] = (params) => {
+        return  axios.post(`/admin/content/${item.url}`, params, item.config || {})
     }
 })
 
-tpl.forEach((item) => {
-    apis[`/admin/keys/${item}`] = (params) => {
-        return  axios.post(`/admin/keys/${item}`, params)
+tpls.forEach((item) => {
+    apis[`/admin/keys/${item.url}`] = (params) => {
+        return  axios.post(`/admin/keys/${item.url}`, params, item.config || {})
     }
 })
 
-tpl.forEach((item) => {
-    apis[`/admin/nav/${item}`] = (params) => {
-        return  axios.post(`/admin/nav/${item}`, params)
+tpls.forEach((item) => {
+    apis[`/admin/nav/${item.url}`] = (params) => {
+        return  axios.post(`/admin/nav/${item.url}`, params, item.config || {})
+    }
+})
+
+tpls.forEach((item) => {
+    apis[`/admin/member/${item.url}`] = (params) => {
+        return  axios.post(`/admin/member/${item.url}`, params, item.config || {})
     }
 })
 

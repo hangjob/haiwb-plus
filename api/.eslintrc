@@ -6,6 +6,7 @@
             4
         ],
         "no-unused-vars": "off",
-        "spaced-comment": "off"
+        "spaced-comment": "off",
+        "object-curly-spacing":"off"
     }
 }

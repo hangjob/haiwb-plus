@@ -26,7 +26,7 @@ class BaseController extends Controller {
     async create() {
         try {
             const params = this.ctx.request.body;
-            params.id = this.ctx.helper.nanoid();
+            params.id = this.ctx.helper.nanoid(this.idSize || 20);
             const data = await this.ctx.service.base.create(this.modelName, { params });
             this.ctx.body = this.ctx.resultData({ data });
         } catch (err) {

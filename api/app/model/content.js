@@ -10,10 +10,9 @@ module.exports = app => {
             nid: {
                 type: INTEGER(11),
                 autoIncrement: true,
-                unique: true,
-                allowNull: false,
             },
             title: STRING(32),
+            origin: STRING(32), // 源地址
             keys: {
                 type: STRING(255),
                 get() {
@@ -24,7 +23,7 @@ module.exports = app => {
                     value && this.setDataValue('keys', value.join(','));
                 },
             },
-            uid: STRING(128),
+            uid: STRING(32),
             des: STRING(500),
             url: STRING(500),
             content: TEXT('long'), // md格式 转换后的内容
@@ -35,6 +34,9 @@ module.exports = app => {
             }, // 点赞
             banner: STRING(500),
             cover: STRING(128), // 封面图
+            panTitle: STRING(500), // 资源地址
+            pan: STRING(500), // 资源地址
+            panPas: STRING(32), // 资源密码
             download: STRING(500),
             views: {
                 type: INTEGER(11),

@@ -4,7 +4,7 @@ module.exports = app => {
     return app.model.define('tpt_menu',
         {
             id: {
-                type: STRING(64),
+                type: STRING(32),
                 primaryKey: true,
             },
             title: STRING(32),

@@ -23,6 +23,17 @@
                         <n-form-item label="文章SEO" path="seo">
                             <n-input type="textarea" v-model:value="compData.from.seo" placeholder="请输入文章SEO"/>
                         </n-form-item>
+                        <n-form-item label="发布平台" path="origin">
+                            <n-select
+                                v-model:value="compData.from.origin"
+                                placeholder="选择发布平台"
+                                :options="compData.originOptions"
+                            >
+                                <template #action>
+                                    选择父级菜单，可以采用树渲染哦，也阔以渲染图标哦
+                                </template>
+                            </n-select>
+                        </n-form-item>
                         <n-form-item label="官网地址" path="url">
                             <n-input v-model:value="compData.from.url" placeholder="请输入官网地址"/>
                         </n-form-item>
@@ -83,6 +94,9 @@
                             />
                         </n-form-item>
                         <n-space>
+                            <n-form-item label="资源名称" path="panTitle">
+                                <n-input v-model:value="compData.from.panTitle" placeholder="请输入资源名称" clearable/>
+                            </n-form-item>
                             <n-form-item label="资源地址" path="pan">
                                 <n-input v-model:value="compData.from.pan" placeholder="请输入网盘地址" clearable />
                             </n-form-item>
@@ -140,128 +154,28 @@
 </template>
 <script>
 import {defineComponent, reactive, computed, ref, onMounted} from "vue"
-import {useMessage} from "naive-ui"
 import apis from "@/api/app.js";
-import {file as pmFile, fun} from 'pm-utils'
-import {langueOptions,labelOptions} from "@/enum"
+import {langueOptions, labelOptions, originOptions} from "@/enum"
 import {useRoute, useRouter} from "vue-router";
-import {mdnice} from "@/config"
+import useComponent from "@/view/article/useComponent.js";
 export default defineComponent({
     setup() {
         const formRef = ref(null)
-        const uploadImageRef = ref(null)
-        const message = useMessage()
         const route = useRoute()
-        const router = useRouter()
-        const compData = reactive({
-            from: {
-                title: null,
-                des: null,
-                url:null,
-                seo: null,
-                keys: null,
-                nav_id: null,
-                like: null,
-                views: null,
-                sort: null,
-                router: null,
-                langue: null,
-                shows: true,
-                cover: null,
-                content: null,
-                html:null
-            },
-            kyesTitle: null,
-            rules: {
-                title: {
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请输入文章名称"
-                },
-                content:{
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "内容不能为空"
-                },
-                html:{
-                    required: true,
-                    trigger: ["blur", "input"],
-                    message: "请转换为html"
-                }
-            },
-            pidOptions: [],
-            keysOptions: [],
-            nav_idOptions: [],
-            keysQuery: null,
-            keysLoading: false,
-            mdnice,
-            loading:false
-        })
-        const compHandle = reactive({
-            validate(e) {
-                e.preventDefault()
-                formRef.value?.validate((errors) => {
-                    if (!errors) {
-                        compData.loading = true;
-                        apis['/admin/content/update']({id: route.params.id, ...compData.from}).then(()=>{
-                            compHandle.back()
-                        }).finally(()=>{
-                            compData.loading = false;
-                        })
-                    }
-                })
-            },
-            back(){
-                router.push('/article')
-            },
-            coverCustomRequest({ file,data,headers,withCredentials,action,onFinish, onError,onProgress}){
-                pmFile.fileToBase64(file.file,(img)=>{
-                    uploadImageRef.value.compHandle.open(true,{img})
-                })
-            },
-            keysHandleSearch: fun.throttle((query) => {
-                compData.keysQuery = query;
-                compHandle.getKeysList();
-            }, 200, {
-                'leading': true,
-                'trailing': true
-            }),
-            keysHandleCreated() {
-                apis['/admin/keys/create']({title: compData.kyesTitle}).then(() => {
-                    compData.kyesTitle = null
-                    compHandle.getKeysList()
-                })
-            },
-            getKeysList() {
-                const where = {};
-                if (compData.keysQuery) {
-                    where['title'] = compData.keysQuery
-                }
-                apis['/admin/keys/list']({where}).then((res) => {
-                    compData.keysOptions = res.data.map((item) => {
-                        return {
-                            ...item,
-                            label: item.title,
-                            value: item.title
-                        }
+        const {compData,compHandle,uploadImageRef} = useComponent()
+        compHandle.validate = (e)=>{
+            e.preventDefault()
+            formRef.value?.validate((errors) => {
+                if (!errors) {
+                    compData.loading = true;
+                    apis['/admin/content/update']({id: route.params.id, ...compData.from}).then(()=>{
+                        compHandle.back()
+                    }).finally(()=>{
+                        compData.loading = false;
                     })
-                })
-            },
-            getNavList() {
-                apis['/admin/keys/list']().then((res) => {
-                    compData.nav_idOptions = res.data.map((item) => {
-                        return {
-                            ...item,
-                            label: item.title,
-                            value: item.id
-                        }
-                    })
-                })
-            }
-        })
-        compHandle.getKeysList()
-        compHandle.getNavList()
-
+                }
+            })
+        }
         apis['/admin/content/find']({id: route.params.id}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
                 compData.from[key] = res.data[key]
@@ -272,27 +186,13 @@ export default defineComponent({
             })
         })
 
-        onMounted(() => {
-            window.addEventListener('message', function (e) {
-                try {
-                    if (e.data.content) {
-                        compData.from.content = e.data.content
-                    }
-                    if (e.data.html) {
-                        compData.from.html = e.data.html
-                    }
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-        })
         return {
             compData,
             compHandle,
             formRef,
             uploadImageRef,
             langueOptions,
-            labelOptions
+            labelOptions,
         }
     }
 })

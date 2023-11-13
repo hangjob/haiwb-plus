@@ -3,9 +3,6 @@
         <n-grid-item span="24 m:24 l:24">
             <n-space :wrap-item="false">
                 <n-card :segmented="{content: true,footer: 'soft'}" header-style="font-size:14px;" title="添加菜单">
-                    <template #header-extra>
-                        古人学问无遗力，少壮工夫老始成
-                    </template>
                     <n-form
                         ref="formRef"
                         :model="compData.from"
@@ -14,11 +11,14 @@
                         label-width="auto"
                         require-mark-placement="right-hanging"
                     >
-                        <n-form-item label="名称" path="title">
-                            <n-input v-model:value="compData.from.title" placeholder="请输入关键词名称"/>
+                        <n-form-item label="用户名称" path="title">
+                            <n-input v-model:value="compData.from.name" placeholder="请输入用户名称"/>
                         </n-form-item>
-                        <n-form-item label="描述" path="des">
-                            <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入关键词描述"/>
+                        <n-form-item label="用户邮箱" path="title">
+                            <n-input v-model:value="compData.from.email" placeholder="请输入用户邮箱"/>
+                        </n-form-item>
+                        <n-form-item label="描述信息" path="des">
+                            <n-input v-model:value="compData.from.des" placeholder="请输入描述信息"/>
                         </n-form-item>
                         <n-form-item label="是否显示" path="shows">
                             <n-switch :round="false" v-model:value="compData.from.shows">
@@ -41,25 +41,28 @@
 <script>
 import {defineComponent, reactive, computed, ref} from "vue"
 import apis from "@/api/app.js";
-import {firstToUpper} from "@/utils"
-import useComponent from "./useComponent.js"
+import {useRoute} from "vue-router"
+import useComponent from "@/view/member/useComponent.js"
 export default defineComponent({
     setup() {
         const {compData,compHandle} = useComponent()
         const formRef = ref(null)
+        const route = useRoute()
 
-        compHandle.validate = (e)=> {
+        compHandle.validate = (e)=>{
             e.preventDefault()
             formRef.value?.validate((errors) => {
                 if (!errors) {
-                    compData.from.title = firstToUpper(compData.from.title)
-                    apis['/admin/keys/create']({...compData.from}).then(()=>{
-                        compHandle.back()
-                    })
+                    apis['/admin/menu/update']({id: route.params.id, ...compData.from})
                 }
             })
         }
 
+        apis['/admin/menu/find']({id:route.params.id}).then((res) => {
+            Object.keys(compData.from).forEach((key) => {
+                compData.from[key] = res.data[key]
+            })
+        })
         return {
             compData,
             compHandle,

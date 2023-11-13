@@ -7,6 +7,7 @@ class NavController extends BaseController {
     constructor(ctx) {
         super(ctx);
         this.modelName = 'Nav';
+        this.idSize = 8;
     }
 
 }

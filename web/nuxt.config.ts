@@ -38,11 +38,24 @@ export default defineNuxtConfig({
                 },
             },
         },
-    },
-    proxy: {
-        '^/api': {
-            target: 'http://127.0.0.1:7001/',
-            pathRewrite: {'^/api/': ''}
+        server: {
+            proxy: {
+                "^/api": {
+                    target: "http://127.0.0.1:7001/",
+                    changeOrigin: true,
+                    rewrite: (path:any) => path.replace(/^\/api/, ""),
+                }
+            }
         }
+    },
+    nitro:{
+        devProxy: {
+            "/api": {
+                target: "http://127.0.0.1:7001", // 这里是接口地址
+                changeOrigin: true,
+                toProxy:false,
+                prependPath: false,
+            },
+        },
     }
 })

@@ -4,13 +4,18 @@ module.exports = app => {
     return app.model.define('tpt_nav',
         {
             id: {
-                type: STRING(64),
+                type: STRING(32),
                 primaryKey: true,
             },
             title: {
-                type: STRING(32),
-                unique: true,
-                allowNull: false,
+                type: STRING(20),
+                validate: {
+                    isEmail: true,
+                    notEmpty: true,
+                },
+            },
+            icon: {
+                type: STRING(20),
             },
             pid: STRING(64),
             des: STRING(500),
