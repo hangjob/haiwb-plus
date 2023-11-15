@@ -3,6 +3,8 @@
 
 export default defineNuxtConfig({
     // @ts-ignore
+    // ssr: process.env.NODE_ENV !== "development",
+    debug:true,
     app: {
         layoutTransition: {name: 'layout', mode: 'out-in'},
         head: {
@@ -38,19 +40,10 @@ export default defineNuxtConfig({
                 },
             },
         },
-        server: {
-            proxy: {
-                "^/api": {
-                    target: "http://127.0.0.1:7001/",
-                    changeOrigin: true,
-                    rewrite: (path:any) => path.replace(/^\/api/, ""),
-                }
-            }
-        }
     },
     nitro:{
         devProxy: {
-            "/api": {
+            "/api/web": {
                 target: "http://127.0.0.1:7001", // 这里是接口地址
                 changeOrigin: true,
                 toProxy:false,

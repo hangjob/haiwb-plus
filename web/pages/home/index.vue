@@ -19,9 +19,9 @@
     </div>
 </template>
 <script setup lang="ts">
-definePageMeta({
-    layout: 'base'
-})
-const route = useRoute()
+// definePageMeta({
+//     layout: 'base'
+// })
+// const route = useRoute()
 
 </script>

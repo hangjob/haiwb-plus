@@ -58,6 +58,7 @@
                 </div>
             </div>
             <NuxtLink
+                :to="getDelPath(content)"
                 class="max-sm:basis-full  max-sm:mt-2  max-md:basis-full max-md:mt-2 max-lg:basis-full max-lg:mt-2 basis-4/12 ">
                 <div
                     class="overflow-hidden rounded-[6px] bg-white sm-thumbnail md-thumbnail lg-thumbnail h-40"
