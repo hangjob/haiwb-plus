@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col">
+    <div class="px-3 py-3 rounded-[5px] bg-white overflow-hidden flex flex-col">
         <div class="overflow-hidden rounded-[6px] bg-white h-[80px] md:h-[150px] lg:h-[120px] xl:h-[150px] 2xl:h-[100px]">
             <nuxt-img fit="cover" class="w-full h-full object-cover" loading="lazy"
                       src="https://www.vipbic.com/uploads/20230923/466ccd86b419fbd0da712aa7532bee06.jpg"></nuxt-img>
@@ -9,12 +9,12 @@
             <p class="text-[14px] text-gray-600 leading-4 mt-2 tracking-wide line-clamp-2">赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目</p>
         </div>
         <div class="flex flex-wrap items-center mt-2">
-            <a class="group flex mr-3 mb-2 items-center rounded-[5px] text-[12px] px-[5px] py-1 bg-gray-100 text-slate-900 cursor-pointer hover:bg-green-500">
+            <nuxt-link class="group flex mr-3 mb-2 items-center rounded-[5px] text-[12px] px-[5px] py-1 bg-gray-100 text-slate-900 cursor-pointer hover:bg-green-500">
                 <svg class="bag-icon stroke-2 mr-[2px] group-hover:text-white" aria-hidden="true">
                     <use xlink:href="#haiwb-biaoqian"></use>
                 </svg>
                 <span class="text-[12px] text-gray-500 group-hover:text-white">测试</span>
-            </a>
+            </nuxt-link>
         </div>
         <div class="flex items-center flex-wrap">
             <div class="flex items-center flex-1">

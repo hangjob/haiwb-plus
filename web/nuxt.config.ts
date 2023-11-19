@@ -1,10 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-
-
 export default defineNuxtConfig({
     // @ts-ignore
     // ssr: process.env.NODE_ENV !== "development",
-    debug:true,
+    debug:false,
     app: {
         layoutTransition: {name: 'layout', mode: 'out-in'},
         head: {

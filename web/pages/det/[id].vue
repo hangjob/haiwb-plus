@@ -4,26 +4,57 @@
             <div id="itnavsHtml" v-html="data?.data?.html"></div>
         </template>
         <template #sidebar>
-            <h1 class="text-[22px]  font-bold">访问官网</h1>
-            <nuxt-link class="mt-5 items-center flex overflow-hidden  text-white">
-                <div
-                    class="bg-[#0000000f] h-[60px]  flex items-center justify-center w-[60px] flex-shrink-0 rounded-l-[15px]">
-                    <svg class="bag-icon stroke-2 max-sm:text-[20px] text-[30px]" aria-hidden="true">
-                        <use xlink:href="#haiwb-weixinxiaochengxu"></use>
-                    </svg>
+            <div class="bg-white rounded-[20px] p-[30px] mb-8">
+                <h1 class="text-[22px]  font-bold">访问官网</h1>
+                <nuxt-link class="mt-5 items-center flex overflow-hidden  text-white">
+                    <div
+                        class="bg-[#0000000f] h-[60px]  flex items-center justify-center w-[60px] flex-shrink-0 rounded-l-[15px]">
+                        <svg class="bag-icon stroke-2 max-sm:text-[20px] text-[30px]" aria-hidden="true">
+                            <use xlink:href="#haiwb-weixinxiaochengxu"></use>
+                        </svg>
+                    </div>
+                    <span
+                        class="h-[60px] flex-1 leading-[60px] rounded-r-[15px] px-[12px] bg-[#FFD55D] font-bold text-[20px] truncate text-[#333]">https://dig.ccccmixterccmixtermixter.org/</span>
+                </nuxt-link>
+                <h1 class="mt-10  text-[22px]  font-bold">文章目录</h1>
+                <div class="mt-5 bg-[#F6F8FF] rounded-[20px] p-[30px]">
+                    <ul class="overflow-y-auto max-h-[600px] no-scrollbar">
+                        <li @click="handleClickTocHtmlItem(item)"
+                            class="mt-5 text-[#607d8b] hover:text-[#8bc34a] cursor-pointer" v-for="item in compData.tocHtml"
+                            :key="item.idx">
+                            <span :style="item.style">{{ item.title }}</span>
+                        </li>
+                    </ul>
                 </div>
-                <span
-                    class="h-[60px] leading-[60px] rounded-r-[15px] px-[12px] bg-[#FFD55D] font-bold text-[20px] truncate text-[#333]">https://dig.ccccmixterccmixtermixter.org/</span>
-            </nuxt-link>
-            <h1 class="mt-10  text-[22px]  font-bold">文章目录</h1>
-            <div class="mt-5 bg-[#F6F8FF] rounded-[20px] p-[30px]">
-                <ul>
-                    <li @click="handleClickTocHtmlItem(item)"
-                        class="mt-5 text-[#607d8b] hover:text-[#8bc34a] cursor-pointer" v-for="item in compData.tocHtml"
-                        :key="item.idx">
-                        <span :style="item.style">{{ item.title }}</span>
-                    </li>
-                </ul>
+            </div>
+            <div class="bg-white rounded-[20px] p-[30px] mb-8">
+                <SidebarHot></SidebarHot>
+            </div>
+            <div class="bg-white rounded-[20px] p-[30px] mb-8">
+                <SidebarArticle></SidebarArticle>
+            </div>
+            <div class="bg-white rounded-[20px] p-[30px] mb-8 sticky top-0">
+                <h1 class="text-[22px]  font-bold">访问官网</h1>
+                <nuxt-link class="mt-5 items-center flex overflow-hidden  text-white">
+                    <div
+                        class="bg-[#0000000f] h-[60px]  flex items-center justify-center w-[60px] flex-shrink-0 rounded-l-[15px]">
+                        <svg class="bag-icon stroke-2 max-sm:text-[20px] text-[30px]" aria-hidden="true">
+                            <use xlink:href="#haiwb-weixinxiaochengxu"></use>
+                        </svg>
+                    </div>
+                    <span
+                        class="h-[60px] flex-1 leading-[60px] rounded-r-[15px] px-[12px] bg-[#FFD55D] font-bold text-[20px] truncate text-[#333]">https://dig.ccccmixterccmixtermixter.org/</span>
+                </nuxt-link>
+                <h1 class="mt-10  text-[22px]  font-bold">文章目录</h1>
+                <div class="mt-5 bg-[#F6F8FF] rounded-[20px] p-[30px]">
+                    <ul class="overflow-y-auto max-h-[600px] no-scrollbar">
+                        <li @click="handleClickTocHtmlItem(item)"
+                            class="mt-5 text-[#607d8b] hover:text-[#8bc34a] cursor-pointer" v-for="item in compData.tocHtml"
+                            :key="item.idx">
+                            <span :style="item.style">{{ item.title }}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </template>
     </NuxtLayout>
@@ -31,7 +62,6 @@
 <script setup lang="ts">
 import $ from "jquery"
 import {useRequest} from "~/composables/useRequest";
-
 definePageMeta({
     layout: false
 })
@@ -98,4 +128,5 @@ const {data} = await useRequest("/api/web/admin/content/find", {
         id: route.params.id
     }
 })
+
 </script>

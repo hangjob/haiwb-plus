@@ -7,7 +7,7 @@
         <div class="flex flex-col px-[12px]">
             <h1 class="text-[16px] font-bold line-clamp-2 leading-tight my-3">赤壁市第六小学赤壁市第六壁市第六小学新建项目建项目</h1>
         </div>
-        <div class="flex flex-col bg-slate-50 px-[12px] py-3 rounded-[5px]">
+        <div class="flex flex-col bg-slate-50 px-[12px] py-3">
             <p class="text-[14px] text-gray-500 line-clamp-3 leading-snug">赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目</p>
         </div>
         <div class="flex flex-row border-b border-solid border-slate-50 pb-2 px-[12px] items-center mt-2">

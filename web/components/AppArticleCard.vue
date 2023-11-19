@@ -82,6 +82,7 @@ const props = defineProps({
         default:{}
     }
 })
+
 const compData = reactive({
     classFhumbnail: 'thumbnail-right',
     classFlexDirection: props.classFlexDirection,

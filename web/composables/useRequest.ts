@@ -1,13 +1,11 @@
 export const useRequest = (url: string, params: any) => {
-    if (process.server) {
-        return useFetch(url, params)
-    } else {
-        return useFetch(url, {
-            headers: {
-                "tag": 'nuxt'
-            },
-            ...params
-        })
-    }
+    const _options = Object.assign({
+        // @ts-ignore
+        onRequest({options}) {
+            options.headers = options.headers || {}
+            options.headers.tag = 'nuxt'
+        }
+    }, params)
+    return useFetch(url, _options)
 }
 

@@ -20,29 +20,7 @@
             </div>
             <div class="col-span-11 xl:col-span-11 2xl:col-span-3">
                 <div class="bg-white rounded-[20px] p-[30px]">
-                    <div class="mb-[30px]">
-                        <SidebarPhoto/>
-                    </div>
-                    <div>
-                        <SidebarPhotoHorizontal/>
-                    </div>
-                </div>
-                <div class="bg-white mt-[30px] rounded-[20px] p-[30px]">
-                    <div class="mb-[30px]">
-                        <AppSidebarGange/>
-                    </div>
-                    <div class="mb-[30px]">
-                        <AppSidebarCardFull/>
-                    </div>
-                    <div class="mb-[30px]">
-                        <AppSidebarCardFull/>
-                    </div>
-                    <div>
-                        <AppSidebarCardFull/>
-                    </div>
-                </div>
-                <div class="mt-[30px] rounded-[20px]">
-                    <SidebarSubtotal/>
+                    <SidebarTag/>
                 </div>
             </div>
         </div>
@@ -51,12 +29,3 @@
 <script setup lang="ts">
 
 </script>
-<style lang="less" scoped>
-.left-bg{
-    width: 100%;
-    --color: rgb(255 255 255 / 8%);
-    background-color: #E91E63;
-    background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent), linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent);
-    background-size: 55px 55px;
-}
-</style>
