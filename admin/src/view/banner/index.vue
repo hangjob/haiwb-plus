@@ -17,7 +17,7 @@
                                         :model="compData.searchForm">
                                     <n-grid cols="24" x-gap="10" item-responsive responsive="screen">
                                         <n-grid-item span="24 m:12 l:8">
-                                            <n-form-item label="菜单名称" path="title">
+                                            <n-form-item label="ID" path="id">
                                                 <n-input v-model:value="compData.searchForm.title"
                                                          placeholder="输入菜单名称"/>
                                             </n-form-item>
@@ -100,7 +100,8 @@
 <script>
 import {defineComponent, reactive, ref} from "vue"
 import {useMessage} from "naive-ui"
-import {createColumns, tableSize} from "./data"
+import {createColumns} from "./data"
+import {tableSize} from "@/enum"
 import {useRouter} from "vue-router"
 import apis from "@/api/app.js";
 import {object} from "pm-utils"
@@ -127,14 +128,14 @@ export default defineComponent({
         const compHandle = reactive({
             getTableData() {
                 compData.loading = true
-                apis['/admin/nav/page']().then((res) => {
-                    compData.tableData = object.toTree({arr: res.data.rows})
+                apis['/admin/banner/list']().then((res) => {
+                    compData.tableData = object.toTree({arr: res.data})
                 }).finally(() => {
                     compData.loading = false
                 })
             },
             del(row) {
-                apis['/admin/nav/destroy']({id:row.id}).then(()=>{
+                apis['/admin/banner/destroy']({id:row.id}).then(()=>{
                     compHandle.getTableData()
                 })
             },
@@ -146,10 +147,10 @@ export default defineComponent({
                 }
             },
             edit(row) {
-                router.push("/nav/edit/" + row.id)
+                router.push("/banner/edit/" + row.id)
             },
             add() {
-                router.push("/nav/add")
+                router.push("/banner/add")
             },
             check(rowKeys) {
                 compData.checkedRowKeys = rowKeys

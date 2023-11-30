@@ -7,6 +7,7 @@ class MenuController extends BaseController {
     constructor(ctx) {
         super(ctx);
         this.modelName = 'Menu';
+        this.idSize = 8;
     }
 
 }

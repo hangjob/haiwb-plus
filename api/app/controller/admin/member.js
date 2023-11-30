@@ -7,12 +7,13 @@ class MemberController extends BaseController {
     constructor(ctx) {
         super(ctx);
         this.modelName = 'Member';
+        this.idSize = 16;
     }
 
     async create() {
         try {
             const params = this.ctx.request.body;
-            params.id = this.ctx.helper.nanoid(this.idSize || 20);
+            params.id = this.ctx.helper.nanoid(this.idSize);
             this.ctx.validate({
                 code: { type: 'string', required: true },
                 password: { type: 'string', required: true },

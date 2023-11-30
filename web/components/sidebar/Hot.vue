@@ -3,51 +3,15 @@
         <svg class="bag-icon stroke-2 text-[18px] mr-[8px] group-hover:text-white" aria-hidden="true">
             <use xlink:href="#haiwb-zuixinziyuan"></use>
         </svg>
-        测试
+        最新发布
     </h1>
     <ul class="hot-dotted pl-[15px] relative">
-        <li class="relative mt-5">
+        <li class="relative mt-5" v-for="item in contentData?.data || []">
             <nuxt-link class="flex flex-col">
-                <h3 class="line-clamp-2 leading-snug mb-3">赤壁市宋家赤壁市宋家河系程全阶段勘测工程全阶段勘测、设计服务</h3>
+                <h3 class="line-clamp-2 leading-snug mb-3">{{item.title}}</h3>
                 <div class="flex flex-row items-center justify-between">
                     <span class="text-[#AAAEB3] text-sm">赤壁市公共资源</span>
-                    <span class="text-[#AAAEB3] text-sm">2023-10-24 00:00:00</span>
-                </div>
-            </nuxt-link>
-        </li>
-        <li class="relative mt-5">
-            <nuxt-link class="flex flex-col">
-                <h3 class="line-clamp-2 leading-snug mb-3">赤壁市宋家赤壁市宋家河系程全阶段勘测工程全阶段勘测、设计服务</h3>
-                <div class="flex flex-row items-center justify-between">
-                    <span class="text-[#AAAEB3] text-sm">赤壁市公共资源</span>
-                    <span class="text-[#AAAEB3] text-sm">2023-10-24 00:00:00</span>
-                </div>
-            </nuxt-link>
-        </li>
-        <li class="relative mt-5">
-            <nuxt-link class="flex flex-col">
-                <h3 class="line-clamp-2 leading-snug mb-3">赤壁市宋家赤壁市宋家河系程全阶段勘测工程全阶段勘测、设计服务</h3>
-                <div class="flex flex-row items-center justify-between">
-                    <span class="text-[#AAAEB3] text-sm">赤壁市公共资源</span>
-                    <span class="text-[#AAAEB3] text-sm">2023-10-24 00:00:00</span>
-                </div>
-            </nuxt-link>
-        </li>
-        <li class="relative mt-5">
-            <nuxt-link class="flex flex-col">
-                <h3 class="line-clamp-2 leading-snug mb-3">赤壁市宋家赤壁市宋家河系程全阶段勘测工程全阶段勘测、设计服务</h3>
-                <div class="flex flex-row items-center justify-between">
-                    <span class="text-[#AAAEB3] text-sm">赤壁市公共资源</span>
-                    <span class="text-[#AAAEB3] text-sm">2023-10-24 00:00:00</span>
-                </div>
-            </nuxt-link>
-        </li>
-        <li class="relative mt-5">
-            <nuxt-link class="flex flex-col">
-                <h3 class="line-clamp-2 leading-snug mb-3">赤壁市宋家赤壁市宋家河系程全阶段勘测工程全阶段勘测、设计服务</h3>
-                <div class="flex flex-row items-center justify-between">
-                    <span class="text-[#AAAEB3] text-sm">赤壁市公共资源</span>
-                    <span class="text-[#AAAEB3] text-sm">2023-10-24 00:00:00</span>
+                    <span class="text-[#AAAEB3] text-sm">{{lunisolar(item.createdAt).format('YYYY/MM/DD HH:mm:ss')}}</span>
                 </div>
             </nuxt-link>
         </li>
@@ -55,10 +19,25 @@
 </template>
 <script setup lang="ts">
 
+import {useRequest} from "~/composables/useRequest";
+
+const props = defineProps({
+    content: {
+        type: Object,
+        default: {}
+    }
+})
+
+const {data: contentData}: { data: any } = await useRequest('/api/web/admin/content/list', {
+    method: 'POST',
+    body: {
+        limit: 8
+    }
+})
 </script>
 <style lang="less" scoped>
-.hot-dotted{
-    &::before{
+.hot-dotted {
+    &::before {
         content: '';
         width: 1px;
         position: absolute;
@@ -67,8 +46,9 @@
         bottom: 5px;
         border-left: 1px dashed rgba(30, 111, 255, 0.2);
     }
-    li{
-        &::before{
+
+    li {
+        &::before {
             content: '';
             position: absolute;
             width: 5px;

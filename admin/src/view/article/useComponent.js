@@ -4,87 +4,92 @@ import {mdnice} from "@/config/index.js";
 import {file as pmFile, fun} from "pm-utils";
 import apis from "@/api/app.js";
 import {originOptions} from "@/enum"
-export default function useComponent()
-{
 
+export default function useComponent() {
+    const formRef = ref(null)
     const router = useRouter()
     const uploadImageRef = ref(null)
     const compData = reactive({
         from: {
             title: null,
-            des:null,
-            pan:null,
-            panPas:null,
-            panTitle:null,
-            url:null,
-            seo:null,
-            keys:null,
-            nav_id:null,
-            like:null,
-            views:null,
-            sort:null,
-            router:null,
-            langue:null,
-            shows:true,
-            cover:null,
-            content:null,
-            html:null,
-            origin:null,
-            label:null
+            des: null,
+            pan: null,
+            panPas: null,
+            panTitle: null,
+            url: null,
+            seo: null,
+            keys: null,
+            nav_id: null,
+            like: null,
+            views: null,
+            sort: null,
+            router: null,
+            langue: null,
+            shows: true,
+            cover: null,
+            content: null,
+            html: null,
+            origin: null,
+            label: null,
+            visitor: true
         },
-        kyesTitle:null,
+        kyesTitle: null,
+        kyesDes: null,
         rules: {
             title: {
                 required: true,
                 trigger: ["blur", "input"],
                 message: "请输入文章名称"
             },
-            content:{
+            content: {
                 required: true,
                 trigger: ["blur", "input"],
                 message: "内容不能为空"
             },
-            html:{
+            html: {
                 required: true,
                 trigger: ["blur", "input"],
                 message: "请转换为html"
             }
         },
         pidOptions: [],
-        keysOptions:[],
-        nav_idOptions:[],
-        keysQuery:null,
-        keysLoading:false,
+        keysOptions: [],
+        nav_idOptions: [],
+        keysQuery: null,
+        keysLoading: false,
         mdnice,
-        loading:false,
+        loading: false,
         originOptions
     })
 
     const compHandle = reactive({
-        back(){
+        back() {
             router.push('/article')
         },
-        coverCustomRequest({ file,data,headers,withCredentials,action,onFinish, onError,onProgress}){
-            pmFile.fileToBase64(file.file,(img)=>{
-                uploadImageRef.value.compHandle.open(true,{img})
+        coverCustomRequest({file, data, headers, withCredentials, action, onFinish, onError, onProgress}) {
+            pmFile.fileToBase64(file.file, (img) => {
+                uploadImageRef.value.compHandle.open(true, {img})
             })
         },
-        keysHandleSearch:fun.throttle((query)=>{
+        keysHandleSearch: fun.throttle((query) => {
             compData.keysQuery = query;
             compHandle.getKeysList();
-        },200,{
+        }, 200, {
             'leading': true,
             'trailing': true
         }),
-        keysHandleCreated(){
-            apis['/admin/keys/create']({title:compData.kyesTitle}).then(()=>{
-                compData.kyesTitle = null
-                compHandle.getKeysList()
-            })
+        keysHandleCreated() {
+            if (compData.kyesDes && compData.kyesTitle) {
+                apis['/admin/keys/create']({title: compData.kyesTitle, des: compData.kyesDes}).then(() => {
+                    compData.kyesTitle = null
+                    compData.kyesDes = null
+                    compHandle.getKeysList()
+                })
+            }
         },
-        getKeysList(){
+        getKeysList() {
             const where = {};
-            if(compData.keysQuery){
+            if (compData.keysQuery) {
                 where['title'] = compData.keysQuery
             }
             apis['/admin/keys/list']({where}).then((res) => {
@@ -97,7 +102,7 @@ export default function useComponent()
                 })
             })
         },
-        getNavList(){
+        getNavList() {
             apis['/admin/nav/list']().then((res) => {
                 compData.nav_idOptions = res.data.map((item) => {
                     return {
@@ -109,8 +114,8 @@ export default function useComponent()
             })
         }
     })
-    onMounted(()=>{
-        window.addEventListener('message', (e)=>{
+    onMounted(() => {
+        window.addEventListener('message', (e) => {
             try {
                 if (e.data.content) {
                     compData.from.content = e.data.content
@@ -128,6 +133,7 @@ export default function useComponent()
     return {
         compData,
         compHandle,
-        uploadImageRef
+        uploadImageRef,
+        formRef
     }
 }

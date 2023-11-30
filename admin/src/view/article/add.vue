@@ -41,6 +41,7 @@
                             <n-select
                                 v-model:value="compData.from.nav_id"
                                 placeholder="选择父级菜单"
+                                multiple
                                 :options="compData.nav_idOptions"
                             >
                                 <template #action>
@@ -48,7 +49,7 @@
                                 </template>
                             </n-select>
                         </n-form-item>
-                        <n-form-item label="文章关键词" path="keys">
+                        <n-form-item label="关键词" path="keys">
                             <n-select
                                 v-model:value="compData.from.keys"
                                 placeholder="输入关键词"
@@ -62,6 +63,9 @@
                                 <n-input v-model:value="compData.kyesTitle" placeholder="输入关键词"/>
                                 <n-button type="primary" ghost @click="compHandle.keysHandleCreated">提交</n-button>
                             </n-input-group>
+                        </n-form-item>
+                        <n-form-item label="关键词描述">
+                            <n-input type="textarea" v-model:value="compData.kyesDes" placeholder="请输入关键词描述"/>
                         </n-form-item>
                         <n-space>
                             <n-form-item label="点赞量" path="like">
@@ -106,6 +110,12 @@
                         </n-space>
                         <n-form-item label="是否显示" path="shows">
                             <n-switch :round="false" v-model:value="compData.from.shows">
+                                <template #checked>是</template>
+                                <template #unchecked>否</template>
+                            </n-switch>
+                        </n-form-item>
+                        <n-form-item label="游客访问" path="visitor">
+                            <n-switch :round="false" v-model:value="compData.from.visitor">
                                 <template #checked>是</template>
                                 <template #unchecked>否</template>
                             </n-switch>
@@ -164,8 +174,7 @@ import useComponent from "@/view/article/useComponent.js"
 
 export default defineComponent({
     setup() {
-        const formRef = ref(null)
-        const {compData, compHandle, uploadImageRef} = useComponent()
+        const {compData, compHandle, uploadImageRef,formRef} = useComponent()
         const article_from = window.localStorage.getItem("article_from")
         if(article_from){
             compData.from = JSON.parse(article_from)

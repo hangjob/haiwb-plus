@@ -25,9 +25,14 @@ const originOptions = [
     { label: "vipbic",value: "www.vipbic.com",},
 ]
 
+const imageTypeOptions = [
+    { label: "请选择",value: null,},
+]
+
 export {
     langueOptions,
     tableSize,
     labelOptions,
-    originOptions
+    originOptions,
+    imageTypeOptions
 }

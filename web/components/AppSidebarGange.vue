@@ -31,34 +31,25 @@
                 :autoplay="{ delay: 60000, disableOnInteraction: true,}"
                 @swiper="onSwiper"
             >
-                <swiper-slide>
-                    <div class="flex items-center text-[14px] mb-[5px]">
+                <swiper-slide v-for="(item,idx) in arrGroup(contentData?.data,2) || []">
+                    <div v-for="todo in item" class="flex items-center text-[14px] mb-[5px]">
                         <svg class="flex-shrink-0 bag-icon stroke-2 mr-2" aria-hidden="true">
                             <use xlink:href="#haiwb-shequxiaozhan"></use>
                         </svg>
                         <span
-                            class="text-gray-500 text-[14px] flex-1 truncate mr-2">第一信封初步评审表（形式评审）1</span>
+                            class="text-gray-500 text-[14px] flex-1 truncate mr-2">{{todo.title}}</span>
                         <a class="bg-gradient-to-r from-[#f9f9f9] cursor-pointer text-gray-600 hover:text-white to-[#f9f9f9] hover:from-[#2b28fc] hover:to-[#2b28fc] rounded-[3px] inline-block bg-amber-50 text-[12px] px-[5px] py-[5px]"
                            href="">品茗科技</a>
                     </div>
-                    <div class="flex items-center text-[14px]">
-                        <svg class="flex-shrink-0 bag-icon stroke-2 mr-2" aria-hidden="true">
-                            <use xlink:href="#haiwb-shequxiaozhan">品茗科技</use>
-                        </svg>
-                        <span class="text-gray-500 text-[14px] flex-1 truncate mr-2">第一信封初步评审表（形式评审）1第一信封初步评审表（形式评审）1第一信封初步评审表（形式评审）1</span>
-                        <a class="bg-gradient-to-r from-[#f9f9f9] cursor-pointer text-gray-600 hover:text-white to-[#f9f9f9] hover:from-[#2b28fc] hover:to-[#2b28fc] rounded-[3px] inline-block bg-amber-50 text-[12px] px-[5px] py-[5px]"
-                           href="">品茗科技</a>
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="bg-[#8881]"> Slide 2</div>
-                    <div class="bg-[#8881]"> Slide 2</div>
                 </swiper-slide>
             </swiper>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
+
+import {useRequest} from "~/composables/useRequest";
+import {arrGroup} from "~/utils";
 
 const compData = {
     swiper: null,
@@ -79,5 +70,22 @@ const onSwiper = (swiper: any) => {
         swiper.slidePrev()
     }
 };
+
+
+const {data: contentData}: { data: any } = await useRequest('/api/web/admin/keys/list', {
+    method: 'POST',
+    body: {
+        where: {
+            label: {
+                key: 'eq',
+                value: 2
+            },
+            cover: {
+                key: 'ne',
+                value: ''
+            }
+        }
+    }
+})
 
 </script>

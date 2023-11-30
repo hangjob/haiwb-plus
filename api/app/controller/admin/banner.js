@@ -2,14 +2,14 @@
 
 const BaseController = require('./base');
 
-class KeysController extends BaseController {
+class BannerController extends BaseController {
 
     constructor(ctx) {
         super(ctx);
-        this.modelName = 'Keys';
+        this.modelName = 'Banner';
         this.idSize = 8;
     }
 
 }
 
-module.exports = KeysController;
+module.exports = BannerController;

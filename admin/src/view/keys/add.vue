@@ -2,7 +2,7 @@
     <n-grid cols="24" x-gap="10" item-responsive responsive="screen">
         <n-grid-item span="24 m:24 l:24">
             <n-space :wrap-item="false">
-                <n-card :segmented="{content: true,footer: 'soft'}" header-style="font-size:14px;" title="添加菜单">
+                <n-card :segmented="{content: true,footer: 'soft'}" header-style="font-size:14px;" title="添加关键词">
                     <template #header-extra>
                         古人学问无遗力，少壮工夫老始成
                     </template>
@@ -19,6 +19,33 @@
                         </n-form-item>
                         <n-form-item label="描述" path="des">
                             <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入关键词描述"/>
+                        </n-form-item>
+                        <n-form-item label="选择标签" path="label">
+                            <n-select
+                                v-model:value="compData.from.label"
+                                placeholder="选择标签"
+                                :options="labelOptions"
+                            />
+                        </n-form-item>
+                        <n-form-item label="封面图" path="cover">
+                            <n-input-group>
+                                <n-input v-model:value="compData.from.cover" placeholder="请输入封面图"/>
+                                <n-upload
+                                    abstract
+                                    :default-file-list="[]"
+                                    action=""
+                                    :custom-request="compHandle.coverCustomRequest"
+                                >
+                                    <n-button-group>
+                                        <n-upload-trigger #="{ handleClick }" abstract>
+                                            <n-button @click="handleClick">
+                                                上传图片
+                                            </n-button>
+                                        </n-upload-trigger>
+                                    </n-button-group>
+                                </n-upload>
+                            </n-input-group>
+                            <upload-image v-model:url="compData.from.cover" ref="uploadImageRef"></upload-image>
                         </n-form-item>
                         <n-form-item label="是否显示" path="shows">
                             <n-switch :round="false" v-model:value="compData.from.shows">
@@ -42,10 +69,11 @@
 import {defineComponent, reactive, computed, ref} from "vue"
 import apis from "@/api/app.js";
 import {firstToUpper} from "@/utils"
+import {labelOptions} from "@/enum"
 import useComponent from "./useComponent.js"
 export default defineComponent({
     setup() {
-        const {compData,compHandle} = useComponent()
+        const {compData,compHandle,uploadImageRef} = useComponent()
         const formRef = ref(null)
 
         compHandle.validate = (e)=> {
@@ -63,7 +91,9 @@ export default defineComponent({
         return {
             compData,
             compHandle,
-            formRef
+            formRef,
+            labelOptions,
+            uploadImageRef
         }
     }
 })

@@ -36,7 +36,7 @@
                         </n-form-item>
                         <n-form-item label="图标" path="icon">
                             <n-input-group>
-                                <n-input readonly v-model:value="compData.from.icon" placeholder="请选择图标"/>
+                                <n-input v-model:value="compData.from.icon" placeholder="请选择图标"/>
                                 <n-button type="primary" ghost>选择图标</n-button>
                             </n-input-group>
                         </n-form-item>
@@ -84,7 +84,12 @@ export default defineComponent({
             e.preventDefault()
             formRef.value?.validate((errors) => {
                 if (!errors) {
-                    apis['/admin/menu/create']({...compData.from})
+                    compData.loading = true;
+                    apis['/admin/menu/create'](compData.from).then((res) => {
+                        compHandle.back()
+                    }).finally(() => {
+                        compData.loading = false;
+                    })
                 }
             })
         }

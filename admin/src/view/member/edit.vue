@@ -53,7 +53,12 @@ export default defineComponent({
             e.preventDefault()
             formRef.value?.validate((errors) => {
                 if (!errors) {
-                    apis['/admin/menu/update']({id: route.params.id, ...compData.from})
+                    compData.loading = true;
+                    apis['/admin/member/update']({id: route.params.id, ...compData.from}).then(()=>{
+                        compHandle.back()
+                    }).finally(()=>{
+                        compData.loading = false;
+                    })
                 }
             })
         }

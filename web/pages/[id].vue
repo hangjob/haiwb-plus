@@ -1,8 +1,23 @@
 <template>
-    <AppBanner/>
-    <div class="mt-5 grid grid-cols-12 gap-4">
-        <AppSidebarExtend class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
-        <AppSidebarHot class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
+    <div class="flex  flex-row max-sm:flex-col max-md:flex-col">
+        <div class="flex flex-1 items-center max-sm:mb-3 max-md:mb-3">
+            <nuxt-link to="/">首页</nuxt-link>
+            <span class="pl-1 pr-1 text-gray-300">/</span>
+            <span class="text-gray-400">{{ navData?.data?.title }}</span>
+        </div>
+        <div class="flex max-sm:flex-1 max-md:flex-1">
+            <UInput
+                class="flex-1"
+                icon="i-heroicons-magnifying-glass-20-solid" size="sm" color="white" :trailing="false"
+                placeholder="Search..."
+            />
+        </div>
+    </div>
+    <div class="mt-5 clearfix">
+        <nuxt-link href=""
+                   class="inline-block mr-5 mb-3 rounded-md border-solid border py-[8px] px-[10px] border-slate-200">
+            <span>全部系统</span>
+        </nuxt-link>
     </div>
     <template v-for="(item,idx) in contentData?.data?.rows || []">
         <div v-if="idx === 0" class="mt-5 border border-slate-100 border-solid rounded-md">
@@ -75,26 +90,36 @@ const getContentPapge = async () => {
     const {data: contentData}: { data: any } = await useRequest('/api/web/admin/content/page', {
         method: 'POST',
         body: {
-            page: modelValue.value
+            page: modelValue.value,
         }
     })
     return contentData;
 }
 
 let contentData = await getContentPapge()
+const route = useRoute()
+const {data: navData}: { data: any } = await useRequest('/api/web/admin/nav/find', {
+    method: 'POST',
+    body: {
+        where: {
+            or: [
+                {id: route.params.id},
+                {router: '/' + route.params.id},
+            ]
+        }
+    }
+})
+
+const {data: navListData}: { data: any } = await useRequest('/api/web/admin/nav/list', {
+    method: 'POST',
+})
+
+console.log(navListData)
 
 watch(modelValue, async () => {
     loadingButton.value = true
     contentData = await getContentPapge()
     loadingButton.value = false
-})
-
-
-const {data: submenuData}: { data: any } = await useRequest('/api/web/admin/nav/submenu', {
-    method: 'POST',
-    body: {
-        pid: contentData?.value?.data.rows[0].id
-    }
 })
 
 

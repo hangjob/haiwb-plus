@@ -135,7 +135,9 @@ export default defineComponent({
                 })
             },
             del(row) {
-                message.success(`模拟演示，删除成功，${row.id}`)
+                apis['/admin/menu/destroy']({id:row.id}).then(()=>{
+                    compHandle.getTableData()
+                })
             },
             dels() {
                 if (compData.checkedRowKeys.length) {

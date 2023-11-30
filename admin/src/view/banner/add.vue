@@ -2,7 +2,10 @@
     <n-grid cols="24" x-gap="10" item-responsive responsive="screen">
         <n-grid-item span="24 m:24 l:24">
             <n-space :wrap-item="false">
-                <n-card :segmented="{content: true,footer: 'soft'}" header-style="font-size:14px;" title="编辑关键词">
+                <n-card :segmented="{content: true,footer: 'soft'}" header-style="font-size:14px;" title="添加菜单">
+                    <template #header-extra>
+                        古人学问无遗力，少壮工夫老始成
+                    </template>
                     <n-form
                         ref="formRef"
                         :model="compData.from"
@@ -17,16 +20,16 @@
                         <n-form-item label="描述" path="des">
                             <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入关键词描述"/>
                         </n-form-item>
-                        <n-form-item label="选择标签" path="label">
+                        <n-form-item label="图片类型" path="label">
                             <n-select
-                                v-model:value="compData.from.label"
-                                placeholder="选择标签"
-                                :options="labelOptions"
+                                v-model:value="compData.from.type"
+                                placeholder="选择图片类型"
+                                :options="compData.imageTypeOptions"
                             />
                         </n-form-item>
-                        <n-form-item label="封面图" path="cover">
+                        <n-form-item label="图片" path="cover">
                             <n-input-group>
-                                <n-input v-model:value="compData.from.cover" placeholder="请输入封面图"/>
+                                <n-input v-model:value="compData.from.cover" placeholder="请输入图片"/>
                                 <n-upload
                                     abstract
                                     :default-file-list="[]"
@@ -64,42 +67,31 @@
 </template>
 <script>
 import {defineComponent, reactive, computed, ref} from "vue"
-import {tagOptions} from "./data"
-import {useMessage} from "naive-ui"
 import apis from "@/api/app.js";
-import {useRoute} from "vue-router"
-import useComponent from "@/view/keys/useComponent.js";
-import {firstToUpper} from "@/utils/index.js";
-import {labelOptions} from "@/enum"
+import {firstToUpper} from "@/utils"
+import useComponent from "./useComponent.js"
 
 export default defineComponent({
     setup() {
+        const {compData, compHandle, uploadImageRef} = useComponent()
         const formRef = ref(null)
-        const route = useRoute()
-        const {compData,compHandle,uploadImageRef} = useComponent()
 
-        compHandle.validate = (e)=> {
+        compHandle.validate = (e) => {
             e.preventDefault()
             formRef.value?.validate((errors) => {
                 if (!errors) {
                     compData.from.title = firstToUpper(compData.from.title)
-                    apis['/admin/keys/update']({id: route.params.id, ...compData.from}).then((res)=>{
+                    apis['/admin/banner/create']({...compData.from}).then(() => {
                         compHandle.back()
                     })
                 }
             })
         }
 
-        apis['/admin/keys/find']({id:route.params.id}).then((res) => {
-            Object.keys(compData.from).forEach((key) => {
-                compData.from[key] = res.data[key]
-            })
-        })
         return {
             compData,
             compHandle,
             formRef,
-            labelOptions,
             uploadImageRef
         }
     }

@@ -30,8 +30,12 @@
     "@nuxt/ui": "^2.9.0",
     "@nuxtjs/markdownit": "^2.0.0",
     "@pinia/nuxt": "^0.5.1",
+    "crypto-js": "^4.2.0",
     "defu": "^6.1.2",
     "jquery": "^3.7.1",
+    "jsencrypt": "^3.3.2",
+    "lunisolar": "^2.3.0",
+    "mitt": "^3.0.1",
     "naive-ui": "^2.35.0",
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7"

@@ -37,19 +37,26 @@ module.exports = app => {
             panTitle: STRING(500), // 资源地址
             pan: STRING(500), // 资源地址
             panPas: STRING(32), // 资源密码
-            download: STRING(500),
             views: {
                 type: INTEGER(11),
                 defaultValue: 1,
             },
             seo: STRING(500),
-            nav_id: STRING(128), // 导航ID
+            nav_id: {
+                type: STRING(255),
+                get() {
+                    const keys = this.getDataValue('nav_id');
+                    return keys && keys.split(',') || [];
+                },
+                set(value) {
+                    value && this.setDataValue('nav_id', value.join(','));
+                },
+            }, // 导航ID
             router: STRING(32), // 别名路由
             sort: {
                 type: INTEGER(11),
                 defaultValue: 1,
             },
-            genre_ids: STRING(500),
             langue: {
                 type: INTEGER(11),
                 defaultValue: 1,
@@ -58,6 +65,7 @@ module.exports = app => {
                 type: INTEGER(11),
                 defaultValue: 1,
             }, // 标签
+            visitor: BOOLEAN, // 游客访问
             shows: BOOLEAN, // 是否显示
         });
 };

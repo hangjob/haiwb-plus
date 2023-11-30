@@ -26,5 +26,8 @@ module.exports = app => {
     apis.forEach(item => {
         app.router.post(`/admin/member/${item.path}`, app.middleware.authority(item), app.controller.admin.member[item.path]);
     });
+    apis.forEach(item => {
+        app.router.post(`/admin/banner/${item.path}`, app.middleware.authority(item), app.controller.admin.banner[item.path]);
+    });
     // app.router.post('/admin/content/edit', app.middleware.authority, app.controller.admin.content.edit);
 };

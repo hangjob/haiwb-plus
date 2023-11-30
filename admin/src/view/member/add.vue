@@ -54,7 +54,11 @@ export default defineComponent({
             e.preventDefault()
             formRef.value?.validate((errors) => {
                 if (!errors) {
-                    apis['/admin/menu/create']({...compData.from})
+                    apis['/admin/member/create'](compData.from).then((res) => {
+                        compHandle.back()
+                    }).finally(() => {
+                        compData.loading = false;
+                    })
                 }
             })
         }

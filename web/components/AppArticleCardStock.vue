@@ -2,13 +2,13 @@
     <div class="flex flex-col rounded-lg border border-solid border-slate-100">
         <div class="overflow-hidden rounded-t-lg bg-white h-[80px] md:h-[150px] lg:h-[150px] xl:h-[150px] 2xl:h-[150px]">
             <nuxt-img fit="cover" class="w-full h-full object-cover" loading="lazy"
-                      src="https://www.vipbic.com/uploads/20230923/466ccd86b419fbd0da712aa7532bee06.jpg"></nuxt-img>
+                      :src="content.cover"></nuxt-img>
         </div>
         <div class="flex flex-col px-[12px]">
-            <h1 class="text-[16px] font-bold line-clamp-2 leading-tight my-3">赤壁市第六小学赤壁市第六壁市第六小学新建项目建项目</h1>
+            <h1 class="text-[16px] font-bold line-clamp-2 leading-tight my-3">{{content.title}}</h1>
         </div>
         <div class="flex flex-col bg-slate-50 px-[12px] py-3">
-            <p class="text-[14px] text-gray-500 line-clamp-3 leading-snug">赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目赤壁市第六小学新建项目</p>
+            <p class="text-[14px] text-gray-500 line-clamp-3 leading-snug">{{content.des}}</p>
         </div>
         <div class="flex flex-row border-b border-solid border-slate-50 pb-2 px-[12px] items-center mt-2">
             <div class="flex group items-center pr-2 hover:bg-[#22c55e] rounded-[10px] bg-slate-100">
@@ -34,11 +34,16 @@
                 <span class="text-[14px]">品茗科技</span>
             </div>
             <div>
-                <span class="text-[14px]">2023年07月04日 星期二</span>
+                <span class="text-[14px]">{{lunisolar(content.createdAt).format('lY年 lM lD A')}}</span>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
-
+const props = defineProps({
+    content:{
+        type: Object,
+        default:{}
+    }
+})
 </script>

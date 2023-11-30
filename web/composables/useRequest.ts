@@ -1,11 +1,16 @@
 export const useRequest = (url: string, params: any) => {
-    const _options = Object.assign({
-        // @ts-ignore
+    if (params && params.body) {
+        params.query = params.body
+    }
+    return useFetch(url, {
         onRequest({options}) {
             options.headers = options.headers || {}
+            // @ts-ignore
             options.headers.tag = 'nuxt'
-        }
-    }, params)
-    return useFetch(url, _options)
+            // @ts-ignore
+            options.headers.sing = aesEncrypt({domain: 'itnvas', uid: getNanoid()})
+        },
+        ...params
+    })
 }
 
