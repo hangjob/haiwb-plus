@@ -13,7 +13,8 @@
     "egg-model": "^1.0.3",
     "egg-scripts": "^2",
     "egg-socket.io": "^4.1.6",
-    "egg-validate": "^2.0.2"
+    "egg-validate": "^2.0.2",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "egg-bin": "^5",

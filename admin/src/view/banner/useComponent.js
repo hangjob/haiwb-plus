@@ -14,6 +14,8 @@ export default function useComponent()
             title: null,
             des: null,
             shows: true,
+            url:null,
+            cover:null
         },
         rules: {
             title: {

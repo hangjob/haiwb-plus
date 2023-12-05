@@ -72,19 +72,10 @@ const onSwiper = (swiper: any) => {
 };
 
 
-const {data: contentData}: { data: any } = await useRequest('/api/web/admin/keys/list', {
+const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/keys/list', {
     method: 'POST',
-    body: {
-        where: {
-            label: {
-                key: 'eq',
-                value: 2
-            },
-            cover: {
-                key: 'ne',
-                value: ''
-            }
-        }
+    body:{
+        limit:10
     }
 })
 

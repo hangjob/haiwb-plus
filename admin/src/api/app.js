@@ -40,7 +40,7 @@ const tpls = [
 
 const apis = {}
 
-const apiss = ['menu', 'content', 'keys', 'banner', 'nav', 'member']
+const apiss = ['menu', 'content', 'keys', 'banner', 'nav', 'member','classify']
 
 apiss.forEach((ctrol) => {
     tpls.forEach((item) => {

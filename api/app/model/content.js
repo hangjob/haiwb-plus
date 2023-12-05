@@ -52,6 +52,9 @@ module.exports = app => {
                     value && this.setDataValue('nav_id', value.join(','));
                 },
             }, // 导航ID
+            classify_id: {
+                type: STRING(32),
+            },
             router: STRING(32), // 别名路由
             sort: {
                 type: INTEGER(11),

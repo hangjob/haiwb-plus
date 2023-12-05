@@ -2,8 +2,11 @@
     <div class="flex  flex-row max-sm:flex-col max-md:flex-col">
         <div class="flex flex-1 items-center max-sm:mb-3 max-md:mb-3">
             <nuxt-link to="/">首页</nuxt-link>
-            <span class="pl-1 pr-1 text-gray-300">/</span>
-            <span class="text-gray-400">{{ navData?.data?.title }}</span>
+            <template v-for="(item,idx) in navThreeData?.data || []">
+                <span class="pl-1 pr-1 text-gray-300">/</span>
+                <span class="text-gray-400" v-if="idx === navThreeData?.data?.length-1">{{ item.title }}</span>
+                <nuxt-link v-else :to="toRouter(item)">{{ item.title }}</nuxt-link>
+            </template>
         </div>
         <div class="flex max-sm:flex-1 max-md:flex-1">
             <UInput
@@ -13,11 +16,13 @@
             />
         </div>
     </div>
-    <div class="mt-5 clearfix">
-        <nuxt-link href=""
-                   class="inline-block mr-5 mb-3 rounded-md border-solid border py-[8px] px-[10px] border-slate-200">
-            <span>全部系统</span>
-        </nuxt-link>
+    <div class="mt-5 grid grid-cols-12 gap-4">
+        <div v-for="item in navListData?.data || []" class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">
+            <nuxt-link :to="toRouter(item)" class="cursor-pointer flex items-center justify-center w-full relative bg-white h-[50px]">
+                <nuxt-img fit="cover" class="blur-[3px] w-full h-full object-cover" loading="lazy" :src="item.cover"></nuxt-img>
+                <span class="absolute text-[14px] font-bold text-white line-clamp-1 px-[5px]">{{item.title}}</span>
+            </nuxt-link>
+        </div>
     </div>
     <template v-for="(item,idx) in contentData?.data?.rows || []">
         <div v-if="idx === 0" class="mt-5 border border-slate-100 border-solid rounded-md">
@@ -65,11 +70,12 @@
 </template>
 <script setup lang="ts">
 import {useRequest} from "~/composables/useRequest";
+import {toRouter} from "~/utils";
 
 const toast = useToast()
 const modelValue = ref(1);
 const loadingButton = ref(false);
-
+const route = useRoute()
 const handleSearch = () => {
     toast.add({
         id: 'update_downloaded',
@@ -86,35 +92,39 @@ const handleSearch = () => {
     })
 }
 
+const {data: navData}: { data: any } = await useRequest('/api/webv1/admin/classify/find', {
+    method: 'POST',
+    body: {
+        id: route.params.id,
+    },
+})
+
 const getContentPapge = async () => {
-    const {data: contentData}: { data: any } = await useRequest('/api/web/admin/content/page', {
+    const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/page', {
         method: 'POST',
         body: {
             page: modelValue.value,
+            id: route.params.id
         }
     })
     return contentData;
 }
 
 let contentData = await getContentPapge()
-const route = useRoute()
-const {data: navData}: { data: any } = await useRequest('/api/web/admin/nav/find', {
+
+const {data: navThreeData}: { data: any } = await useRequest('/api/webv1/web/classify/three', {
     method: 'POST',
     body: {
-        where: {
-            or: [
-                {id: route.params.id},
-                {router: '/' + route.params.id},
-            ]
-        }
+        id: route.params.id,
     }
 })
 
-const {data: navListData}: { data: any } = await useRequest('/api/web/admin/nav/list', {
+const {data: navListData}: { data: any } = await useRequest('/api/webv1/admin/classify/list', {
     method: 'POST',
 })
 
-console.log(navListData)
+console.log(navListData,222)
+
 
 watch(modelValue, async () => {
     loadingButton.value = true
@@ -124,7 +134,6 @@ watch(modelValue, async () => {
 
 
 useOn('modify-nav', (item: any) => {
-    console.log(item, 1111)
 })
 
 onBeforeUnmount(() => {

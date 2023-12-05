@@ -14,19 +14,20 @@
                         label-width="auto"
                         require-mark-placement="right-hanging"
                     >
-                        <n-form-item label="Web菜单名称" path="title">
-                            <n-input v-model:value="compData.from.title" placeholder="请输入Web菜单名称"/>
-                        </n-form-item>
-                        <n-form-item label="父级菜单" path="pid">
+                        <n-form-item label="一级分类" path="pid">
                             <n-select
                                 v-model:value="compData.from.pid"
-                                placeholder="选择父级菜单"
+                                placeholder="选择一级分类"
                                 :options="compData.pidOptions"
+                                clearable
                             >
                                 <template #action>
                                     选择父级菜单，可以采用树渲染哦，也阔以渲染图标哦
                                 </template>
                             </n-select>
+                        </n-form-item>
+                        <n-form-item label="Web菜单名称" path="title">
+                            <n-input v-model:value="compData.from.title" placeholder="请输入Web菜单名称"/>
                         </n-form-item>
                         <n-form-item label="Web别名菜单路由" path="router">
                             <n-input v-model:value="compData.from.router" placeholder="请输入Web别名菜单路由"/>

@@ -27,6 +27,7 @@ const originOptions = [
 
 const imageTypeOptions = [
     { label: "请选择",value: null,},
+    { label: "首页",value: 'home',},
 ]
 
 export {

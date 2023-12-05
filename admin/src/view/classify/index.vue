@@ -79,7 +79,7 @@
                         :size="compData.tableSizeValue"
                         :row-key="compData.rowKey"
                         @update:checked-row-keys="compHandle.check"
-                        :default-expanded-row-keys="[]"
+                        :default-expanded-row-keys="[200]"
                     />
                     <template #footer>
                         <n-pagination
@@ -100,12 +100,10 @@
 <script>
 import {defineComponent, reactive, ref} from "vue"
 import {useMessage} from "naive-ui"
-import {createColumns} from "./data"
+import {createColumns, tableSize} from "./data"
 import {useRouter} from "vue-router"
-import {tableSize} from "@/enum"
 import apis from "@/api/app.js";
 import {object} from "pm-utils"
-
 export default defineComponent({
     setup() {
         const router = useRouter()
@@ -129,14 +127,14 @@ export default defineComponent({
         const compHandle = reactive({
             getTableData() {
                 compData.loading = true
-                apis['/admin/content/page']().then((res) => {
+                apis['/admin/classify/page']().then((res) => {
                     compData.tableData = object.toTree({arr: res.data.rows})
                 }).finally(() => {
                     compData.loading = false
                 })
             },
             del(row) {
-                apis['/admin/content/destroy']({id:row.id}).then(()=>{
+                apis['/admin/classify/destroy']({id:row.id}).then(()=>{
                     compHandle.getTableData()
                 })
             },
@@ -148,10 +146,10 @@ export default defineComponent({
                 }
             },
             edit(row) {
-                router.push("/article/edit/" + row.id)
+                router.push("/classify/edit/" + row.id)
             },
             add() {
-                router.push("/article/add")
+                router.push("/classify/add")
             },
             check(rowKeys) {
                 compData.checkedRowKeys = rowKeys

@@ -33,24 +33,24 @@
                     </svg>
                     <span class="text-[14px]">点赞<strong class="ml-2 mr-2">{{contentData?.data?.like}}</strong>次数</span>
                 </div>
-                <div class="flex items-center mt-3 mr-5">
-                    <svg class="bag-icon stroke-2 mr-[5px]" aria-hidden="true">
-                        <use xlink:href="#haiwb-duoyuyanguanli"></use>
-                    </svg>
-                    <span class="text-[14px]">支持语言<strong class="ml-2">中文</strong></span>
-                </div>
+<!--                <div class="flex items-center mt-3 mr-5">-->
+<!--                    <svg class="bag-icon stroke-2 mr-[5px]" aria-hidden="true">-->
+<!--                        <use xlink:href="#haiwb-duoyuyanguanli"></use>-->
+<!--                    </svg>-->
+<!--                    <span class="text-[14px]">支持语言<strong class="ml-2">中文</strong></span>-->
+<!--                </div>-->
                 <div class="flex items-center mt-3 mr-5">
                     <svg class="bag-icon stroke-2 mr-[5px]" aria-hidden="true">
                         <use xlink:href="#haiwb-anquanbangzhu"></use>
                     </svg>
                     <span class="text-[14px]">网站安全<strong class="ml-2 mr-2">加密</strong></span>
                 </div>
-                <div class="flex items-center mt-3 mr-5">
-                    <svg class="bag-icon stroke-2 mr-[5px]" aria-hidden="true">
-                        <use xlink:href="#haiwb-gaoliuchangdiyanshi-01"></use>
-                    </svg>
-                    <span class="text-[14px]">网站速度<strong class="ml-2 mr-2">疾速</strong></span>
-                </div>
+<!--                <div class="flex items-center mt-3 mr-5">-->
+<!--                    <svg class="bag-icon stroke-2 mr-[5px]" aria-hidden="true">-->
+<!--                        <use xlink:href="#haiwb-gaoliuchangdiyanshi-01"></use>-->
+<!--                    </svg>-->
+<!--                    <span class="text-[14px]">网站速度<strong class="ml-2 mr-2">疾速</strong></span>-->
+<!--                </div>-->
                 <div class="flex items-center mt-3 mr-5">
                     <svg class="bag-icon stroke-2 mr-[5px]" aria-hidden="true">
                         <use xlink:href="#haiwb-kafei"></use>
@@ -85,7 +85,7 @@
                     #资源下载
                 </nuxt-link>
             </div>
-            <div class="mt-5 overflow-hidden rounded-lg bg-white h-[300px] max-md:h-[150px] lg:h-[350px] xl:h-[300px] 2xl:h-[300px] text-center m-auto">
+            <div class="mt-5 overflow-hidden rounded-md bg-white h-[300px] max-md:h-[150px] lg:h-[350px] xl:h-[300px] 2xl:h-[300px] text-center m-auto">
                 <nuxt-img fit="cover" class="w-full h-full object-cover" loading="lazy" :src="contentData?.data?.cover"></nuxt-img>
             </div>
             <div id="itnavsHtml" v-html="contentData?.data?.html"></div>
@@ -113,7 +113,7 @@
                         class="h-[60px] flex-1 leading-[60px] rounded-r-[15px] px-[12px] bg-[#FFD55D] font-bold text-[20px] truncate text-[#333]">{{ contentData?.data?.url }}</span>
                 </nuxt-link>
                 <h1 class="mt-10  text-[22px]  font-bold">文章目录</h1>
-                <div class="mt-5 bg-[#F6F8FF] rounded-[20px] p-[30px]">
+                <div class="mt-5 bg-[#F6F8FF] rounded-[10px] pl-[20px] pr-[20px] pb-[20px]">
                     <ul class="overflow-y-auto max-h-[600px] no-scrollbar">
                         <li @click="handleClickTocHtmlItem(item)"
                             class="mt-5 text-[#607d8b] hover:text-[#8bc34a] cursor-pointer"
@@ -143,7 +143,7 @@
                         class="h-[60px] flex-1 leading-[60px] rounded-r-[15px] px-[12px] bg-[#FFD55D] font-bold text-[20px] truncate text-[#333]">{{ contentData?.data?.url }}</span>
                 </nuxt-link>
                 <h1 class="mt-10  text-[22px]  font-bold">文章目录</h1>
-                <div class="mt-5 bg-[#F6F8FF] rounded-[20px] p-[30px]">
+                <div class="mt-5 bg-[#F6F8FF] rounded-[10px] pl-[20px] pr-[20px] pb-[20px]">
                     <ul class="overflow-y-auto max-h-[600px] no-scrollbar">
                         <li @click="handleClickTocHtmlItem(item)"
                             class="mt-5 text-[#607d8b] hover:text-[#8bc34a] cursor-pointer"
@@ -222,7 +222,7 @@ const handleClickTocHtmlItem = (item: any) => {
     }
 }
 
-const {data: contentData} = await useRequest("/api/web/admin/content/find", {
+const {data: contentData} = await useRequest("/webv1/admin/content/find", {
     method: "POST",
     body: {
         id: route.params.id

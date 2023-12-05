@@ -19,7 +19,7 @@
     </div>
     <div class="mt-10 grid grid-cols-12 gap-4">
         <div v-for="item in 3" class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6">
-            <AppArticleCardStock/>
+<!--            <AppArticleCardStock/>-->
         </div>
     </div>
 </template>

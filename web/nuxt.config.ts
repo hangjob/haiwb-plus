@@ -41,7 +41,7 @@ export default defineNuxtConfig({
     },
     nitro:{
         devProxy: {
-            "/api/web": {
+            "/webv1": {
                 target: "http://127.0.0.1:7001", // 这里是接口地址
                 changeOrigin: true,
                 toProxy:false,

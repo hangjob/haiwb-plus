@@ -19,6 +19,7 @@ export default function useComponent() {
             url: null,
             seo: null,
             keys: null,
+            classify_id:null,
             nav_id: null,
             like: null,
             views: null,
@@ -55,6 +56,7 @@ export default function useComponent() {
         pidOptions: [],
         keysOptions: [],
         nav_idOptions: [],
+        classify_idOptions:[],
         keysQuery: null,
         keysLoading: false,
         mdnice,
@@ -103,7 +105,7 @@ export default function useComponent() {
             })
         },
         getNavList() {
-            apis['/admin/nav/list']().then((res) => {
+            apis['/admin/nav/list']({pid:compData.from.classify_id}).then((res) => {
                 compData.nav_idOptions = res.data.map((item) => {
                     return {
                         ...item,
@@ -112,7 +114,18 @@ export default function useComponent() {
                     }
                 })
             })
-        }
+        },
+        getClassifyOptions(){
+            apis['/admin/classify/list']().then((res) => {
+                compData.classify_idOptions = res.data.map((item) => {
+                    return {
+                        ...item,
+                        label: item.title,
+                        value: item.id
+                    }
+                })
+            })
+        },
     })
     onMounted(() => {
         window.addEventListener('message', (e) => {
@@ -129,7 +142,7 @@ export default function useComponent() {
         })
     })
     compHandle.getKeysList()
-    compHandle.getNavList()
+    compHandle.getClassifyOptions()
     return {
         compData,
         compHandle,

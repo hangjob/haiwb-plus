@@ -28,7 +28,7 @@ const props = defineProps({
     }
 })
 
-const {data: contentData}: { data: any } = await useRequest('/api/web/admin/content/list', {
+const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/list', {
     method: 'POST',
     body: {
         limit: 8

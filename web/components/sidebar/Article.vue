@@ -45,15 +45,10 @@ const props = defineProps({
 
 const contentDataMores = <any>ref([]);
 props?.content?.data?.nav_id?.forEach(async (item: any) => {
-    const {data: contentDataMore}: { data: any } = await useRequest('/api/web/admin/content/list', {
+    const {data: contentDataMore}: { data: any } = await useRequest('/api/webv1/admin/content/list', {
         method: 'POST',
         body: {
-            where: {
-                nav_id: {
-                    key: 'like',
-                    value: `%${item}%`
-                }
-            },
+            nav_id: item,
             limit: 5
         }
     })

@@ -32,15 +32,10 @@
 <script setup lang="ts">
 import {useRequest} from "~/composables/useRequest";
 
-const {data: contentData}: { data: any } = await useRequest('/api/web/admin/content/list', {
+const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/list', {
     method: 'POST',
     body: {
-        where: {
-            label: {
-                key: 'eq',
-                value: 1
-            }
-        }
+        label: 1
     }
 })
 </script>

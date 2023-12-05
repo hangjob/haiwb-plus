@@ -17,10 +17,11 @@
 
 import {useRequest} from "~/composables/useRequest";
 
-const {data: keysData}: { data: any } = await useRequest('/api/web/admin/keys/list', {
+const {data: keysData}: { data: any } = await useRequest('/api/webv1/admin/keys/list', {
     method: 'POST',
     body: {
-        limit: 10
+        limit: 10,
+        label:2
     }
 })
 

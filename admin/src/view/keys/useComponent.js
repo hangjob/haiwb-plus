@@ -14,7 +14,8 @@ export default function useComponent() {
             des: null,
             shows: true,
             label: null,
-            cover:null
+            cover:null,
+            nav_id:null,
         },
         rules: {
             title: {
@@ -23,6 +24,7 @@ export default function useComponent() {
                 message: "请输入关键词名称"
             },
         },
+        nav_idOptions:[]
     })
     const compHandle = reactive({
         back() {
@@ -33,7 +35,19 @@ export default function useComponent() {
                 uploadImageRef.value.compHandle.open(true, {img})
             })
         },
+        getNavList() {
+            apis['/admin/nav/list']().then((res) => {
+                compData.nav_idOptions = res.data.map((item) => {
+                    return {
+                        ...item,
+                        label: item.title,
+                        value: item.id
+                    }
+                })
+            })
+        },
     })
+    compHandle.getNavList()
     return {
         compData,
         compHandle,

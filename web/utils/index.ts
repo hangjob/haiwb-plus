@@ -5,8 +5,8 @@ const getDelPath = (row: any) => {
     return del + (row.router || row.id);
 }
 
-const toRouter = (row: any) => {
-    return del + (row.router || row.id);
+const toRouter = (row:any) => {
+    return '/'+row.id
 }
 
 
@@ -39,5 +39,5 @@ export {
     lunisolar,
     arrGroup,
     uniqueFunc,
-    delHtmlTag
+    delHtmlTag,
 }

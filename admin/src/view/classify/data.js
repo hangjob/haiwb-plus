@@ -7,41 +7,34 @@ const createColumns = ({compHandle}) => {
             type: "selection",
         },
         {
-            title: "文章名称",
+            title: "ID",
+            key: "id",
+            align: "center",
+            ellipsis: true,
+            width: 160
+        },
+        {
+            title: "Web菜单名称",
             key: "title",
             align: "center",
             ellipsis: true,
         },
         {
-            title: "点赞",
-            key: "like",
+            title: "路由",
+            key: "router",
             align: "center",
             ellipsis: true,
             width: 160
         },
         {
-            title: "一级分类",
-            key: "classify_id",
-            align: "center",
-            ellipsis: true,
-            width: 120
-        },
-        {
-            title: "浏览",
-            key: "views",
-            align: "center",
-            ellipsis: true,
-            width: 160
-        },
-        {
-            title: "SEO",
-            key: "seo",
+            title: "描述",
+            key: "des",
             align: "center",
             ellipsis: true
         },
         {
-            title: "路由别名",
-            key: "router",
+            title: "封面图",
+            key: "cover",
             align: "center",
             ellipsis: true
         },
@@ -121,7 +114,6 @@ const tableSize = [
         value: "large",
     }
 ]
-
 
 
 export {

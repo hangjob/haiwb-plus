@@ -21,26 +21,14 @@ export default function useComponent()
             title: {
                 required: true,
                 trigger: ["blur", "input"],
-                message: "请输入Web菜单名称"
+                message: "请输入一级分类"
             }
         },
     })
 
     const compHandle = reactive({
-        getPidOptions(){
-            apis['/admin/classify/list']().then((res) => {
-                const pidOptions = res.data.map((item) => {
-                    return {
-                        ...item,
-                        label: item.title,
-                        value: item.id,
-                    }
-                })
-                compData.pidOptions = pidOptions.filter((item)=>item.shows)
-            })
-        },
         back(){
-            router.push('/nav')
+            router.push('/classify')
         },
         coverCustomRequest({ file,data,headers,withCredentials,action,onFinish, onError,onProgress}){
             pmFile.fileToBase64(file.file,(img)=>{

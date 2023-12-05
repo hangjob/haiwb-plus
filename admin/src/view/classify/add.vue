@@ -14,23 +14,11 @@
                         label-width="auto"
                         require-mark-placement="right-hanging"
                     >
-                        <n-form-item label="一级分类" path="pid">
-                            <n-select
-                                v-model:value="compData.from.pid"
-                                placeholder="选择一级分类"
-                                :options="compData.pidOptions"
-                                clearable
-                            >
-                                <template #action>
-                                    选择父级菜单，可以采用树渲染哦，也阔以渲染图标哦
-                                </template>
-                            </n-select>
+                        <n-form-item label="一级分类" path="title">
+                            <n-input v-model:value="compData.from.title" placeholder="请输入一级分类"/>
                         </n-form-item>
-                        <n-form-item label="Web菜单名称" path="title">
-                            <n-input v-model:value="compData.from.title" placeholder="请输入Web菜单名称"/>
-                        </n-form-item>
-                        <n-form-item label="Web别名菜单路由" path="router">
-                            <n-input v-model:value="compData.from.router" placeholder="请输入Web别名菜单路由"/>
+                        <n-form-item label="路由名称-别名" path="router">
+                            <n-input v-model:value="compData.from.router" placeholder="请输入路由名称-别名"/>
                         </n-form-item>
                         <n-form-item label="描述" path="des">
                             <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入描述"/>
@@ -79,7 +67,7 @@
 <script>
 import {defineComponent, reactive, computed, ref} from "vue"
 import apis from "@/api/app.js";
-import useComponent from "@/view/nav/useComponent.js";
+import useComponent from "@/view/classify/useComponent.js";
 
 export default defineComponent({
     setup() {
@@ -90,14 +78,12 @@ export default defineComponent({
             e.preventDefault()
             formRef.value?.validate((errors) => {
                 if (!errors) {
-                    apis['/admin/nav/create']({...compData.from}).then(()=>{
+                    apis['/admin/classify/create']({...compData.from}).then(()=>{
                         compHandle.back()
                     })
                 }
             })
         }
-        compHandle.getPidOptions()
-
         return {
             compData,
             compHandle,

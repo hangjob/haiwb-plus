@@ -13,9 +13,12 @@
                         <p class="text-[12px] text-white mt-2 px-4">找导航就上全栈导航</p>
                     </div>
                 </nuxt-link>
-                <nuxt-link :to="item.router" class="col-span-12 max-md:col-span-3 max-sm:col-span-6 max-lg:col-span-3 max-xl:col-span-2 my-4" v-for="item in navaData?.data || []">
+                <nuxt-link :to="toRouter(item)"
+                           class="col-span-12 max-md:col-span-3 max-sm:col-span-6 max-lg:col-span-3 max-xl:col-span-2 my-4"
+                           v-for="item in navaData?.data || []">
                     <div class="flex flex-col items-center justify-center">
-                        <div class="bg-[#fff] flex flex-col items-center justify-center w-[100px] px-[20px] py-[15px] rounded-[15px]">
+                        <div
+                            class="bg-[#fff] flex flex-col items-center justify-center w-[100px] px-[20px] py-[15px] rounded-[15px]">
                             <svg class="bag-icon stroke-2 text-[40px]" aria-hidden="true">
                                 <use :xlink:href="'#'+item.icon"></use>
                             </svg>
@@ -23,9 +26,11 @@
                         </div>
                     </div>
                 </nuxt-link>
-                <div class="col-span-12 max-md:col-span-3 max-sm:col-span-6 max-lg:col-span-3 max-xl:col-span-2 my-4 mt-8">
+                <div
+                    class="col-span-12 max-md:col-span-3 max-sm:col-span-6 max-lg:col-span-3 max-xl:col-span-2 my-4 mt-8">
                     <div class="flex justify-center flex-col items-center p-[10px]">
                         <nuxt-img src="/img/qrcode.jpg" class="rounded-[10px]"></nuxt-img>
+                        <p class="text-white mt-[5px] text-[12px]">微信公众号</p>
                     </div>
                 </div>
             </div>
@@ -33,16 +38,10 @@
     </div>
 </template>
 <script lang="ts" setup>
+import {useRequest} from "~/composables/useRequest";
+import {toRouter} from "~/utils";
 
-const {data: navaData}: { data: any } = await useRequest("/api/web/admin/nav/list", {
+const {data: navaData}: { data: any } = await useRequest("/api/webv1/admin/classify/list", {
     method: "POST",
-    body:{
-        where: {
-            pid: {
-                key: 'eq',
-                value: null
-            }
-        }
-    }
 })
 </script>

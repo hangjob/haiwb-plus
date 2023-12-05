@@ -14,6 +14,18 @@
                         label-width="auto"
                         require-mark-placement="right-hanging"
                     >
+                        <n-form-item label="二级分类" path="nav_id">
+                            <n-select
+                                v-model:value="compData.from.nav_id"
+                                placeholder="选择二级分类"
+                                :options="compData.nav_idOptions"
+                                clearable
+                            >
+                                <template #action>
+                                    选择父级菜单，可以采用树渲染哦，也阔以渲染图标哦
+                                </template>
+                            </n-select>
+                        </n-form-item>
                         <n-form-item label="名称" path="title">
                             <n-input v-model:value="compData.from.title" placeholder="请输入关键词名称"/>
                         </n-form-item>

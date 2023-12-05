@@ -37,6 +37,19 @@
                         <n-form-item label="官网地址" path="url">
                             <n-input v-model:value="compData.from.url" placeholder="请输入官网地址"/>
                         </n-form-item>
+                        <n-form-item label="一级分类" path="classify_id">
+                            <n-select
+                                v-model:value="compData.from.classify_id"
+                                placeholder="选择一级分类"
+                                :options="compData.classify_idOptions"
+                                clearable
+                                @update:value="compHandle.getNavList"
+                            >
+                                <template #action>
+                                    选择父级菜单，可以采用树渲染哦，也阔以渲染图标哦
+                                </template>
+                            </n-select>
+                        </n-form-item>
                         <n-form-item label="Web菜单ID" path="nav_id">
                             <n-select
                                 v-model:value="compData.from.nav_id"

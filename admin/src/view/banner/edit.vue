@@ -17,7 +17,10 @@
                         <n-form-item label="描述" path="des">
                             <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入关键词描述"/>
                         </n-form-item>
-                        <n-form-item label="图片类型" path="label">
+                        <n-form-item label="链接地址" path="url">
+                            <n-input v-model:value="compData.from.url" placeholder="请输入链接地址"/>
+                        </n-form-item>
+                        <n-form-item label="图片类型" path="type">
                             <n-select
                                 v-model:value="compData.from.type"
                                 placeholder="选择图片类型"
@@ -66,7 +69,7 @@
 import {defineComponent, reactive, computed, ref} from "vue"
 import apis from "@/api/app.js";
 import {useRoute} from "vue-router"
-import useComponent from "@/view/keys/useComponent.js";
+import useComponent from "@/view/banner/useComponent.js";
 
 
 export default defineComponent({

@@ -12,14 +12,14 @@
 // })
 
 // const data = await useHttp({
-//     url:'/admin/content/find',
+//     url:'/api/webv1/admin/content/find',
 //     method:"post",
 //     body: {
 //         id: '202310180M7123N18212T143S1E2L1Z1P40201'
 //     }
 // })
 // console.log(data)
-// const res = await useAsyncData('getContent', () => useFetch('/admin/content/find', {
+// const res = await useAsyncData('getContent', () => useFetch('/api/webv1/admin/content/find', {
 //     body: {
 //         id: '1'
 //     }

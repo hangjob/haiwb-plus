@@ -13,6 +13,7 @@ module.exports = app => {
                     notEmpty: true,
                 },
             },
+            url: STRING(128), // 链接地址
             type: INTEGER(),
             des: STRING(500),
             cover: STRING(128), // 封面图

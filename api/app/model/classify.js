@@ -1,7 +1,7 @@
 'use strict';
 module.exports = app => {
     const { STRING, INTEGER, BIGINT, DATE, BOOLEAN } = app.Sequelize;
-    return app.model.define('tpt_keys',
+    return app.model.define('tpt_classify',
         {
             id: {
                 type: STRING(32),
@@ -13,13 +13,12 @@ module.exports = app => {
                     notEmpty: true,
                 },
             },
-            nav_id: STRING(128),
+            icon: {
+                type: STRING(50),
+            },
+            des: STRING(500),
+            router: STRING(32), // 别名路由
             cover: STRING(128), // 封面图
-            label: {
-                type: INTEGER(11),
-                defaultValue: 1,
-            }, // 标签
-            des: STRING(255),
             shows: BOOLEAN, // 是否显示
         });
 };

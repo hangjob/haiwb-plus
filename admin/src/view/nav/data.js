@@ -27,8 +27,8 @@ const createColumns = ({compHandle}) => {
             width: 160
         },
         {
-            title: "路径",
-            key: "file",
+            title: "路由",
+            key: "router",
             align: "center",
             ellipsis: true,
             width: 160
