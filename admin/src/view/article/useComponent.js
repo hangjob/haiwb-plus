@@ -2,7 +2,7 @@ import {onMounted, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import {mdnice} from "@/config/index.js";
 import {file as pmFile, fun} from "pm-utils";
-import apis from "@/api/app.js";
+import apis, {post} from "@/api/app.js";
 import {originOptions} from "@/enum"
 
 export default function useComponent() {
@@ -19,11 +19,11 @@ export default function useComponent() {
             url: null,
             seo: null,
             keys: null,
-            classify_id:null,
+            classify_id: null,
             nav_id: null,
-            like: null,
-            views: null,
-            sort: null,
+            like: 1,
+            views: 1,
+            sort: 1,
             router: null,
             langue: null,
             shows: true,
@@ -55,10 +55,15 @@ export default function useComponent() {
         },
         pidOptions: [],
         keysOptions: [],
+        keysTagOptions: [],
         nav_idOptions: [],
-        classify_idOptions:[],
+        nav_idOptionsSelct: [],
+        classify_idOptions: [],
+        reclassify_idOptions: [],
+        topic_idOptions: [],
         keysQuery: null,
         keysLoading: false,
+        keysTag: [],
         mdnice,
         loading: false,
         originOptions
@@ -66,7 +71,7 @@ export default function useComponent() {
 
     const compHandle = reactive({
         back() {
-            router.push('/article')
+            router.push('/article').then()
         },
         coverCustomRequest({file, data, headers, withCredentials, action, onFinish, onError, onProgress}) {
             pmFile.fileToBase64(file.file, (img) => {
@@ -82,7 +87,11 @@ export default function useComponent() {
         }),
         keysHandleCreated() {
             if (compData.kyesDes && compData.kyesTitle) {
-                apis['/admin/keys/create']({title: compData.kyesTitle, des: compData.kyesDes}).then(() => {
+                apis['/admin/keys/create']({
+                    title: compData.kyesTitle,
+                    nav_id: compData.from.nav_id[0],
+                    des: compData.kyesDes
+                }).then(() => {
                     compData.kyesTitle = null
                     compData.kyesDes = null
                     compHandle.getKeysList()
@@ -90,11 +99,7 @@ export default function useComponent() {
             }
         },
         getKeysList() {
-            const where = {};
-            if (compData.keysQuery) {
-                where['title'] = compData.keysQuery
-            }
-            apis['/admin/keys/list']({where}).then((res) => {
+            apis['/admin/keys/list']({nav_id: compData.keysQuery}).then((res) => {
                 compData.keysOptions = res.data.map((item) => {
                     return {
                         ...item,
@@ -104,9 +109,54 @@ export default function useComponent() {
                 })
             })
         },
-        getNavList() {
-            apis['/admin/nav/list']({pid:compData.from.classify_id}).then((res) => {
+        keysFilter(pattern, option) {
+            console.log(pattern, option)
+        },
+        getKeysListAll(arr) {
+            const https = [];
+            arr && arr.length && arr.forEach((item) => {
+                const http = post('/admin/keys/list', {nav_id: item})
+                https.push(http);
+            })
+            const datas = [];
+            Promise.all(https).then((res) => {
+                res.forEach((item, idx) => {
+                    datas.push(...item.data)
+                })
+                compData.keysOptions = datas.map((item) => {
+                    return {
+                        ...item,
+                        label: item.title,
+                        value: item.id
+                    }
+                })
+                const new_keys = []
+                compData.from.keys.forEach((key) => {
+                    const data = datas.find((item) => key === item.id)
+                    data && new_keys.push(data.id)
+                })
+                console.log(new_keys, compData.from.keys, compData.keysOptions)
+                compData.from.keys = new_keys
+            })
+        },
+        getNavList(empty = true) {
+            compData.from.classify_id && apis['/admin/nav/list']({pid: compData.from.classify_id}).then((res) => {
                 compData.nav_idOptions = res.data.map((item) => {
+                    return {
+                        ...item,
+                        label: item.title,
+                        value: item.id
+                    }
+                })
+                if (empty) {
+                    compData.from.keys = []
+                    compData.from.nav_id = []
+                }
+            })
+        },
+        getClassifyOptions() {
+            apis['/admin/classify/list']().then((res) => {
+                compData.classify_idOptions = res.data.map((item) => {
                     return {
                         ...item,
                         label: item.title,
@@ -115,9 +165,20 @@ export default function useComponent() {
                 })
             })
         },
-        getClassifyOptions(){
-            apis['/admin/classify/list']().then((res) => {
-                compData.classify_idOptions = res.data.map((item) => {
+        getReclassifyOptions() {
+            apis['/admin/reclassify/list']().then((res) => {
+                compData.reclassify_idOptions = res.data.map((item) => {
+                    return {
+                        ...item,
+                        label: item.title,
+                        value: item.id
+                    }
+                })
+            })
+        },
+        getTopicOptions() {
+            apis['/admin/topic/list']().then((res) => {
+                compData.topic_idOptions = res.data.map((item) => {
                     return {
                         ...item,
                         label: item.title,
@@ -141,7 +202,6 @@ export default function useComponent() {
             }
         })
     })
-    compHandle.getKeysList()
     compHandle.getClassifyOptions()
     return {
         compData,

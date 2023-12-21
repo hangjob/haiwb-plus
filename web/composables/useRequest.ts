@@ -10,6 +10,7 @@ export const useRequest = (url: string, params: any) => {
             // @ts-ignore
             options.headers.sing = aesEncrypt({domain: 'itnvas', uid: getNanoid()})
         },
+        // watch: [getNanoid()],
         ...params
     })
 }

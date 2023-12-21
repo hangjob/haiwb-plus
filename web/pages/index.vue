@@ -4,7 +4,7 @@
         <AppSidebarExtend class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
         <AppSidebarHot class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
     </div>
-    <template v-for="(item,idx) in contentData?.data?.rows || []">
+    <template v-for="(item,idx) in compData?.content?.data?.rows">
         <div v-if="idx === 0" class="mt-5 border border-slate-100 border-solid rounded-md">
             <AppArticleCard :content="item"></AppArticleCard>
         </div>
@@ -16,7 +16,7 @@
         </div>
     </template>
     <div class="mt-5 grid grid-cols-12 gap-4">
-        <template v-for="(item,idx) in contentData?.data?.rows || []">
+        <template v-for="(item,idx) in compData?.content?.data?.rows">
             <div v-if="idx > 4" class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6">
                 <AppArticleCardStock :content="item"/>
             </div>
@@ -42,9 +42,10 @@
 
             }"
             v-model="modelValue"
-            :total="contentData?.data?.count"
+            :total="compData.content?.data?.count"
             show-first
             show-last
+            @update:model-value="hanlePageUpdate"
         />
     </div>
 </template>
@@ -55,47 +56,28 @@ const toast = useToast()
 const modelValue = ref(1);
 const loadingButton = ref(false);
 
-const handleSearch = () => {
-    toast.add({
-        id: 'update_downloaded',
-        title: '正在搜索中...',
-        description: 'It will  be installed on restart. Restart now?',
-        icon: 'i-octicon-desktop-download-24',
-        timeout: 5000,
-        actions: [{
-            label: '没有找到数据',
-            click: () => {
+const compData = reactive({
+    content:{}
+})
 
-            }
-        }]
-    })
-}
-
-const getContentPapge = async () => {
+const getContentPapge = async (page: any) => {
+    loadingButton.value = true
     const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/page', {
         method: 'POST',
         body: {
-            page: modelValue.value
+            page
         }
     })
+    loadingButton.value = false
+    compData.content = contentData
     return contentData;
 }
 
-let contentData = await getContentPapge()
+await getContentPapge(modelValue.value)
 
-watch(modelValue, async () => {
-    loadingButton.value = true
-    contentData = await getContentPapge()
-    loadingButton.value = false
-})
-
-
-const {data: submenuData}: { data: any } = await useRequest('/api/webv1/admin/nav/list', {
-    method: 'POST',
-    body: {
-        pid: contentData?.value?.data.rows[0].id
-    }
-})
+const hanlePageUpdate = async (page: any) => {
+    await getContentPapge(page)
+}
 
 
 useOn('modify-nav', (item: any) => {

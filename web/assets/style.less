@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .bag-icon {
     width: 1em;
     height: 1em;
@@ -10,11 +13,12 @@ body {
     background-color: #f7f9fa;
 }
 
-.no-scrollbar{
+.no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-.no-scrollbar::-webkit-scrollbar{
+
+.no-scrollbar::-webkit-scrollbar {
     display: none;
 }
 
@@ -25,12 +29,120 @@ body {
     color: #8bc34a;
 }
 
-.left-bg{
+.left-bg {
     width: 100%;
     --color: rgb(255 255 255 / 8%);
     background-color: #ffffff;
-    background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent), linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent);
+    background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent);
     background-size: 55px 55px;
 }
+
+
+.c-red {
+    color: #ff5473;
+    background-color: rgba(255, 84, 115, .2)
+}
+
+.c-red-2 {
+    color: #d6064c;
+    background-color: rgba(194, 41, 46, 0.2)
+}
+
+.c-yellow {
+    color: #ff6f06;
+    background-color: rgba(255, 111, 6, 0.2)
+}
+
+.c-yellow-2 {
+    color: #c58516;
+    background-color: rgba(179, 103, 8, 0.2)
+}
+
+.c-blue {
+    color: #2997f7;
+    background-color: rgba(41, 151, 247, .2)
+}
+
+.c-blue-2 {
+    color: #5c7cff;
+    background-color: rgba(77, 130, 249, .2)
+}
+
+.c-cyan {
+    color: #04b9b6;
+    background-color: rgba(8, 196, 193, 0.2)
+}
+
+.c-green {
+    color: #18a52a;
+    background-color: rgba(18, 185, 40, .2)
+}
+
+
+.c-purple {
+    color: #e434e1;
+    background-color: rgba(213, 72, 245, 0.1)
+}
+
+.c-purple-2 {
+    color: #8e4aff;
+    background-color: rgba(154, 72, 245, 0.1)
+}
+
+@layer components {
+    .item-hot{
+        &.top_1 {
+            &::before{
+                content: "TOP 1";
+            }
+        }
+        &.top_2 {
+            &::before{
+                background: linear-gradient(135deg, #ff7a66 10%, #ff2d2d);
+                content: "TOP 2";
+            }
+        }
+        &.top_3 {
+            &::before{
+                background: linear-gradient(135deg, #f59f55 10%, #ff6922);
+                content: "TOP 3";
+            }
+        }
+        &.top_4 {
+            &::before{
+                background: linear-gradient(135deg, #84cc16 10%, #a3e635);
+                content: "TOP 4";
+            }
+        }
+        &.top_5 {
+            &::before{
+                background: linear-gradient(135deg, #ef4444 10%, #f87171);
+                content: "TOP 5";
+            }
+        }
+    }
+
+    .item-hot::before{
+        background: linear-gradient(135deg, #f84975 10%, #f36);
+        border: 0;
+        border-radius: 0 10px 10px 0;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+        color: #fff;
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        height: auto;
+        left: 0;
+        line-height: 12px;
+        padding: 3px 6px 3px 4px;
+        position: absolute;
+        text-align: center;
+        top: 15px;
+        width: auto;
+        z-index: 1;
+    }
+}
+
+
 
 

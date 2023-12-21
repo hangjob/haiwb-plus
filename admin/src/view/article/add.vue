@@ -50,16 +50,14 @@
                                 </template>
                             </n-select>
                         </n-form-item>
-                        <n-form-item label="Web菜单ID" path="nav_id">
+                        <n-form-item label="二级分类" path="nav_id">
                             <n-select
                                 v-model:value="compData.from.nav_id"
                                 placeholder="选择父级菜单"
                                 multiple
                                 :options="compData.nav_idOptions"
+                                @update:value="compHandle.getKeysListAll"
                             >
-                                <template #action>
-                                    选择父级菜单，可以采用树渲染哦，也阔以渲染图标哦
-                                </template>
                             </n-select>
                         </n-form-item>
                         <n-form-item label="关键词" path="keys">
@@ -70,16 +68,17 @@
                                 :loading="compData.keysLoading"
                                 filterable
                                 multiple
+                                :filter="compHandle.keysFilter"
                                 @search="compHandle.keysHandleSearch"
                             />
-                            <n-input-group style="margin-left: 5px">
-                                <n-input v-model:value="compData.kyesTitle" placeholder="输入关键词"/>
-                                <n-button type="primary" ghost @click="compHandle.keysHandleCreated">提交</n-button>
-                            </n-input-group>
+<!--                            <n-input-group style="margin-left: 5px">-->
+<!--                                <n-input v-model:value="compData.kyesTitle" placeholder="输入关键词"/>-->
+<!--                                <n-button type="primary" ghost @click="compHandle.keysHandleCreated">提交</n-button>-->
+<!--                            </n-input-group>-->
                         </n-form-item>
-                        <n-form-item label="关键词描述">
-                            <n-input type="textarea" v-model:value="compData.kyesDes" placeholder="请输入关键词描述"/>
-                        </n-form-item>
+<!--                        <n-form-item label="关键词描述">-->
+<!--                            <n-input type="textarea" v-model:value="compData.kyesDes" placeholder="请输入关键词描述"/>-->
+<!--                        </n-form-item>-->
                         <n-space>
                             <n-form-item label="点赞量" path="like">
                                 <n-input-number v-model:value="compData.from.like" placeholder="请输入点赞量"
@@ -184,8 +183,11 @@ import {defineComponent, reactive, computed, ref, onMounted, watch} from "vue"
 import apis from "@/api/app.js";
 import {langueOptions, labelOptions, originOptions} from "@/enum"
 import useComponent from "@/view/article/useComponent.js"
-
+import Transfer from './Transfer.vue'
 export default defineComponent({
+    components:{
+        Transfer,
+    },
     setup() {
         const {compData, compHandle, uploadImageRef,formRef} = useComponent()
         const article_from = window.localStorage.getItem("article_from")
@@ -195,12 +197,14 @@ export default defineComponent({
         watch(compData.from, () => {
             window.localStorage.setItem("article_from", JSON.stringify(compData.from))
         })
+        compHandle.getNavList()
         compHandle.validate = (e) => {
             e.preventDefault()
             formRef.value?.validate((errors) => {
                 if (!errors) {
                     compData.loading = true;
                     apis['/admin/content/create'](compData.from).then((res) => {
+                        window.localStorage.removeItem("article_from")
                         compHandle.back()
                     }).finally(() => {
                         compData.loading = false;

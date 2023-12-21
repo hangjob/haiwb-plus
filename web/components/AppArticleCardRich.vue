@@ -5,51 +5,60 @@
                       :src="content.cover"></nuxt-img>
         </div>
         <div class="flex flex-col justify-between py-[4px]">
-            <h1 class="font-bold text-[18px] text-gray-700  mt-2">{{content.title}}</h1>
-            <p class="text-[14px] text-gray-600 leading-4 mt-2 tracking-wide line-clamp-2">{{content.des}}</p>
+            <nuxt-link :to="'/det'+toRouter(content)" class="font-bold text-[18px] text-gray-700  mt-2">{{content.title}}</nuxt-link>
+            <nuxt-link :to="'/det'+toRouter(content)" class="text-[14px] text-gray-600 leading-4 mt-2 tracking-wide line-clamp-2">{{content.des}}</nuxt-link>
         </div>
         <div class="flex flex-wrap items-center mt-2">
-            <nuxt-link class="group flex mr-3 mb-2 items-center rounded-[5px] text-[12px] px-[5px] py-1 bg-gray-100 text-slate-900 cursor-pointer hover:bg-green-500">
+            <nuxt-link :to="'/tag'+toRouter(item)" v-for="(item,idx) in content.keys_list" class="group flex mr-3 mb-2 items-center rounded-[5px] text-[12px] px-[5px] py-[6px] bg-gray-100 text-slate-900 cursor-pointer hover:bg-green-500">
                 <svg class="bag-icon stroke-2 mr-[2px] group-hover:text-white" aria-hidden="true">
                     <use xlink:href="#haiwb-biaoqian"></use>
                 </svg>
-                <span class="text-[12px] text-gray-500 group-hover:text-white">测试</span>
+                <span class="text-[12px] text-gray-500 group-hover:text-white">{{item.title}}</span>
             </nuxt-link>
         </div>
-        <div class="flex items-center flex-wrap">
-            <div class="flex items-center flex-1">
-                <div class="flex items-center text-[16px] mr-2">
-                    <svg class="bag-icon stroke-2 mr-[2px]" aria-hidden="true">
-                        <use xlink:href="#haiwb-tupian"></use>
-                    </svg>
-                    <span class="text-[14px]">品茗</span>
+        <div class="flex flex-1 items-end flex-row w-full">
+            <div class="flex items-center max-md:items-start max-md:flex-col flex-1">
+                <div class="items-center max-md:items-start max-md:flex-col flex flex-1">
+                    <div class="flex items-center flex-row mr-2 mt-3">
+                        <svg class="bag-icon stroke-2 mr-[2px]" aria-hidden="true">
+                            <use xlink:href="#haiwb-tupian"></use>
+                        </svg>
+                        <span class="text-[14px]">{{website.name}}</span>
+                    </div>
+                    <div class="flex items-center flex-row mr-2 mt-3">
+                        <svg class="bag-icon stroke-2 mr-1" aria-hidden="true">
+                            <use xlink:href="#haiwb-naozhong"></use>
+                        </svg>
+                        <span class="text-[14px]">{{lunisolar(content.createdAt).format('lYn年 lM lD A')}}</span>
+                    </div>
+                    <div class="flex items-center flex-row mr-2 mt-3">
+                        <svg class="bag-icon stroke-2 mr-[3px]" aria-hidden="true">
+                            <use xlink:href="#haiwb-zuixinziyuan"></use>
+                        </svg>
+                        <span class="text-[14px]">访问 {{content.views}}</span>
+                    </div>
                 </div>
-                <div class="flex items-center text-[16px]  mr-2">
-                    <svg class="bag-icon stroke-2 mr-[2px]" aria-hidden="true">
-                        <use xlink:href="#haiwb-naozhong"></use>
-                    </svg>
-                    <span class="text-[14px]">{{lunisolar(content.createdAt).format('lY年 lM lD A')}}</span>
-                    <span class="text-[14px] text-gray-400"></span>
+                <div class="flex items-center flex-row mt-3">
+                    <nuxt-link :to="'/fl'+toRouter(content.nav_id_list[content.nav_id_list.length - 1])" class="flex text-gray-500 items-center flex-row p-1 rounded-[5px] bg-blue-100">
+                        <svg class="bag-icon stroke-2 mr-1" aria-hidden="true">
+                            <use xlink:href="#haiwb-zixun"></use>
+                        </svg>
+                        <span class="text-[12px]">{{content.nav_id_list[content.nav_id_list.length - 1].title}}</span>
+                    </nuxt-link>
                 </div>
-                <div class="flex items-center text-[14px]">
-                    <svg class="bag-icon stroke-2 mr-[3px]" aria-hidden="true">
-                        <use xlink:href="#haiwb-zuixinziyuan"></use>
-                    </svg>
-                    <span class="text-[14px]">{{content.views}}</span>
-                    <span class="text-[14px] text-gray-400"></span>
-                </div>
-            </div>
-            <div class="flex items-center text-[14px]">
-                <span class="group flex  items-center rounded-[5px] text-[12px] px-[7px] py-[5px] bg-gray-100  cursor-pointer hover:bg-green-500 hover:text-white text-gray-400">品茗科技</span>
             </div>
         </div>
+
     </div>
 </template>
 <script setup lang="ts">
+import {useWebsite} from "~/composables/useWebsite";
+
 const props = defineProps({
     content:{
         type: Object,
         default:{}
     }
 })
+const website = useWebsite()
 </script>

@@ -27,6 +27,14 @@ axios.interceptors.response.use(response => {
 })
 
 
+const post = (url, params, config) => {
+    return axios.post(url, params, config)
+}
+
+const get = (url, params, config) => {
+    return axios.get(url, {params, ...config})
+}
+
 const tpls = [
     {url: 'list'},
     {url: 'page'},
@@ -40,7 +48,7 @@ const tpls = [
 
 const apis = {}
 
-const apiss = ['menu', 'content', 'keys', 'banner', 'nav', 'member','classify']
+const apiss = ['menu', 'content', 'keys', 'banner', 'nav', 'member', 'classify', 'reclassify', 'topic']
 
 apiss.forEach((ctrol) => {
     tpls.forEach((item) => {
@@ -62,4 +70,7 @@ apis[`/upload/images`] = (params) => {
 
 axios.apis = apis;
 export default apis;
+export {
+    post
+}
 

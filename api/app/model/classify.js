@@ -1,6 +1,7 @@
 'use strict';
 module.exports = app => {
     const { STRING, INTEGER, BIGINT, DATE, BOOLEAN } = app.Sequelize;
+    // 一级分类
     return app.model.define('tpt_classify',
         {
             id: {

@@ -69,7 +69,7 @@
 import {defineComponent, reactive, computed, ref} from "vue"
 import apis from "@/api/app.js";
 import {useRoute} from "vue-router"
-import useComponent from "@/view/banner/useComponent.js";
+import useComponent from "./useComponent.js";
 
 
 export default defineComponent({

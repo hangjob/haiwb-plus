@@ -17,7 +17,9 @@ class ContentController extends BaseController {
             const list = [];
             for (const todo of item.keys) {
                 const find = await this.ctx.service.base.find('Keys', {params: {where: {id: todo}}});
-                list.push(find);
+                if (find) {
+                    list.push(find);
+                }
             }
             item.setDataValue('keys_list', list);
         }
@@ -25,7 +27,9 @@ class ContentController extends BaseController {
             const list = [];
             for (const todo of item.nav_id) {
                 const find = await this.ctx.service.base.find('Nav', {params: {where: {id: todo}}});
-                list.push(find);
+                if (find) {
+                    list.push(find);
+                }
             }
             item.setDataValue('nav_id_list', list);
         }
@@ -33,10 +37,12 @@ class ContentController extends BaseController {
 
     async page() {
         try {
-            const { page = 1, limit = 10, id, nav_id, keys, ...params } = this.ctx.request.body;
+            const {page = 1, limit = 10, id, nav_id, keys, ...params} = this.ctx.request.body;
             const offset = (page - 1) * limit;
             const Op = this.app.Sequelize.Op;
-
+            if (params.limit) {
+                params.limit = parseInt(params.limit);
+            }
             const options = Object.assign({
                 limit,
                 offset,
@@ -69,7 +75,7 @@ class ContentController extends BaseController {
             const params = this.ctx.request.body;
             const where = {};
             if (params.label) {
-                where.label = {[this.app.Sequelize.Op.eq]: params.label};
+                where.label = {[this.app.Sequelize.Op.eq]: parseInt(params.label)};
             }
             if (params.nav_id) {
                 where.nav_id = {[this.app.Sequelize.Op.like]: `%${params.nav_id}%`};
@@ -79,8 +85,22 @@ class ContentController extends BaseController {
             }
             if (params.limit) {
                 params.limit = parseInt(params.limit);
+            } else {
+                params.limit = 10;
             }
-            const data = await this.app.model[this.modelName].findAll({where, ...params});
+            let data = [];
+            if (params.nav_ids) {
+                for (const item of params.nav_ids) {
+                    const todo = await this.app.model[this.modelName].findAll({
+                        where: {
+                            nav_id: {[this.app.Sequelize.Op.like]: `%${item}%`},
+                        }, ...params,
+                    });
+                    data.push(...todo);
+                }
+            } else {
+                data = await this.app.model[this.modelName].findAll({where, ...params});
+            }
             if (isArray(data)) {
                 for (const item of data) {
                     await this.setRowItem(item);
@@ -96,13 +116,29 @@ class ContentController extends BaseController {
         try {
             const params = this.ctx.request.body;
             const data = await this.ctx.service.base.find(this.modelName, {params: {where: params}});
+            await this.app.model[this.modelName].increment({views: 1}, { where: { id: params.id } });
             await this.setRowItem(data);
+            const count = await this.app.model[this.modelName].count({ where: {
+                nav_id: {[this.app.Sequelize.Op.like]: `%${data.nav_id}%`},
+            } });
+            data.setDataValue('content_count', count);
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
         }
     }
 
+    async next() {
+        try {
+            const params = this.ctx.request.body;
+            const data = await this.app.model[this.modelName].findOne({ where: { id: params.id } });
+            const prev = await this.app.model[this.modelName].findOne({ where: { nid: data.nid + 1 }});
+            const next = await this.app.model[this.modelName].findOne({ where: { nid: data.nid - 1 }});
+            this.ctx.body = this.ctx.resultData({data: [ prev, next ]});
+        } catch (err) {
+            this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
+        }
+    }
 
 }
 

@@ -14,7 +14,7 @@ createApp(App).use(install, {
         "/register":"admin/member/create"
     },
     website: {
-        title: "管理系统",
+        title: "",
         logo:logo2,
         maxLogo:logo2
     },

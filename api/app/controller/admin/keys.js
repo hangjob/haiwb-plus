@@ -1,6 +1,7 @@
 'use strict';
 
 const BaseController = require('./base');
+const isArray = require('lodash/isArray');
 
 class KeysController extends BaseController {
 
@@ -14,7 +15,19 @@ class KeysController extends BaseController {
         try {
             const params = this.ctx.request.body;
             const where = {};
+            if (params && params.nav_id) {
+                where.nav_id = params.nav_id;
+            }
+            if (params.limit) {
+                params.limit = parseInt(params.limit);
+            }
             const data = await this.ctx.model[this.modelName].findAll({where, ...params});
+            if (isArray(data)) {
+                for (const item of data) {
+                    const find = await this.ctx.model.Nav.findOne({where: {id: item.nav_id}});
+                    item.setDataValue('nav_id_find', find);
+                }
+            }
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});

@@ -21,10 +21,10 @@ class NavController extends BaseController {
                     [Op.eq]: params.pid,
                 };
             }
-            if (params.pid === true) {
+            if (params.pid === 'ne') {
                 where.pid = {[this.app.Sequelize.Op.ne]: ''};
             }
-            if (params.pid === false) {
+            if (params.pid === 'or') {
                 where.pid = {[this.app.Sequelize.Op.or]: [ null, '' ]};
             }
             const data = await this.ctx.model[this.modelName].findAll({where, ...params});

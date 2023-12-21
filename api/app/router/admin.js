@@ -30,7 +30,16 @@ module.exports = app => {
         app.router.post(`/admin/banner/${item.path}`, app.middleware.authority(item), app.controller.admin.banner[item.path]);
     });
     apis.forEach(item => {
-        app.router.post(`/admin/classify/${item.path}`, app.middleware.authority(item), app.controller.admin.classify[item.path]);
+        app.router.post(`/admin/classify/${item.path}`, app.controller.admin.classify[item.path]);
+    });
+    apis.forEach(item => {
+        app.router.post(`/admin/reclassify/${item.path}`, app.controller.admin.reclassify[item.path]);
+    });
+    apis.forEach(item => {
+        app.router.post(`/admin/topic/${item.path}`, app.controller.admin.topic[item.path]);
+    });
+    apis.forEach(item => {
+        app.router.post(`/admin/relevancy/${item.path}`, app.controller.admin.relevancy[item.path]);
     });
     // app.router.post('/admin/content/edit', app.middleware.authority, app.controller.admin.content.edit);
 };

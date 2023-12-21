@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+
 export default defineNuxtConfig({
     // @ts-ignore
     // ssr: process.env.NODE_ENV !== "development",
@@ -6,7 +8,11 @@ export default defineNuxtConfig({
     app: {
         layoutTransition: {name: 'layout', mode: 'out-in'},
         head: {
-            script: [{src: '//at.alicdn.com/t/c/font_3943467_cvcs8xhmcn9.js'}]
+            script: [
+                {src: '//at.alicdn.com/t/c/font_3943467_cvcs8xhmcn9.js'},
+                {src:'//cdn.jsdelivr.net/npm/fabric'},
+                {src:'//cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js'},
+            ]
         }
     },
     image: {
@@ -38,6 +44,10 @@ export default defineNuxtConfig({
                 },
             },
         },
+    },
+    devServer: {
+        "host": "0.0.0.0",
+        port: 3001,
     },
     nitro:{
         devProxy: {
