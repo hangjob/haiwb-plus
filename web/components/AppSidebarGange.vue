@@ -24,14 +24,14 @@
                 </div>
             </div>
         </div>
-        <div class="px-3 h-[90px] mt-2 py-[5px] overflow-hidden">
+        <div class="px-3 h-[110px] mt-2 py-[5px] overflow-hidden">
             <swiper
                 ref="mySwiperRef"
                 :modules="[SwiperAutoplay]"
                 :loop="true"
                 direction="vertical"
-                :height="85"
-                :autoplay="{ delay: 3000, disableOnInteraction: true,}"
+                :height="110"
+                :autoplay="{ delay: 5000, disableOnInteraction: true,}"
                 @swiper="onSwiper"
             >
                 <swiper-slide v-for="(item,idx) in arrGroup(contentData?.data || [],3) || []">
@@ -74,11 +74,9 @@ const onSwiper = (swiper: any) => {
 };
 
 
-const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/keys/list?v=1', {
+const {data: contentData}: { data: any } = await useRequest('/api/webv1/web/keys/kyesBanner', {
     method: 'POST',
-    body: {
-        limit: 10
-    }
 })
+
 const website = useWebsite()
 </script>

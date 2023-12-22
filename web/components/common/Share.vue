@@ -223,7 +223,7 @@ const handleDownload = () => {
 }
 
 const handleLikePlus = () => {
-    locaOnce().then(async res => {
+    locaOnce(String(props.content.id)).then(async res => {
         if (res) {
             const {data}: { data: any } = await useRequest("/api/webv1/web/common/contentPlus", {
                 method: "POST",

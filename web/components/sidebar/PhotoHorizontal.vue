@@ -1,6 +1,6 @@
 <template>
     <h1 class="flex items-center text-[22px]  font-bold">
-        更多相关
+        免费并且好使用
     </h1>
     <div class="mt-5 grid grid-cols-12 gap-4">
         <div v-for="item in contentData?.data || []"

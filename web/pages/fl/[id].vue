@@ -10,13 +10,6 @@
                         <nuxt-link v-else :to="toRouter(item)">{{ item.title }}</nuxt-link>
                     </template>
                 </div>
-                <div class="flex max-sm:flex-1 max-md:flex-1">
-                    <UInput
-                        class="flex-1"
-                        icon="i-heroicons-magnifying-glass-20-solid" size="sm" color="white" :trailing="false"
-                        placeholder="Search..."
-                    />
-                </div>
             </div>
             <div class="mt-5 grid grid-cols-12 gap-4">
                 <div v-for="item in navListData?.data || []" class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">

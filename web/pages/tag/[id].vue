@@ -7,13 +7,6 @@
                     <span class="pl-1 pr-1 text-gray-300">/</span>
                     <span class="text-gray-400">话题：{{ keysData?.data?.title }}</span>
                 </div>
-                <div class="flex max-sm:flex-1 max-md:flex-1">
-                    <UInput
-                        class="flex-1"
-                        icon="i-heroicons-magnifying-glass-20-solid" size="sm" color="white" :trailing="false"
-                        placeholder="Search..."
-                    />
-                </div>
             </div>
             <div class="mt-5 flex flex-col p-[30px] bg-[#8881] rounded-[20px]">
                 <h1 class="text-[24px] font-bold">{{ keysData?.data?.title }}</h1>
@@ -40,8 +33,11 @@
             </div>
         </template>
         <template #sidebar>
-            <div class="bg-white rounded-[20px] p-[30px]">
+            <div class="bg-white rounded-[20px] p-[30px] mb-[30px]">
                 <SidebarTag :navId="keysData?.data?.nav_det?.id"/>
+            </div>
+            <div class="bg-white rounded-[20px] p-[30px] mb-[30px] sticky top-0">
+                <sidebar-hot></sidebar-hot>
             </div>
         </template>
     </NuxtLayout>

@@ -58,6 +58,7 @@ class ContentController extends BaseController {
             if (keys) {
                 options.where.keys = {[Op.like]: `%${keys}%`};
             }
+            options.attributes = {exclude: [ 'content', 'html' ]};
             const data = await this.app.model[this.modelName].findAndCountAll(options);
             if (isArray(data.rows)) {
                 for (const item of data.rows) {
@@ -89,6 +90,7 @@ class ContentController extends BaseController {
                 params.limit = 10;
             }
             let data = [];
+            params.attributes = {exclude: [ 'content', 'html' ]};
             if (params.nav_ids) {
                 for (const item of params.nav_ids) {
                     const todo = await this.app.model[this.modelName].findAll({

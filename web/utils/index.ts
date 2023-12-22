@@ -56,7 +56,7 @@ function locaOnce(key: string = 'discoverTime') {
         if (startTime && startTime !== " ") {
             startTime = Number(startTime);
         } else {
-            localStorage.setItem("discoverTime", String(+new Date()));
+            localStorage.setItem(key, String(+new Date()));
             return Promise.resolve(true);
         }
         const startTimeMs = new Date(startTime).setHours(0, 0, 0, 0);
