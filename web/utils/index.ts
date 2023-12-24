@@ -62,6 +62,7 @@ function locaOnce(key: string = 'discoverTime') {
         const startTimeMs = new Date(startTime).setHours(0, 0, 0, 0);
         const endTimeMs = new Date().setHours(0, 0, 0, 0);
         const result = startTimeMs !== endTimeMs;
+        localStorage.setItem(key, String(+new Date()));
         return Promise.resolve(result);
     } catch (err) {
         return Promise.resolve(false);

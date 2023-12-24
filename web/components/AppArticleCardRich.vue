@@ -5,8 +5,8 @@
                       :src="content.cover"></nuxt-img>
         </div>
         <div class="flex flex-col justify-between py-[4px]">
-            <nuxt-link :to="'/det'+toRouter(content)" class="font-bold text-[18px] text-gray-700  mt-2">{{content.title}}</nuxt-link>
-            <nuxt-link :to="'/det'+toRouter(content)" class="text-[14px] text-gray-600 leading-4 mt-2 tracking-wide line-clamp-2">{{content.des}}</nuxt-link>
+            <a :href="'/det'+toRouter(content)" class="font-bold text-[18px] text-gray-700  mt-2" v-html="keywordscolorful(content.title,route.query.s)"></a>
+            <a :href="'/det'+toRouter(content)" class="text-[14px] text-gray-600 leading-4 mt-2 tracking-wide line-clamp-2" v-html="keywordscolorful(content.des,route.query.s)"></a>
         </div>
         <div class="flex flex-wrap items-center mt-2">
             <nuxt-link :to="'/tag'+toRouter(item)" v-for="(item,idx) in content.keys_list" class="group flex mr-3 mb-2 items-center rounded-[5px] text-[12px] px-[5px] py-[6px] bg-gray-100 text-slate-900 cursor-pointer hover:bg-green-500">
@@ -53,7 +53,8 @@
 </template>
 <script setup lang="ts">
 import {useWebsite} from "~/composables/useWebsite";
-
+import {keywordscolorful} from "~/composables/useTagColor";
+const route = useRoute()
 const props = defineProps({
     content:{
         type: Object,

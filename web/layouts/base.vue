@@ -10,6 +10,7 @@
                 </div>
             </div>
             <div class="col-span-11 xl:col-span-11 2xl:col-span-3 sticky top-0">
+                <app-search></app-search>
                 <slot name="sidebar" />
             </div>
         </div>

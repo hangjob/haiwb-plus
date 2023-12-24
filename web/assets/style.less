@@ -141,6 +141,22 @@ body {
         width: auto;
         z-index: 1;
     }
+    .highlight{
+        position: relative;
+        i{
+            position: relative;
+        }
+        &::before{
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 60%;
+            background-color: rgba(255,255,0,0.7);
+        }
+    }
 }
 
 

@@ -15,10 +15,10 @@
             </div>
         </div>
         <nuxt-link :to="'/det'+toRouter(content)" class="flex flex-col px-[12px]">
-            <h1 class="text-[16px] font-bold line-clamp-2 leading-tight my-3">{{ content.title }}</h1>
+            <h1 class="text-[16px] font-bold line-clamp-2 leading-tight my-3" v-html="keywordscolorful(content.title,route.query.s)"></h1>
         </nuxt-link>
         <nuxt-link :to="'/det'+toRouter(content)" class="flex flex-col bg-slate-50 px-[12px] py-3 min-h-[80px] items-center justify-center">
-            <p class="text-[14px] text-gray-500 line-clamp-3 leading-snug">{{ content.des }}</p>
+            <p class="text-[14px] text-gray-500 line-clamp-3 leading-snug" v-html="keywordscolorful(content.des,route.query.s)"></p>
         </nuxt-link>
         <div class="flex flex-row border-b border-solid border-slate-50 pb-2 px-[12px] items-center mt-2">
             <div class="flex-wrap flex">
@@ -56,8 +56,8 @@
     </div>
 </template>
 <script lang="ts" setup>
-import {useColorHash, useTagColor} from "~/composables/useTagColor";
-
+import {keywordscolorful, useColorHash, useTagColor} from "~/composables/useTagColor";
+const route = useRoute()
 const props = defineProps({
     content: {
         type: Object,

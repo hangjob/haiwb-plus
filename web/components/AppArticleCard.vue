@@ -9,8 +9,8 @@
                 max-sm:ml-0 max-md:mr-0 max-md:ml-0 max-lg:mr-0 max-lg:ml-0"
                 :class="[compData.classCardLeft,compData.classCardRight]"
             >
-                <nuxt-link :to="'/det'+toRouter(content)" class="text-[18px] font-bold">{{content.title}}</nuxt-link>
-                <nuxt-link :to="'/det'+toRouter(content)" class="text-[14px] pt-4 leading-5 text-justify line-clamp-2">{{content.des}}</nuxt-link>
+                <a :href="'/det'+toRouter(content)" class="inline-block text-[18px] font-bold" v-html="keywordscolorful(content.title,route.query.s)"></a>
+                <a :href="'/det'+toRouter(content)" class="inline-block text-[14px] pt-4 leading-5 text-justify line-clamp-2" v-html="keywordscolorful(content.des,route.query.s)"></a>
                 <div class="flex flex-wrap items-center mt-2">
                     <nuxt-link :to="'/tag'+toRouter(item)" v-for="(item,idx) in content.keys_list" class="group flex mr-3 mb-2 items-center rounded-[5px] text-[12px] px-[5px] py-[6px] bg-gray-100 text-slate-900 cursor-pointer hover:bg-green-500">
                         <svg class="bag-icon stroke-2 mr-[2px] group-hover:text-white" aria-hidden="true">
@@ -68,7 +68,8 @@
 </template>
 <script setup lang="ts">
 import {useWebsite} from "~/composables/useWebsite";
-
+import {keywordscolorful} from "~/composables/useTagColor";
+const route = useRoute()
 const props = defineProps({
     classFlexDirection: {
         type: String,

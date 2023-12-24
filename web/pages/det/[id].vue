@@ -113,6 +113,14 @@
                     修改网站提供的资源，加群提示为修改者自留，<b>非本站信息</b>，注意鉴别
                 </p>
             </div>
+            <div v-if="contentData?.data?.pan" class="flex mt-10 flex-col relative rounded-md border-dashed border-[1px] px-[10px] py-[15px] border-zinc-100">
+                <div class="flex justify-between items-center">
+                    <p class="text-[14px]">下载：<span class="text-[26px] text-yellow-400">免费</span></p>
+                    <UButton color="green" :to="contentData?.data?.pan" variant="solid" target="_blank">立即下载</UButton>
+                </div>
+                <div class="text-[14px] mt-2">密码：<span class="text-[14px]">{{contentData?.data?.panPas ? contentData?.data?.panPas : '无需密码'}}</span></div>
+                <div class="absolute top-[-13px] text-[#64748b] bg-white left-3">{{contentData?.data?.panTitle}}</div>
+            </div>
             <div class="flex mt-5 flex-col">
                 <CommonShare :content="contentData?.data"/>
             </div>
@@ -264,6 +272,8 @@ const {data: contentData} = await useRequest("/api/webv1/admin/content/find", {
         id: route.params.id
     }
 })
+
+console.log(contentData)
 
 const {data: nextData} = await useRequest("/api/webv1/web/content/next", {
     method: "POST",

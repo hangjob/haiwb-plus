@@ -1,9 +1,9 @@
-export const useTagColor = (idx:any) => {
-    let arrs = ['c-red','c-yellow','c-yellow-2','c-blue','c-blue-2','c-red-2','c-cyan','c-green','c-purple','c-purple-2']
+export const useTagColor = (idx: any) => {
+    let arrs = ['c-red', 'c-yellow', 'c-yellow-2', 'c-blue', 'c-blue-2', 'c-red-2', 'c-cyan', 'c-green', 'c-purple', 'c-purple-2']
     return arrs[idx] ? arrs[idx] : arrs[0];
 }
 
-export const useColorWarm = (idx:any) => {
+export const useColorWarm = (idx: any) => {
     // 暖色系
     const arrs = [
         {
@@ -19,28 +19,24 @@ export const useColorWarm = (idx:any) => {
             "id": 3
         },
         {
-            "color": "#f05b72",
-            "id": 7
-        },
-        {
-            "color": "#905a3d",
-            "id": 8
-        },
-        {
-            "color": "#87843b",
-            "id": 9
+            "color": "#b2d235",
+            "id": 27
         },
         {
             "color": "#f15b6c",
             "id": 10
         },
         {
-            "color": "#8f4b2e",
-            "id": 11
+            "color": "#ffd400",
+            "id": 173
         },
         {
-            "color": "#726930",
-            "id": 12
+            "color": "#009ad6",
+            "id": 174
+        },
+        {
+            "color": "#ae5039",
+            "id": 175
         },
         {
             "color": "#f8aba6",
@@ -59,8 +55,8 @@ export const useColorWarm = (idx:any) => {
             "id": 16
         },
         {
-            "color": "#5f3c23",
-            "id": 17
+            "color": "#f05b72",
+            "id": 7
         },
         {
             "color": "#2e3a1f",
@@ -98,10 +94,7 @@ export const useColorWarm = (idx:any) => {
             "color": "#fab27b",
             "id": 26
         },
-        {
-            "color": "#b2d235",
-            "id": 27
-        },
+
         {
             "color": "#bd6758",
             "id": 28
@@ -682,18 +675,7 @@ export const useColorWarm = (idx:any) => {
             "color": "#c85d44",
             "id": 172
         },
-        {
-            "color": "#ffd400",
-            "id": 173
-        },
-        {
-            "color": "#009ad6",
-            "id": 174
-        },
-        {
-            "color": "#ae5039",
-            "id": 175
-        },
+
         {
             "color": "#ffe600",
             "id": 176
@@ -758,7 +740,7 @@ export const useColorWarm = (idx:any) => {
     return arrs[idx] ? arrs[idx] : arrs[0];
 }
 
-export function useColorHash(str:string) {
+export function useColorHash(str: string) {
     let lsL = [0.35, 0.5, 0.65];
     let lsS = [0.35, 0.5, 0.65];
     let seed = 131;
@@ -808,3 +790,9 @@ export function useColorHash(str:string) {
     });
     return hex;
 }
+
+export function keywordscolorful(str: string, key: any) {
+    let reg = new RegExp("(" + key + ")", "g");
+    return str.replace(reg, `<span class="highlight"><i>$1</i></span>`);
+}
+

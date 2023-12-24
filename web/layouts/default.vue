@@ -10,6 +10,7 @@
                 </div>
             </div>
             <div class="col-span-11 md:col-span-11 xl:col-span-11 2xl:col-span-3">
+                <app-search></app-search>
                 <div class="bg-white rounded-[20px] max-sm:px-[15px] max-md:px-[15px] p-[30px]">
                     <div class="mb-[30px]">
                         <SidebarPhoto/>
@@ -18,9 +19,9 @@
                         <SidebarPhotoHorizontal/>
                     </div>
                 </div>
-                <div class="mt-[30px] rounded-[20px]">
-                    <SidebarSubtotal/>
-                </div>
+<!--                <div class="mt-[30px] rounded-[20px]">-->
+<!--                    <SidebarSubtotal/>-->
+<!--                </div>-->
                 <div class="sticky top-0 bg-white mt-[30px] rounded-[20px] max-sm:px-[15px] max-md:px-[15px] p-[30px] ">
                     <AppSidebarGange/>
                     <AppSidebarCardFull/>

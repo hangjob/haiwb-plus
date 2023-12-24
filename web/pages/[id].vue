@@ -8,13 +8,6 @@
                 <nuxt-link v-else :to="toRouter(item)">{{ item.title }}</nuxt-link>
             </template>
         </div>
-        <div class="flex max-sm:flex-1 max-md:flex-1">
-            <UInput
-                class="flex-1"
-                icon="i-heroicons-magnifying-glass-20-solid" size="sm" color="white" :trailing="false"
-                placeholder="Search..."
-            />
-        </div>
     </div>
     <div class="mt-5 grid grid-cols-12 gap-4">
         <div v-for="item in navListData?.data || []" class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">
@@ -73,20 +66,12 @@
 import {useRequest} from "~/composables/useRequest";
 import {toRouter} from "~/utils";
 
-const toast = useToast()
 const modelValue = ref(1);
 const loadingButton = ref(false);
 const route = useRoute()
 
 const compData = reactive({
     content:{}
-})
-
-const {data: navData}: { data: any } = await useRequest('/api/webv1/admin/classify/find', {
-    method: 'POST',
-    body: {
-        id: route.params.id,
-    },
 })
 
 const getContentPapge = async (page:any) => {
@@ -122,6 +107,7 @@ const hanlePageUpdate = async (page: any) => {
 
 
 useOn('modify-nav', (item: any) => {
+    alert(1)
 })
 
 onBeforeUnmount(() => {

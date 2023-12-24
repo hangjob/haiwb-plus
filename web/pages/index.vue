@@ -1,8 +1,12 @@
 <template>
-    <AppBanner/>
-    <div class="mt-5 grid grid-cols-12 gap-4">
+    <AppBanner v-if="!compData.s"/>
+    <div v-if="!compData.s" class="mt-5 grid grid-cols-12 gap-4">
         <AppSidebarExtend class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
         <AppSidebarHot class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
+    </div>
+    <div v-if="compData.s">
+        <strong class="font-bold text-[18px]"><span
+            class="highlight"><i>“{{ compData.s }}”</i></span>的搜索结果</strong>
     </div>
     <template v-for="(item,idx) in compData?.content?.data?.rows">
         <div v-if="idx === 0" class="mt-5 border border-slate-100 border-solid rounded-md">
@@ -52,13 +56,19 @@
 <script setup lang="ts">
 import {useRequest} from "~/composables/useRequest";
 
-const toast = useToast()
 const modelValue = ref(1);
 const loadingButton = ref(false);
 
+const route = useRoute()
+
 const compData = reactive({
-    content:{}
+    content: {},
+    s: <any>''
 })
+compData.s = route.query.s;
+
+
+// 匹配颜色高亮
 
 const getContentPapge = async (page: any) => {
     loadingButton.value = true
@@ -78,13 +88,5 @@ await getContentPapge(modelValue.value)
 const hanlePageUpdate = async (page: any) => {
     await getContentPapge(page)
 }
-
-
-useOn('modify-nav', (item: any) => {
-})
-
-onBeforeUnmount(() => {
-    useOff('modify-nav')
-})
 
 </script>

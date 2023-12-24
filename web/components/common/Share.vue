@@ -41,7 +41,7 @@
 </template>
 <script lang="ts" setup>
 import {useRequest} from "~/composables/useRequest";
-import tianqi from '~/public/img/tianqi.png'
+import tianqi from '/img/tianqi.png'
 import {locaOnce} from "~/utils";
 import {useWebsite} from "~/composables/useWebsite";
 

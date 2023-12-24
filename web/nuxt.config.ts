@@ -9,7 +9,7 @@ export default defineNuxtConfig({
         layoutTransition: {name: 'layout', mode: 'out-in'},
         head: {
             script: [
-                {src: '//at.alicdn.com/t/c/font_3943467_cvcs8xhmcn9.js'},
+                {src: '//at.alicdn.com/t/c/font_3943467_mtdn5uqzxri.js'},
                 {src:'//cdn.jsdelivr.net/npm/fabric'},
                 {src:'//cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js'},
             ]
@@ -27,7 +27,7 @@ export default defineNuxtConfig({
         name: 'bag',
         seoMeta: {
             title: '13',
-            ogTitle: '',
+            ogTitle: '33',
             description: '',
             ogDescription: '',
             ogImage: 'https://example.com/image.png',

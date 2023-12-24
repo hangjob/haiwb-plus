@@ -12,14 +12,18 @@
                 </div>
             </div>
             <div class="mt-5 grid grid-cols-12 gap-4">
-                <div v-for="item in navListData?.data || []" class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">
-                    <nuxt-link :to="toRouter(item.classify_det) + toRouter(item)" class="cursor-pointer flex items-center justify-center w-full relative bg-white h-[50px]">
-                        <nuxt-img fit="cover" class="blur-[3px] w-full h-full object-cover" loading="lazy" :src="item.cover"></nuxt-img>
-                        <span class="absolute text-[14px] font-bold text-white line-clamp-1 px-[5px]">{{item.title}}</span>
+                <div v-for="item in navListData?.data || []"
+                     class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">
+                    <nuxt-link :to="toRouter(item.classify_det) + toRouter(item)"
+                               class="cursor-pointer flex items-center justify-center w-full relative bg-white h-[50px]">
+                        <nuxt-img fit="cover" class="blur-[3px] w-full h-full object-cover" loading="lazy"
+                                  :src="item.cover"></nuxt-img>
+                        <span
+                            class="absolute text-[14px] font-bold text-white line-clamp-1 px-[5px]">{{ item.title }}</span>
                     </nuxt-link>
                 </div>
             </div>
-            <template v-for="(item,idx) in contentData?.data?.rows || []">
+            <template v-for="(item,idx) in compData?.content?.data?.rows || []">
                 <div v-if="idx === 0" class="mt-5 border border-slate-100 border-solid rounded-md">
                     <AppArticleCard :content="item"></AppArticleCard>
                 </div>
@@ -31,7 +35,7 @@
                 </div>
             </template>
             <div class="mt-5 grid grid-cols-12 gap-4">
-                <template v-for="(item,idx) in contentData?.data?.rows || []">
+                <template v-for="(item,idx) in compData?.content?.data?.rows || []">
                     <div v-if="idx > 4" class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6">
                         <AppArticleCardStock :content="item"/>
                     </div>
@@ -57,20 +61,28 @@
 
             }"
                     v-model="modelValue"
-                    :total="contentData?.data?.count"
+                    :total="compData.content?.data?.count"
                     show-first
                     show-last
+                    @update:model-value="hanlePageUpdate"
                 />
             </div>
         </template>
         <template #sidebar>
-
+            <fl-friend></fl-friend>
+            <div class=" z-10 sticky top-0">
+                <div class="bg-white mt-5 rounded-[20px] max-sm:px-[15px] max-md:px-[15px] p-[30px]">
+                    <fl-aggregation></fl-aggregation>
+                </div>
+            </div>
+            <fl-picture></fl-picture>
         </template>
     </NuxtLayout>
 </template>
 <script setup lang="ts">
 import {useRequest} from "~/composables/useRequest";
 import {toRouter} from "~/utils";
+
 const route = useRoute()
 const modelValue = ref(1);
 definePageMeta({
@@ -79,18 +91,24 @@ definePageMeta({
 const toast = useToast()
 const loadingButton = ref(false);
 
-const getContentPapge = async () => {
+const compData = reactive({
+    content:{}
+})
+const getContentPapge = async (page:any) => {
+    loadingButton.value = true
     const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/page', {
         method: 'POST',
         body: {
-            page: modelValue.value,
+            page,
             nav_id: route.params.id
         }
     })
+    loadingButton.value = false
+    compData.content = contentData
     return contentData;
 }
 
-let contentData = await getContentPapge()
+await getContentPapge(modelValue.value)
 
 const {data: navThreeData}: { data: any } = await useRequest('/api/webv1/web/classify/three', {
     method: 'POST',
@@ -106,12 +124,8 @@ const {data: navListData}: { data: any } = await useRequest('/api/webv1/admin/na
     }
 })
 
-
-
-watch(modelValue, async () => {
-    loadingButton.value = true
-    contentData = await getContentPapge()
-    loadingButton.value = false
-})
+const hanlePageUpdate = async (page: any) => {
+    await getContentPapge(page)
+}
 
 </script>
