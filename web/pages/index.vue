@@ -1,12 +1,16 @@
 <template>
-    <AppBanner v-if="!compData.s"/>
-    <div v-if="!compData.s" class="mt-5 grid grid-cols-12 gap-4">
+    <AppBanner v-if="!route.query.s"/>
+    <div v-if="!route.query.s" class="mt-5 grid grid-cols-12 gap-4">
         <AppSidebarExtend class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
         <AppSidebarHot class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
     </div>
-    <div v-if="compData.s">
-        <strong class="font-bold text-[18px]"><span
-            class="highlight"><i>“{{ compData.s }}”</i></span>的搜索结果</strong>
+    <div v-if="route.query.s">
+        <strong class="font-bold text-[18px] contrast-[30]"><span
+            class="highlight"><i>“{{ route.query.s }}”</i></span>的搜索结果</strong>
+    </div>
+    <div v-if="!compData.content?.data?.count"
+         class="bg-[#8881] w-full h-[274px] mt-5 rounded-[20px] flex items-center justify-center">
+        <span class="yh_text text-black text-[30px]">没有找到符合条件的结果</span>
     </div>
     <template v-for="(item,idx) in compData?.content?.data?.rows">
         <div v-if="idx === 0" class="mt-5 border border-slate-100 border-solid rounded-md">
@@ -75,7 +79,8 @@ const getContentPapge = async (page: any) => {
     const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/page', {
         method: 'POST',
         body: {
-            page
+            page,
+            s: compData.s
         }
     })
     loadingButton.value = false
@@ -89,4 +94,12 @@ const hanlePageUpdate = async (page: any) => {
     await getContentPapge(page)
 }
 
+useOn('modify-nav', (item: any) => {
+    compData.s = item
+    getContentPapge(1)
+})
+
+onBeforeUnmount(() => {
+    useOff('modify-nav')
+})
 </script>

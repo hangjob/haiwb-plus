@@ -1,75 +1,20 @@
 # Nuxt 3 Minimal Starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
+# 部署
+```shell
 npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
+把生成的文件.output放到服务器目录下
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+使用pm2开启守护进程
+```shell
+pm2 start [ecosystem.config.js](ecosystem.config.js) // port 3010,配置自定义填写
 ```
+pm2 stop haiwb
+pm2 start haiwb
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+# nginx
+开启方向代理
+规则 访问`/` 指向到 127.0.0.1:3010，完成页面
+反向代理接口
+规则 访问`/api/webv1` 指向到接口地址

@@ -1,6 +1,6 @@
 
 const  mdnice = {
-    src: 'https://mdnice.haiwb.com/'
+    // src:'http://localhost:3000/'
 }
 
 export {

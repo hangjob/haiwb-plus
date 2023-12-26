@@ -14,6 +14,7 @@
                 <slot name="sidebar" />
             </div>
         </div>
+        <app-footer></app-footer>
     </div>
 </template>
 <script setup lang="ts">

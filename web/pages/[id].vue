@@ -17,6 +17,10 @@
             </nuxt-link>
         </div>
     </div>
+    <div v-if="!compData.content?.data?.count"
+         class="bg-[#8881] w-full h-[274px] mt-5 rounded-[20px] flex items-center justify-center">
+        <span class="yh_text text-black text-[30px]">没有找到符合条件的结果</span>
+    </div>
     <template v-for="(item,idx) in compData?.content?.data?.rows || []">
         <div v-if="idx === 0" class="mt-5 border border-slate-100 border-solid rounded-md">
             <AppArticleCard :content="item"></AppArticleCard>
@@ -106,12 +110,6 @@ const hanlePageUpdate = async (page: any) => {
 }
 
 
-useOn('modify-nav', (item: any) => {
-    alert(1)
-})
 
-onBeforeUnmount(() => {
-    useOff('modify-nav')
-})
 
 </script>

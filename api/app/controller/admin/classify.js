@@ -20,7 +20,6 @@ class ClassifyController extends BaseController {
             if (params.id) {
                 where[Op.or] = [
                     { id: params.id},
-                    {router: {[Op.like]: `%${params.id}`}},
                 ];
                 delete params.id;
             }

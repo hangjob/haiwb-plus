@@ -7,7 +7,6 @@
 
 <script setup lang="ts">
 import {useWebsite} from "~/composables/useWebsite";
-
 const website = useWebsite()
 useHead({
     title: website.value.name,

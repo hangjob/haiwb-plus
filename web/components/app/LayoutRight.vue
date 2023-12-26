@@ -7,10 +7,10 @@
                     <div class="flex flex-col items-center justify-center">
                         <div
                             class="bg-[#fff] w-[50%] flex flex-col items-center justify-center p-[10px] rounded-[15px]">
-                            <img class="w-full object-cover" src="/img/logo.png" alt="">
+                            <img class="w-full object-cover" src="/img/logo.png" :alt="website.name">
                         </div>
-                        <span class="font-bold text-white mt-3">{{website.name}}</span>
-                        <p class="text-[12px] text-white mt-2 px-4 leading-tight">{{website.minSubDescription}}</p>
+                        <span class="font-bold text-white mt-3">{{ website.name }}</span>
+                        <p class="text-[12px] text-white mt-2 px-4 leading-tight">{{ website.minSubDescription }}</p>
                     </div>
                 </nuxt-link>
                 <nuxt-link :to="toRouter(item)"
@@ -29,7 +29,7 @@
                 <div
                     class="col-span-12 max-md:col-span-3 max-sm:col-span-6 max-lg:col-span-3 max-xl:col-span-2 my-4">
                     <div class="flex justify-center flex-col items-center p-[10px] max-md:pt-0">
-                        <nuxt-img src="/img/qrcode.jpg" class="rounded-[10px] w-[60%]"></nuxt-img>
+                        <img src="/img/qrcode.png" class="rounded-[10px] w-[60%]" :alt="website.name"/>
                         <p class="text-white mt-[5px] text-[12px]">微信公众号</p>
                     </div>
                 </div>

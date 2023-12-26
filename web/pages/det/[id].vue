@@ -273,7 +273,6 @@ const {data: contentData} = await useRequest("/api/webv1/admin/content/find", {
     }
 })
 
-console.log(contentData)
 
 const {data: nextData} = await useRequest("/api/webv1/web/content/next", {
     method: "POST",

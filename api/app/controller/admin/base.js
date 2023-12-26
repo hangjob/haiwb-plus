@@ -4,19 +4,12 @@ const Controller = require('egg').Controller;
 
 class BaseController extends Controller {
     async list() {
-        try {
-            const params = this.ctx.request.body;
-            const data = await this.ctx.service.base.list(this.modelName, {params});
-            this.ctx.body = this.ctx.resultData({data});
-        } catch (err) {
-            this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
-        }
+        await this.page();
     }
 
     async page() {
         try {
-            const params = this.ctx.request.body;
-            const data = await this.ctx.service.base.page(this.modelName, {params});
+            const data = await this.ctx.model[this.modelName].findAll();
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
@@ -27,7 +20,7 @@ class BaseController extends Controller {
         try {
             const params = this.ctx.request.body;
             params.id = this.ctx.helper.nanoid(this.idSize || 20);
-            const data = await this.ctx.service.base.create(this.modelName, {params});
+            const data = await this.ctx.model[this.modelName].create(params);
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
@@ -37,7 +30,7 @@ class BaseController extends Controller {
     async find() {
         try {
             const params = this.ctx.request.body;
-            const data = await this.ctx.service.base.find(this.modelName, {params: {where: params}});
+            const data = await this.ctx.model[this.modelName].findOne(params);
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
@@ -46,8 +39,8 @@ class BaseController extends Controller {
 
     async update() {
         try {
-            const {id, ...params} = this.ctx.request.body;
-            const data = await this.ctx.service.base.update(this.modelName, {params, id});
+            const params = this.ctx.request.body;
+            const data = await this.ctx.model[this.modelName].update(params);
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
@@ -57,7 +50,7 @@ class BaseController extends Controller {
     async destroy() {
         try {
             const {id} = this.ctx.request.body;
-            const data = await this.ctx.service.base.destroy(this.modelName, {id});
+            const data = await this.ctx.model[this.modelName].destroy({id});
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
@@ -66,8 +59,8 @@ class BaseController extends Controller {
 
     async increment() {
         try {
-            const {id, ...params} = this.ctx.request.body;
-            const data = await this.ctx.service.base.increment(this.modelName, {params, id});
+            const params = this.ctx.request.body;
+            const data = await this.ctx.model[this.modelName].increment(params);
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
@@ -80,7 +73,7 @@ class BaseController extends Controller {
             params.forEach(item => {
                 item.id = this.ctx.helper.nanoid();
             });
-            const data = await this.ctx.service.base.bulkCreate(this.modelName, {params});
+            const data = await this.ctx.model[this.modelName].bulkCreate(params);
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});

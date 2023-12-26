@@ -37,7 +37,7 @@ class ContentController extends BaseController {
 
     async page() {
         try {
-            const {page = 1, limit = 10, id, nav_id, keys, ...params} = this.ctx.request.body;
+            const {page = 1, limit = 10, id, nav_id, s, keys, ...params} = this.ctx.request.body;
             const offset = (page - 1) * limit;
             const Op = this.app.Sequelize.Op;
             if (params.limit) {
@@ -58,7 +58,13 @@ class ContentController extends BaseController {
             if (keys) {
                 options.where.keys = {[Op.like]: `%${keys}%`};
             }
-            options.attributes = {exclude: [ 'content', 'html' ]};
+            if (s) {
+                options.where[Op.or] = [
+                    {title: {[Op.like]: `%${s}%`}},
+                    {des: {[Op.like]: `%${s}%`}},
+                ];
+            }
+            options.attributes = {exclude: ['content', 'html']};
             const data = await this.app.model[this.modelName].findAndCountAll(options);
             if (isArray(data.rows)) {
                 for (const item of data.rows) {
@@ -90,7 +96,7 @@ class ContentController extends BaseController {
                 params.limit = 10;
             }
             let data = [];
-            params.attributes = {exclude: [ 'content', 'html' ]};
+            params.attributes = {exclude: ['content', 'html']};
             if (params.nav_ids) {
                 for (const item of params.nav_ids) {
                     const todo = await this.app.model[this.modelName].findAll({
@@ -118,11 +124,13 @@ class ContentController extends BaseController {
         try {
             const params = this.ctx.request.body;
             const data = await this.ctx.service.base.find(this.modelName, {params: {where: params}});
-            await this.app.model[this.modelName].increment({views: 1}, { where: { id: params.id } });
+            await this.app.model[this.modelName].increment({views: 1}, {where: {id: params.id}});
             await this.setRowItem(data);
-            const count = await this.app.model[this.modelName].count({ where: {
-                nav_id: {[this.app.Sequelize.Op.like]: `%${data.nav_id}%`},
-            } });
+            const count = await this.app.model[this.modelName].count({
+                where: {
+                    nav_id: {[this.app.Sequelize.Op.like]: `%${data.nav_id}%`},
+                },
+            });
             data.setDataValue('content_count', count);
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
@@ -133,10 +141,10 @@ class ContentController extends BaseController {
     async next() {
         try {
             const params = this.ctx.request.body;
-            const data = await this.app.model[this.modelName].findOne({ where: { id: params.id } });
-            const prev = await this.app.model[this.modelName].findOne({ where: { nid: data.nid + 1 }});
-            const next = await this.app.model[this.modelName].findOne({ where: { nid: data.nid - 1 }});
-            this.ctx.body = this.ctx.resultData({data: [ prev, next ]});
+            const data = await this.app.model[this.modelName].findOne({where: {id: params.id}});
+            const prev = await this.app.model[this.modelName].findOne({where: {nid: data.nid + 1}});
+            const next = await this.app.model[this.modelName].findOne({where: {nid: data.nid - 1}});
+            this.ctx.body = this.ctx.resultData({data: [prev, next]});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
         }

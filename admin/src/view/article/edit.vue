@@ -207,11 +207,9 @@ export default defineComponent({
             })
             compHandle.getNavList(false)
             compHandle.getKeysListAll(res.data.nav_id)
-            onMounted(()=>{
-                let authIframe = document.getElementById('authIframe')
-                authIframe.addEventListener('load', function (e) {
-                    authIframe.contentWindow.postMessage({content: compData.from.content}, compData.mdnice.src)
-                })
+            let authIframe = document.getElementById('authIframe')
+            authIframe.addEventListener('load', function (e) {
+                authIframe.contentWindow.postMessage({content: compData.from.content}, compData.mdnice.src)
             })
         })
 

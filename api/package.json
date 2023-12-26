@@ -3,18 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "egg": {
-    "framework": "egg-bag-framework"
-  },
   "dependencies": {
     "ali-oss": "^6.18.1",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.10",
     "egg": "^3",
     "egg-jwt": "^3.1.7",
     "egg-model": "^1.0.3",
+    "egg-mysql": "4",
+    "egg-redis": "~2.5.0",
     "egg-scripts": "^2",
+    "egg-sequelize": "6",
     "egg-socket.io": "^4.1.6",
     "egg-validate": "^2.0.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "mysql2": "3.6",
+    "nanoid": "^3.3.6",
+    "node-jsencrypt": "^1.0.0"
   },
   "devDependencies": {
     "egg-bin": "^5",
@@ -29,7 +34,7 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-admin-itnavs-vip",
+    "start": "egg-scripts start --daemon --port=7010 --title=egg-server-admin-itnavs-vip",
     "stop": "egg-scripts stop --title=egg-server-admin-itnavs-vip",
     "dev": "egg-bin dev --sticky",
     "debug": "egg-bin debug",

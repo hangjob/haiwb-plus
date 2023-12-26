@@ -4,14 +4,14 @@
 export default defineNuxtConfig({
     // @ts-ignore
     // ssr: process.env.NODE_ENV !== "development",
-    debug:false,
+    debug: false,
     app: {
         layoutTransition: {name: 'layout', mode: 'out-in'},
         head: {
             script: [
                 {src: '//at.alicdn.com/t/c/font_3943467_mtdn5uqzxri.js'},
-                {src:'//cdn.jsdelivr.net/npm/fabric'},
-                {src:'//cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js'},
+                {src: '//cdn.jsdelivr.net/npm/fabric'},
+                {src: '//cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js'},
             ]
         }
     },
@@ -21,19 +21,23 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
         "nuxt-bag-web",
-        "nuxt-swiper"
+        "nuxt-swiper",
+        "nuxt-lodash"
     ],
     bagWeb: {
         name: 'bag',
         seoMeta: {
-            title: '13',
-            ogTitle: '33',
+            title: '',
+            ogTitle: '',
             description: '',
             ogDescription: '',
-            ogImage: 'https://example.com/image.png',
-            twitterCard: 'summary_large_image',
+            ogImage: '',
+            twitterCard: '',
         },
         pinia: ['./stores/**']
+    },
+    runtimeConfig: {
+        tag: 'nuxt'
     },
     // @ts-ignore
     vite: {
@@ -46,17 +50,19 @@ export default defineNuxtConfig({
         },
     },
     devServer: {
-        "host": "0.0.0.0",
+        host: "0.0.0.0",
         port: 3001,
     },
-    nitro:{
+    nitro: {
         devProxy: {
-            "/webv1": {
-                target: "http://127.0.0.1:7001", // 这里是接口地址
-                changeOrigin: true,
-                toProxy:false,
+            "/api/webv1": {
+                toProxy: false,
                 prependPath: false,
             },
         },
+        routeRules: {
+            '/api/webv1/**': {
+            }
+        }
     }
 })

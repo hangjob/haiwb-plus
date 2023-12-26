@@ -14,7 +14,6 @@ function unusualResult(result) {
 }
 
 axios.interceptors.request.use((config) => {
-    config.headers["sing"] = crypto.cryptoJs.encrypt({word: {domain: 'itnvas', uid: string.randomId()}, tp: 'pb'})
     return config
 }, (error) => {
     return Promise.reject(error)
