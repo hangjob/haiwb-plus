@@ -2,15 +2,15 @@
     <div class="flex  flex-row max-sm:flex-col max-md:flex-col">
         <div class="flex flex-1 items-center max-sm:mb-3 max-md:mb-3 text-[14px]">
             <nuxt-link to="/">首页</nuxt-link>
-            <template v-for="(item,idx) in navThreeData?.data || []">
+            <template v-for="(item,idx) in allData?.data?.breadcrumb || []">
                 <span class="pl-1 pr-1 text-gray-300">/</span>
-                <span class="text-gray-400" v-if="idx === navThreeData?.data?.length-1">{{ item.title }}</span>
-                <nuxt-link v-else :to="toRouter(item)">{{ item.title }}</nuxt-link>
+                <span class="text-gray-400" v-if="idx === allData?.data?.breadcrumb?.length-1">{{ item.title }}</span>
+                <a v-else :href="toRouter(item)">{{ item.title }}</a>
             </template>
         </div>
     </div>
     <div class="mt-5 grid grid-cols-12 gap-4">
-        <div v-for="item in navListData?.data || []" class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">
+        <div v-for="item in allData?.data?.flNavList || []" class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">
             <nuxt-link :to="toRouter(item)" class="cursor-pointer flex items-center justify-center w-full relative bg-white h-[50px]">
                 <nuxt-img fit="cover" class="blur-[3px] w-full h-full object-cover" loading="lazy" :src="item.cover"></nuxt-img>
                 <span class="absolute text-[14px] font-bold text-white line-clamp-1 px-[5px]">{{item.title}}</span>
@@ -94,22 +94,17 @@ const getContentPapge = async (page:any) => {
 
 await getContentPapge(modelValue.value)
 
-const {data: navThreeData}: { data: any } = await useRequest('/api/webv1/web/classify/three', {
+const {data:allData}: { data: any } = await useRequest('/api/webv1/web/home/fl', {
     method: 'POST',
-    body: {
+    body:{
+        order: 'like',
         id: route.params.id,
     }
 })
 
-const {data: navListData}: { data: any } = await useRequest('/api/webv1/admin/classify/list', {
-    method: 'POST',
-})
 
 const hanlePageUpdate = async (page: any) => {
     await getContentPapge(page)
 }
-
-
-
 
 </script>

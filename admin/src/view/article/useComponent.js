@@ -51,6 +51,21 @@ export default function useComponent() {
                 required: true,
                 trigger: ["blur", "input"],
                 message: "请转换为html"
+            },
+            des: {
+                required: true,
+                trigger: ["blur", "input"],
+                message: "请输入文章描述"
+            },
+            url: {
+                required: true,
+                trigger: ["blur", "input"],
+                message: "请输入官网地址"
+            },
+            cover: {
+                required: true,
+                trigger: ["blur", "input"],
+                message: "请输入封面图"
             }
         },
         pidOptions: [],

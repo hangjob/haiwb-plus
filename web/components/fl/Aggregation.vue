@@ -2,7 +2,7 @@
     <UTabs :items="items" class="w-full">
         <template #item="{ item }">
             <template v-if="item.key === '1'">
-                <template v-for="todo,idx in contentData?.data || []">
+                <template v-for="(todo,idx) in contentHot || []">
                     <nuxt-link :to="'/det'+toRouter(todo)" v-if="idx === 0" class="flex relative flex-col overflow-hidden">
                         <nuxt-img class="w-full h-[150px] rounded-md"
                                   :src="todo.cover"></nuxt-img>
@@ -28,7 +28,7 @@
                 </template>
             </template>
             <template v-if="item.key === '2'">
-                <template v-for="todo,idx in navData?.data || []">
+                <template v-for="(todo,idx) in navData || []">
                     <nuxt-link :to="'/fl'+toRouter(todo)" class="group flex h-[70px] mb-5 relative justify-center flex-col overflow-hidden">
                         <nuxt-img
                             class="blur-[2px] group-hover:blur-0 w-full absolute top-0 bottom-0  h-full rounded-md object-cover overflow-hidden"
@@ -53,13 +53,11 @@ const items = [{
     key: '2',
     label: '分类',
 }]
-const {data: contentData}: { data: any } = await useRequest('/api/webv1/web/common/contentHot', {
-    method: 'POST',
-    body: {
-        order: 'like'
-    }
+
+type OptionsProp = Record<string, any>
+const props = defineProps({
+    contentHot:  Array as PropType<OptionsProp[]>,
+    navData: Array as PropType<OptionsProp[]>,
 })
-const {data: navData}: { data: any } = await useRequest('/api/webv1/web/common/navList', {
-    method: 'POST',
-})
+
 </script>

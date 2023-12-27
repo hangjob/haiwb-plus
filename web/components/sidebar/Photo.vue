@@ -4,7 +4,7 @@
     </h1>
     <div class="flex mt-6 flex-col">
         <div class="col-1 col-span-6 2xl:col-span-6 xl:col-span-6 overflow-hidden">
-            <template v-for="(item,idx) in contentData?.data || []">
+            <template v-for="(item,idx) in data">
                 <nuxt-link v-if="idx === 0" :to="'/det'+toRouter(item)"
                            class="overflow-hidden w-full rounded-[6px] inline-block cursor-pointer relative bg-white h-[100px] md:h-[150px] lg:h-[130px] xl:h-[150px] 2xl:h-[120px]">
                     <nuxt-img fit="cover" class="peer-blur-sm w-full h-full object-cover" loading="lazy"
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="mt-5 grid grid-cols-12 gap-4">
-        <template v-for="(item,idx) in contentData?.data || []">
+        <template v-for="(item,idx) in data">
             <div v-if="idx >= 1 && idx <= 4" class="col-1 col-span-6 2xl:col-span-6 xl:col-span-6 overflow-hidden">
                 <nuxt-link :to="'/det'+toRouter(item)"
                            class="overflow-hidden w-full  rounded-[6px]  inline-block cursor-pointer relative bg-white h-[90px] md:h-[90px] lg:h-[90px] xl:h-[90px] 2xl:h-[90px]">
@@ -30,12 +30,8 @@
     </div>
 </template>
 <script setup lang="ts">
-import {useRequest} from "~/composables/useRequest";
-
-const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/list', {
-    method: 'POST',
-    body: {
-        label: 1
-    }
+type OptionsProp = Record<string, any>
+const props = defineProps({
+    data:  Array as PropType<OptionsProp[]>,
 })
 </script>

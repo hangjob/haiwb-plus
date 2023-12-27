@@ -20,13 +20,6 @@ const createColumns = ({compHandle}) => {
             ellipsis: true,
         },
         {
-            title: "路由",
-            key: "router",
-            align: "center",
-            ellipsis: true,
-            width: 160
-        },
-        {
             title: "描述",
             key: "des",
             align: "center",

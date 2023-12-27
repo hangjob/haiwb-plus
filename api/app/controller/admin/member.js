@@ -17,6 +17,7 @@ class MemberController extends BaseController {
             this.ctx.validate({
                 code: { type: 'string', required: true },
                 password: { type: 'string', required: true },
+                email: { type: 'string', required: true },
             }, this.ctx.request.body);
             const Op = this.app.Sequelize.Op;
             const findOne = await this.ctx.model.Member.findOne({
@@ -26,7 +27,7 @@ class MemberController extends BaseController {
             });
             if (!findOne) {
                 params.passHash = this.ctx.helper.encrypt(this.ctx.helper.md5(params.password));
-                const data = await this.ctx.service.base.create(this.modelName, {params});
+                const data = await this.ctx.model[this.modelName].create(params);
                 this.ctx.body = this.ctx.resultData({data});
             } else {
                 this.ctx.body = this.ctx.resultData({msg: '用户已存在'});

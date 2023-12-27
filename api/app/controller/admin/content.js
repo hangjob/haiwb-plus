@@ -11,38 +11,11 @@ class ContentController extends BaseController {
         this.idSize = 8;
     }
 
-
-    async setRowItem(item) {
-        if (isArray(item.keys)) {
-            const list = [];
-            for (const todo of item.keys) {
-                const find = await this.ctx.service.base.find('Keys', {params: {where: {id: todo}}});
-                if (find) {
-                    list.push(find);
-                }
-            }
-            item.setDataValue('keys_list', list);
-        }
-        if (isArray(item.nav_id)) {
-            const list = [];
-            for (const todo of item.nav_id) {
-                const find = await this.ctx.service.base.find('Nav', {params: {where: {id: todo}}});
-                if (find) {
-                    list.push(find);
-                }
-            }
-            item.setDataValue('nav_id_list', list);
-        }
-    }
-
     async page() {
         try {
-            const {page = 1, limit = 10, id, nav_id, s, keys, ...params} = this.ctx.request.body;
+            const {page = 1, limit = 10, id, nav_id, search, keys, ...params} = this.ctx.request.body;
             const offset = (page - 1) * limit;
             const Op = this.app.Sequelize.Op;
-            if (params.limit) {
-                params.limit = parseInt(params.limit);
-            }
             const options = Object.assign({
                 limit,
                 offset,
@@ -58,17 +31,23 @@ class ContentController extends BaseController {
             if (keys) {
                 options.where.keys = {[Op.like]: `%${keys}%`};
             }
-            if (s) {
+            if (search) {
                 options.where[Op.or] = [
-                    {title: {[Op.like]: `%${s}%`}},
-                    {des: {[Op.like]: `%${s}%`}},
+                    {title: {[Op.like]: `%${search}%`}},
+                    {des: {[Op.like]: `%${search}%`}},
                 ];
             }
-            options.attributes = {exclude: ['content', 'html']};
+            if (options?.where?.url) {
+                options.where.url = {[Op.like]: `%${options?.where?.url}%`};
+            }
+            options.attributes = {exclude: [ 'content', 'html' ]};
+            options.order = [[ 'createdAt', 'DESC' ]];
             const data = await this.app.model[this.modelName].findAndCountAll(options);
             if (isArray(data.rows)) {
                 for (const item of data.rows) {
-                    await this.setRowItem(item);
+                    await this.setKeysList(item);
+                    await this.setNavIdList(item);
+                    await this.setClassifyIdItem(item);
                 }
             }
             this.ctx.body = this.ctx.resultData({data});
@@ -96,7 +75,7 @@ class ContentController extends BaseController {
                 params.limit = 10;
             }
             let data = [];
-            params.attributes = {exclude: ['content', 'html']};
+            params.attributes = {exclude: [ 'content', 'html' ]};
             if (params.nav_ids) {
                 for (const item of params.nav_ids) {
                     const todo = await this.app.model[this.modelName].findAll({
@@ -111,7 +90,8 @@ class ContentController extends BaseController {
             }
             if (isArray(data)) {
                 for (const item of data) {
-                    await this.setRowItem(item);
+                    await this.setKeysList(item);
+                    await this.setNavIdList(item);
                 }
             }
             this.ctx.body = this.ctx.resultData({data});
@@ -120,12 +100,29 @@ class ContentController extends BaseController {
         }
     }
 
+    async create() {
+        try {
+            const params = this.ctx.request.body;
+            const find = await this.ctx.model[this.modelName].findOne({where: {url: params.url}});
+            if (find) {
+                this.ctx.body = this.ctx.resultData({msg: `链接地址已存在ID为,${find.id}`});
+            } else {
+                params.id = this.ctx.helper.nanoid(this.idSize || 20);
+                const data = await this.ctx.model[this.modelName].create(params);
+                this.ctx.body = this.ctx.resultData({data});
+            }
+        } catch (err) {
+            this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
+        }
+    }
+
     async find() {
         try {
             const params = this.ctx.request.body;
-            const data = await this.ctx.service.base.find(this.modelName, {params: {where: params}});
-            await this.app.model[this.modelName].increment({views: 1}, {where: {id: params.id}});
-            await this.setRowItem(data);
+            const data = await this.ctx.model[this.modelName].findOne(params);
+            await this.app.model[this.modelName].increment({views: 1}, {where: {id: params?.where?.id}});
+            await this.setNavIdList(data);
+            await this.setKeysList(data);
             const count = await this.app.model[this.modelName].count({
                 where: {
                     nav_id: {[this.app.Sequelize.Op.like]: `%${data.nav_id}%`},
@@ -144,7 +141,7 @@ class ContentController extends BaseController {
             const data = await this.app.model[this.modelName].findOne({where: {id: params.id}});
             const prev = await this.app.model[this.modelName].findOne({where: {nid: data.nid + 1}});
             const next = await this.app.model[this.modelName].findOne({where: {nid: data.nid - 1}});
-            this.ctx.body = this.ctx.resultData({data: [prev, next]});
+            this.ctx.body = this.ctx.resultData({data: [ prev, next ]});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
         }

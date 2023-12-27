@@ -15,7 +15,7 @@
                 </nuxt-link>
                 <nuxt-link :to="toRouter(item)"
                            class="col-span-12 max-md:col-span-3 max-sm:col-span-6 max-lg:col-span-3 max-xl:col-span-2 my-4"
-                           v-for="item in navaData?.data || []">
+                           v-for="item in data">
                     <div class="flex flex-col items-center justify-center">
                         <div
                             class="bg-[#fff] flex flex-col items-center justify-center w-[100px] px-[20px] py-[15px] rounded-[15px]">
@@ -38,12 +38,11 @@
     </div>
 </template>
 <script lang="ts" setup>
-import {useRequest} from "~/composables/useRequest";
 import {toRouter} from "~/utils";
 import {useWebsite} from "~/composables/useWebsite";
 
-const {data: navaData}: { data: any } = await useRequest("/api/webv1/admin/classify/list", {
-    method: "POST",
+const props = defineProps({
+    data: Array,
 })
 const website = useWebsite()
 </script>

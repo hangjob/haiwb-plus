@@ -3,7 +3,7 @@
         免费并且好使用
     </h1>
     <div class="mt-5 grid grid-cols-12 gap-4">
-        <div v-for="item in contentData?.data || []"
+        <div v-for="item in data"
              class="col-1 col-span-6 md:col-span-4 2xl:col-span-4 xl:col-span-4 overflow-hidden">
             <nuxt-link :to="'/tag'+toRouter(item)"
                        class="overflow-hidden inline-block w-full rounded-[6px] cursor-pointer relative bg-white h-[100px] md:h-[100px] lg:h-[100px] xl:h-[100px] 2xl:h-[100px]">
@@ -14,9 +14,8 @@
     </div>
 </template>
 <script setup lang="ts">
-import {useRequest} from "~/composables/useRequest";
-
-const { data:contentData } = await useRequest('/api/webv1/web/keys/moreProducts', {
-    method: 'POST',
+type OptionsProp = Record<string, any>
+const props = defineProps({
+    data:  Array as PropType<OptionsProp[]>,
 })
 </script>

@@ -17,11 +17,20 @@
                         <n-form-item label="用户名称" path="title">
                             <n-input v-model:value="compData.from.name" placeholder="请输入用户名称"/>
                         </n-form-item>
-                        <n-form-item label="用户邮箱" path="title">
-                            <n-input v-model:value="compData.from.email" placeholder="请输入用户邮箱"/>
+                        <n-form-item label="用户邮箱" path="email">
+                            <n-auto-complete
+                                v-model:value="compData.from.email"
+                                :input-props="{autocomplete: 'disabled'}"
+                                :options="compData.emailOptions"
+                                placeholder="请输入用户邮箱"
+                                clearable
+                            />
                         </n-form-item>
-                        <n-form-item label="描述信息" path="des">
-                            <n-input v-model:value="compData.from.des" placeholder="请输入描述信息"/>
+                        <n-form-item label="用户密码" path="password">
+                            <n-input v-model:value="compData.from.password" placeholder="请输入密码"/>
+                        </n-form-item>
+                        <n-form-item label="描述信息"  path="des">
+                            <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入描述信息"/>
                         </n-form-item>
                         <n-form-item label="是否显示" path="shows">
                             <n-switch :round="false" v-model:value="compData.from.shows">
@@ -32,7 +41,7 @@
                     </n-form>
                     <template #action>
                         <n-space justify="end">
-                            <n-button attr-type="button">返回列表</n-button>
+                            <n-button attr-type="button" @click="compHandle.back">返回列表</n-button>
                             <n-button attr-type="button" type="success" @click="compHandle.validate">提交数据</n-button>
                         </n-space>
                     </template>

@@ -125,23 +125,22 @@
                 <CommonShare :content="contentData?.data"/>
             </div>
             <div class="flex space-x-4 max-md:space-x-0 max-md:flex-col">
-                <template v-for="(item,idx) in nextData?.data || []">
-                    <div :style="{background:`url(${item.cover})`}"
-                         class="mt-5 p-4 z-1 flex-1 justify-between min-h-[80px] flex flex-col text-white overflow-hidden rounded-[5px] cover-fill relative before:absolute before:left-0 before:top-0 before:bg-[#00000080] before:content-[''] before:w-full before:h-full"
-                         v-if="item">
-                        <h6 class="relative z-1 text-[14px]">{{ item.title }}</h6>
-                        <div class="flex z-1 relative text-[12px] justify-between items-center">
-                            <template v-if="idx===0">
-                                <nuxt-link :to="'/det'+toRouter(item)">上一篇</nuxt-link>
-                                <span>{{ lunisolar(item?.data?.createdAt).format('lYn年 lM lD T 星期dd A') }}</span>
-                            </template>
-                            <template v-else>
-                                <span>{{ lunisolar(item?.data?.createdAt).format('lYn年 lM lD T 星期dd A') }}</span>
-                                <nuxt-link :to="'/det'+toRouter(item)">下一篇</nuxt-link>
-                            </template>
-                        </div>
+                <div v-if="contentData?.data?.content_prev" :style="{background:`url(${contentData?.data?.content_prev?.cover})`}"
+                     class="mt-5 p-4 z-1 flex-1 justify-between min-h-[80px] flex flex-col text-white overflow-hidden rounded-[5px] cover-fill relative before:absolute before:left-0 before:top-0 before:bg-[#00000080] before:content-[''] before:w-full before:h-full">
+                    <h6 class="relative z-1 text-[14px]">{{ contentData?.data?.content_prev?.title }}</h6>
+                    <div class="flex z-1 relative text-[12px] justify-between items-center">
+                        <nuxt-link :to="'/det'+toRouter(contentData?.data?.content_prev)">上一篇</nuxt-link>
+                        <span>{{ lunisolar(contentData?.data?.content_prev?.createdAt).format('lYn年 lM lD T 星期dd A') }}</span>
                     </div>
-                </template>
+                </div>
+                <div v-if="contentData?.data?.content_next" :style="{background:`url(${contentData?.data?.content_next?.cover})`}"
+                     class="mt-5 p-4 z-1 flex-1 justify-between min-h-[80px] flex flex-col text-white overflow-hidden rounded-[5px] cover-fill relative before:absolute before:left-0 before:top-0 before:bg-[#00000080] before:content-[''] before:w-full before:h-full">
+                    <h6 class="relative z-1 text-[14px]">{{ contentData?.data?.content_next?.title }}</h6>
+                    <div class="flex z-1 relative text-[12px] justify-between items-center">
+                        <span>{{ lunisolar(contentData?.data?.content_next?.createdAt).format('lYn年 lM lD T 星期dd A') }}</span>
+                        <nuxt-link :to="'/det'+toRouter(contentData?.data?.content_next)">下一篇</nuxt-link>
+                    </div>
+                </div>
             </div>
         </template>
         <template #sidebar>
@@ -173,7 +172,7 @@
                 </div>
             </div>
             <div class="bg-white rounded-[20px] max-sm:px-[15px] max-md:px-[15px] p-[30px] mb-8">
-                <SidebarArticle :content="contentData"></SidebarArticle>
+                <SidebarArticle :data="contentData?.data?.content_moreList"></SidebarArticle>
             </div>
             <div class="bg-white rounded-[20px] max-sm:px-[15px] max-md:px-[15px] p-[30px] mb-8 sticky top-0">
                 <h1 class="text-[22px]  font-bold">访问官网</h1>
@@ -266,18 +265,12 @@ const handleClickTocHtmlItem = (item: any) => {
     }
 }
 
-const {data: contentData} = await useRequest("/api/webv1/admin/content/find", {
-    method: "POST",
+
+const {data:contentData}: { data: any } = await useRequest('/api/webv1/web/home/detail', {
+    method: 'POST',
     body: {
         id: route.params.id
     }
 })
-
-
-const {data: nextData} = await useRequest("/api/webv1/web/content/next", {
-    method: "POST",
-    body: {
-        id: route.params.id
-    }
-})
+console.log(contentData)
 </script>

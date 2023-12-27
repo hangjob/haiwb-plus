@@ -14,11 +14,20 @@
                         <n-form-item label="用户名称" path="title">
                             <n-input v-model:value="compData.from.name" placeholder="请输入用户名称"/>
                         </n-form-item>
-                        <n-form-item label="用户邮箱" path="title">
-                            <n-input v-model:value="compData.from.email" placeholder="请输入用户邮箱"/>
+                        <n-form-item label="用户邮箱" path="email">
+                            <n-auto-complete
+                                v-model:value="compData.from.email"
+                                :input-props="{autocomplete: 'disabled'}"
+                                :options="compData.emailOptions"
+                                placeholder="请输入用户邮箱"
+                                clearable
+                            />
                         </n-form-item>
-                        <n-form-item label="描述信息" path="des">
-                            <n-input v-model:value="compData.from.des" placeholder="请输入描述信息"/>
+                        <n-form-item label="输入新密码" path="password">
+                            <n-input v-model:value="compData.from.password" placeholder="请输入新密码"/>
+                        </n-form-item>
+                        <n-form-item label="描述信息"  path="des">
+                            <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入描述信息"/>
                         </n-form-item>
                         <n-form-item label="是否显示" path="shows">
                             <n-switch :round="false" v-model:value="compData.from.shows">
@@ -63,7 +72,7 @@ export default defineComponent({
             })
         }
 
-        apis['/admin/menu/find']({id:route.params.id}).then((res) => {
+        apis['/admin/member/find']({where:{id:route.params.id}}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
                 compData.from[key] = res.data[key]
             })

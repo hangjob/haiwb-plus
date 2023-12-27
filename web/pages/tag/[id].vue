@@ -5,12 +5,12 @@
                 <div class="flex flex-1 items-center max-sm:mb-3 max-md:mb-3 text-[14px]">
                     <nuxt-link href="/">首页</nuxt-link>
                     <span class="pl-1 pr-1 text-gray-300">/</span>
-                    <span class="text-gray-400">话题：{{ keysData?.data?.title }}</span>
+                    <span class="text-gray-400">话题：{{ allData?.data?.keys?.title }}</span>
                 </div>
             </div>
             <div class="mt-5 flex flex-col p-[30px] bg-[#8881] rounded-[20px]">
-                <h1 class="text-[24px] font-bold">{{ keysData?.data?.title }}</h1>
-                <p class="mt-3 text-[#9DA0B3]">{{ keysData?.data?.des }}</p>
+                <h1 class="text-[24px] font-bold">{{ allData?.data?.keys?.title }}</h1>
+                <p class="mt-3 text-[#9DA0B3]">{{ allData?.data?.keys?.des }}</p>
             </div>
             <div class="mt-10 grid grid-cols-12 gap-4">
                 <div v-for="item in compData?.content?.data?.rows || []"
@@ -34,10 +34,10 @@
         </template>
         <template #sidebar>
             <div class="bg-white rounded-[20px] p-[30px] mb-[30px]">
-                <SidebarTag :navId="keysData?.data?.nav_det?.id"/>
+                <SidebarTag :data="allData?.data?.hot"/>
             </div>
             <div class="bg-white rounded-[20px] p-[30px] mb-[30px] sticky top-0">
-                <sidebar-hot></sidebar-hot>
+                <sidebar-hot :data="allData?.data?.recommend"></sidebar-hot>
             </div>
         </template>
     </NuxtLayout>
@@ -59,13 +59,6 @@ const compData = reactive({
     content:{}
 })
 
-const {data: keysData}: { data: any } = await useRequest('/api/webv1/admin/keys/find', {
-    method: 'POST',
-    body: {
-        id: route.params.id,
-    },
-})
-
 const getContentPapge = async (page:any) => {
     loadingButton.value = true
     const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/page', {
@@ -83,4 +76,12 @@ await getContentPapge(modelValue.value)
 const hanlePageUpdate = async (page: any) => {
     await getContentPapge(page)
 }
+
+const {data: allData}: { data: any } = await useRequest('/api/webv1/web/home/tag', {
+    method: 'POST',
+    body: {
+        id: route.params.id,
+    },
+})
+console.log(allData)
 </script>

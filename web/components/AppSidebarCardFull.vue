@@ -1,5 +1,5 @@
 <template>
-    <div class="flex mt-[30px]" v-for="(item,idx) in contentData?.data || []">
+    <div class="flex mt-[30px]" v-for="(item,idx) in data">
         <nuxt-link :to="toRouter(item)"
                    class="basis-4/12 relative flex-shrink-0 mr-4 overflow-hidden rounded-[6px] bg-white h-[80px] md:h-[150px] lg:h-[120px] xl:h-[150px] 2xl:h-[100px]">
             <nuxt-img fit="cover" class="w-full h-full object-cover" loading="lazy"
@@ -33,14 +33,9 @@
     </div>
 </template>
 <script lang="ts" setup>
-import {useRequest} from "~/composables/useRequest.js";
 import {useColorHash, useColorWarm, useTagColor} from "~/composables/useTagColor";
-
-const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/list', {
-    method: 'POST',
-    body: {
-        label: 3,
-        limit: 5
-    }
+type OptionsProp = Record<string, any>
+const props = defineProps({
+    data:  Array as PropType<OptionsProp[]>,
 })
 </script>

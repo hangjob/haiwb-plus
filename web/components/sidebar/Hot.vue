@@ -6,7 +6,7 @@
         实时热门
     </h1>
     <ul class="hot-dotted pl-[15px] relative">
-        <li class="relative mt-5" v-for="item in contentData?.data || []">
+        <li class="relative mt-5" v-for="item in data || []">
             <nuxt-link :to="'/det'+toRouter(item)" class="flex flex-col">
                 <h3 class="line-clamp-2 leading-snug mb-3 text-[#494B4D]">{{lunisolar(item.createdAt).format('lM')}} {{lunisolar(item.createdAt).format('lD')}}，{{lunisolar(item.createdAt).format('dddd')}}，{{item.title}}</h3>
                 <div class="flex justify-between mt-2">
@@ -18,10 +18,9 @@
     </ul>
 </template>
 <script setup lang="ts">
-import {useRequest} from "~/composables/useRequest";
-
-const {data: contentData}: { data: any } = await useRequest('/api/webv1/web/common/contentHot', {
-    method: 'POST',
+type OptionsProp = Record<string, any>
+const props = defineProps({
+    data:  Array as PropType<OptionsProp[]>,
 })
 </script>
 <style lang="less" scoped>

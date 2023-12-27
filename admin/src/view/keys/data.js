@@ -1,5 +1,6 @@
-import { NButton, NPopconfirm, NSwitch} from "naive-ui"
+import {NButton, NPopconfirm, NSwitch, NTag} from "naive-ui"
 import {h} from "vue"
+import {labelOptions} from "@/enum/index.js";
 
 const createColumns = ({compHandle}) => {
     return [
@@ -19,6 +20,51 @@ const createColumns = ({compHandle}) => {
             align: "center",
             ellipsis: true,
             width: 300
+        },
+        {
+            title: "二级菜单",
+            key: "nav_id_find",
+            align: "center",
+            ellipsis: true,
+            width: 300,
+            render(row) {
+                return h(
+                    NTag,
+                    {
+                        style: {
+                            marginRight: '6px'
+                        },
+                        type: 'success',
+                        bordered: false
+                    },
+                    {
+                        default: () => row.nav_id_find.title
+                    }
+                )
+            }
+        },
+        {
+            title: "标签",
+            key: "label",
+            align: "center",
+            ellipsis: true,
+            width: 120,
+            render(row) {
+                const data = labelOptions.find((item) => item.value === row.label)
+                return h(
+                    NTag,
+                    {
+                        style: {
+                            marginRight: '6px'
+                        },
+                        type: 'info',
+                        bordered: false
+                    },
+                    {
+                        default: () => data.label
+                    }
+                )
+            }
         },
         {
             title: "关键词描述",

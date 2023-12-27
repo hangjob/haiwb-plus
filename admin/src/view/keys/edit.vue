@@ -102,7 +102,7 @@ export default defineComponent({
             })
         }
 
-        apis['/admin/keys/find']({id:route.params.id}).then((res) => {
+        apis['/admin/keys/find']({where:{id:route.params.id}}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
                 compData.from[key] = res.data[key]
             })

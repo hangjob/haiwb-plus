@@ -13,7 +13,7 @@
         }"
         @swiper="onSwiper"
         @slideChange="onSlideChange">
-        <swiper-slide v-for="item in bannerListData?.data || []">
+        <swiper-slide v-for="item in data || []">
             <nuxt-link :to="toRouter(item.url)" class="bg-[#8881]  flex relative h-[280px] max-md:h-[150px] rounded-[10px] overflow-hidden">
                 <nuxt-img :src="item.cover" class="w-full h-full object-cover"></nuxt-img>
                 <div class="absolute bottom-[25px]  p-[20px] shadow-inner text-white left-[20px] bg-[#0006] rounded-[10px] text-[24px] max-md:text-[14px] font-bold w-[60%] max-md:w-auto max-md:right-[20px]">
@@ -65,11 +65,9 @@ const onSlideChange = () => {
 };
 
 
-const {data: bannerListData}: { data: any } = await useRequest('/api/webv1/admin/banner/list', {
-    method: 'POST',
-    body: {
-        // type:'home'
-    }
+type OptionsProp = Record<string, any>
+const props = defineProps({
+    data:  Array as PropType<OptionsProp[]>,
 })
 
 </script>

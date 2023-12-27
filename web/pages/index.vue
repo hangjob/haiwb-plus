@@ -1,8 +1,8 @@
 <template>
-    <AppBanner v-if="!route.query.s"/>
+    <AppBanner :data="allData?.data?.banner" v-if="!route.query.s"/>
     <div v-if="!route.query.s" class="mt-5 grid grid-cols-12 gap-4">
-        <AppSidebarExtend class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
-        <AppSidebarHot class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
+        <AppSidebarExtend :data="allData?.data?.keys" class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
+        <AppSidebarHot :data="allData?.data?.nav" class="col-1 col-span-12 2xl:col-span-6 xl:col-span-6"/>
     </div>
     <div v-if="route.query.s">
         <strong class="font-bold text-[18px] contrast-[30]"><span
@@ -80,7 +80,7 @@ const getContentPapge = async (page: any) => {
         method: 'POST',
         body: {
             page,
-            s: compData.s
+            search: compData.s
         }
     })
     loadingButton.value = false
@@ -94,8 +94,13 @@ const hanlePageUpdate = async (page: any) => {
     await getContentPapge(page)
 }
 
+
+const {data: allData}: { data: any } = await useRequest('/api/webv1/web/home/bannerlist', {
+    method: 'POST',
+})
+console.log(allData)
 useOn('modify-nav', (item: any) => {
-    compData.s = item
+    compData.search = item
     getContentPapge(1)
 })
 

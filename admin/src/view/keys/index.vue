@@ -16,19 +16,19 @@
                                         :show-label="true" ref="searchFormRef" inline
                                         :model="compData.searchForm">
                                     <n-grid cols="24" x-gap="10" item-responsive responsive="screen">
-                                        <n-grid-item span="24 m:12 l:8">
-                                            <n-form-item label="菜单名称" path="title">
+                                        <n-grid-item span="24 m:12 l:4">
+                                            <n-form-item label="ID" path="id">
+                                                <n-input v-model:value="compData.searchForm.id"
+                                                         placeholder="输入ID"/>
+                                            </n-form-item>
+                                        </n-grid-item>
+                                        <n-grid-item span="24 m:12 l:4">
+                                            <n-form-item label="关键词名称" path="title">
                                                 <n-input v-model:value="compData.searchForm.title"
-                                                         placeholder="输入菜单名称"/>
+                                                         placeholder="输入关键词名称"/>
                                             </n-form-item>
                                         </n-grid-item>
-                                        <n-grid-item span="24 m:12 l:8">
-                                            <n-form-item label="路由" path="path">
-                                                <n-input v-model:value="compData.searchForm.path"
-                                                         placeholder="输入路由"/>
-                                            </n-form-item>
-                                        </n-grid-item>
-                                        <n-grid-item span="24 m:12 l:8">
+                                        <n-grid-item span="24 m:12 l:4">
                                             <n-form-item>
                                                 <n-space>
                                                     <n-button attr-type="button" @click="compHandle.search">搜索
@@ -84,7 +84,8 @@
                     <template #footer>
                         <n-pagination
                             v-model:page="compData.tablePage"
-                            :page-count="1"
+                            :item-count="compData.itemCount"
+                            @update-page="compHandle.updatePage"
                             size="large"
                             show-quick-jumper
                             show-size-picker
@@ -112,6 +113,7 @@ export default defineComponent({
         const compData = reactive({
             tableData: [],
             tablePage: 1,
+            itemCount:0,
             tableSizeValue: "medium",
             tableSize,
             loading: true,
@@ -128,20 +130,37 @@ export default defineComponent({
         const compHandle = reactive({
             getTableData() {
                 compData.loading = true
-                apis['/admin/keys/list']().then((res) => {
-                    compData.tableData = object.toTree({arr: res.data})
+                apis['/admin/keys/page']({
+                    page: compData.tablePage,
+                    where: Object.fromEntries(Object.entries(compData.searchForm).filter(([k, v]) => v))
+                }).then((res) => {
+                    compData.tableData = object.toTree({arr: res.data.rows})
+                    compData.itemCount = res.data.count
                 }).finally(() => {
                     compData.loading = false
                 })
             },
             del(row) {
-                apis['/admin/keys/destroy']({id:row.id}).then(()=>{
+                apis['/admin/keys/destroy']({where: {id: row.id}}).then(() => {
                     compHandle.getTableData()
                 })
             },
             dels() {
                 if (compData.checkedRowKeys.length) {
-                    message.success(`模拟演示，删除成功，${compData.checkedRowKeys.join(",")}`)
+                    dialog.warning({
+                        title: '警告',
+                        content: '你确定？',
+                        positiveText: '确定',
+                        negativeText: '不确定',
+                        onPositiveClick: () => {
+                            apis['/admin/keys/destroy']({where: {id: [compData.checkedRowKeys]}}).then(() => {
+                                compHandle.getTableData()
+                            })
+                        },
+                        onNegativeClick: () => {
+
+                        }
+                    })
                 } else {
                     message.warning("请选择要删除的项")
                 }
@@ -162,7 +181,10 @@ export default defineComponent({
                 compData.columns = compData.sourceColumns.filter((item) => value.indexOf(item.key) !== -1)
             },
             search() {
-                message.success("模拟演示搜索")
+                compHandle.getTableData()
+            },
+            updatePage() {
+                compHandle.getTableData()
             }
         })
         compData.sourceColumns = createColumns({compHandle})

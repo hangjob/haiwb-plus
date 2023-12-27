@@ -18,10 +18,10 @@
                             <n-input v-model:value="compData.from.title" placeholder="请输入文章名称"/>
                         </n-form-item>
                         <n-form-item label="文章描述" path="des">
-                            <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入文章描述"/>
+                            <n-input type="textarea" maxlength="120" show-count v-model:value="compData.from.des" placeholder="请输入文章描述"/>
                         </n-form-item>
                         <n-form-item label="文章SEO" path="seo">
-                            <n-input type="textarea" v-model:value="compData.from.seo" placeholder="请输入文章SEO"/>
+                            <n-input type="textarea" maxlength="120" show-count v-model:value="compData.from.seo" placeholder="请输入文章SEO"/>
                         </n-form-item>
                         <n-form-item label="发布平台" path="origin">
                             <n-select
@@ -201,7 +201,7 @@ export default defineComponent({
                 }
             })
         }
-        apis['/admin/content/find']({id: route.params.id}).then((res) => {
+        apis['/admin/content/find']({where:{id: route.params.id}}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
                 compData.from[key] = res.data[key]
             })

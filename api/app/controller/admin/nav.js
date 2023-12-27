@@ -46,19 +46,22 @@ class NavController extends BaseController {
         }
     }
 
-    async find() {
+    async page() {
         try {
-            const params = this.ctx.request.body;
-            const Op = this.app.Sequelize.Op;
-            const where = {};
-            if (params.id) {
-                where[Op.or] = [
-                    { id: params.id},
-                    {router: {[Op.like]: `%${params.id}`}},
-                ];
-                delete params.id;
+            const {page = 1, limit = 10, ...params} = this.ctx.request.body;
+            const offset = (page - 1) * limit;
+            const options = Object.assign({
+                limit,
+                offset,
+            }, params);
+            options.order = [[ 'createdAt', 'DESC' ]];
+            const data = await this.ctx.model[this.modelName].findAndCountAll(options);
+            if (isArray(data.rows)) {
+                for (const item of data.rows) {
+                    const find = await this.ctx.model.Classify.findOne({where: {id: item.pid}});
+                    item.setDataValue('classify_det', find);
+                }
             }
-            const data = await this.ctx.model[this.modelName].findOne({where, ...params});
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});

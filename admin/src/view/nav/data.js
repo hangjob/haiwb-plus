@@ -1,4 +1,4 @@
-import { NButton, NPopconfirm, NSwitch} from "naive-ui"
+import {NButton, NPopconfirm, NSwitch, NTag} from "naive-ui"
 import {h} from "vue"
 
 const createColumns = ({compHandle}) => {
@@ -20,18 +20,26 @@ const createColumns = ({compHandle}) => {
             ellipsis: true,
         },
         {
-            title: "上级菜单",
+            title: "一级菜单",
             key: "pid",
             align: "center",
             ellipsis: true,
-            width: 160
-        },
-        {
-            title: "路由",
-            key: "router",
-            align: "center",
-            ellipsis: true,
-            width: 160
+            width: 120,
+            render(row) {
+                return h(
+                    NTag,
+                    {
+                        style: {
+                            marginRight: '6px'
+                        },
+                        type: 'success',
+                        bordered: false
+                    },
+                    {
+                        default: () => row.classify_det.title
+                    }
+                )
+            }
         },
         {
             title: "描述",

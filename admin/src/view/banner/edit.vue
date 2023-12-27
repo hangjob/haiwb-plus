@@ -89,7 +89,7 @@ export default defineComponent({
             })
         }
 
-        apis['/admin/banner/find']({id: route.params.id}).then((res) => {
+        apis['/admin/banner/find']({where:{id: route.params.id}}).then((res) => {
             Object.keys(compData.from).forEach((key) => {
                 compData.from[key] = res.data[key]
             })

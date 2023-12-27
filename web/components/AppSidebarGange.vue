@@ -34,7 +34,7 @@
                 :autoplay="{ delay: 5000, disableOnInteraction: true,}"
                 @swiper="onSwiper"
             >
-                <swiper-slide v-for="(item,idx) in arrGroup(contentData?.data || [],3) || []">
+                <swiper-slide v-for="(item,idx) in arrGroup( data||[],3) || []">
                     <div v-for="todo in item" class="flex items-center text-[14px] mb-[5px]">
                         <svg class="flex-shrink-0 bag-icon stroke-2 mr-2" aria-hidden="true">
                             <use xlink:href="#haiwb-xuexi"></use>
@@ -48,11 +48,12 @@
     </div>
 </template>
 <script lang="ts" setup>
-
-import {useRequest} from "~/composables/useRequest";
 import {arrGroup} from "~/utils";
 import {useWebsite} from "~/composables/useWebsite";
-
+type OptionsProp = Record<string, any>
+const props = defineProps({
+    data:  Array as PropType<OptionsProp[]>,
+})
 const compData = {
     swiper: null,
     next: () => {
@@ -72,11 +73,6 @@ const onSwiper = (swiper: any) => {
         swiper.slidePrev()
     }
 };
-
-
-const {data: contentData}: { data: any } = await useRequest('/api/webv1/web/keys/kyesBanner', {
-    method: 'POST',
-})
 
 const website = useWebsite()
 </script>

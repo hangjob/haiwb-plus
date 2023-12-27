@@ -6,7 +6,7 @@
         更多相关
     </h1>
     <ul class="relative">
-        <template v-for="(item,idx) in uniqueFunc(contentDataMores?.data || [],'id')">
+        <template v-for="(item,idx) in uniqueFunc(data || [],'id')">
             <li v-if="idx <= 8" :class="['item-hot flex relative mt-6 flex-col','top_'+(idx+1)]">
                 <nuxt-link :to="'/det'+toRouter(item)"
                            class="overflow-hidden cursor-pointer relative rounded-[6px] bg-white h-[130px] md:h-[250px] lg:h-[170px] xl:h-[200px] 2xl:h-[150px]">
@@ -35,25 +35,16 @@
     </ul>
 </template>
 <script lang="ts" setup>
-
 import {useRequest} from "~/composables/useRequest";
 import {uniqueFunc} from "~/utils";
 import {useWebsite} from "~/composables/useWebsite";
 
+type OptionsProp = Record<string, any>
 const props = defineProps({
-    content: {
-        type: Object,
-        default: {}
-    }
+    data:  Array as PropType<OptionsProp[]>,
 })
 
+console.log(props.data)
 
-const {data: contentDataMores}: { data: any } = await useRequest('/api/webv1/admin/content/list', {
-    method: 'POST',
-    body: {
-        nav_ids: props?.content?.data?.nav_id,
-        limit: '5'
-    }
-})
 const website = useWebsite()
 </script>
