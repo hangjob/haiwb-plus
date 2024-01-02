@@ -39,8 +39,8 @@
                         <svg class="flex-shrink-0 bag-icon stroke-2 mr-2" aria-hidden="true">
                             <use xlink:href="#haiwb-xuexi"></use>
                         </svg>
-                        <nuxt-link :to="'/tag'+toRouter(todo)" class="text-gray-500 hover:underline text-[14px] hover:text-gray-700 flex-1 truncate mr-2">{{ todo.title }}</nuxt-link>
-                        <nuxt-link :to="'/fl'+toRouter(todo.nav_id_find)" class="bg-gradient-to-r from-[#f9f9f9] cursor-pointer text-gray-600 hover:text-white to-[#f9f9f9] hover:from-[#2b28fc] hover:to-[#2b28fc] rounded-[3px] inline-block bg-amber-50 text-[12px] px-[5px] py-[5px]">{{todo.nav_id_find.title}}</nuxt-link>
+                        <a :href="'/tag'+toRouter(todo)" class="text-gray-500 hover:underline text-[14px] hover:text-gray-700 flex-1 truncate mr-2">{{ todo.title }}</a>
+                        <a :href="'/fl'+toRouter(todo.nav_id_find)" class="bg-gradient-to-r from-[#00b2d1] cursor-pointer text-white to-[#79c692] hover:from-[#79c692] hover:to-[#79c692] rounded-[3px] inline-block bg-amber-50 text-[12px] px-[5px] py-[5px]">{{todo.nav_id_find.title}}</a>
                     </div>
                 </swiper-slide>
             </swiper>

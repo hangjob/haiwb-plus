@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     // ssr: process.env.NODE_ENV !== "development",
     debug: false,
     app: {
+        "baseURL": "/",
         layoutTransition: {name: 'layout', mode: 'out-in'},
         head: {
             script: [
@@ -56,12 +57,14 @@ export default defineNuxtConfig({
     nitro: {
         devProxy: {
             "/api/webv1": {
-                toProxy: false,
-                prependPath: false,
+                target: "http://127.0.0.1:7010",
+                changeOrigin: true,
+                prependPath: true
             },
         },
         routeRules: {
             '/api/webv1/**': {
+                proxy: 'http://127.0.0.1:7010/**'
             }
         }
     }

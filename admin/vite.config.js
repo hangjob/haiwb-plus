@@ -11,6 +11,9 @@ export default defineConfig({
             resolvers: [NaiveUiResolver()]
         })
     ],
+    build: {
+        chunkSizeWarningLimit: 1024*5,
+    },
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "src"),

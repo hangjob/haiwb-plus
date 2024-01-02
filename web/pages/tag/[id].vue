@@ -3,7 +3,7 @@
         <template #default>
             <div class="flex  flex-row max-sm:flex-col max-md:flex-col">
                 <div class="flex flex-1 items-center max-sm:mb-3 max-md:mb-3 text-[14px]">
-                    <nuxt-link href="/">首页</nuxt-link>
+                    <a href="/">首页</a>
                     <span class="pl-1 pr-1 text-gray-300">/</span>
                     <span class="text-gray-400">话题：{{ allData?.data?.keys?.title }}</span>
                 </div>
@@ -45,12 +45,13 @@
 <script setup lang="ts">
 // 推荐话题
 import {useRequest} from "~/composables/useRequest";
+import {useWebsite} from "~/composables/useWebsite";
 
 const toast = useToast()
 const modelValue = ref(1);
 const route = useRoute()
 const loadingButton = ref(false);
-
+const website = useWebsite()
 definePageMeta({
     layout: false
 })
@@ -83,5 +84,10 @@ const {data: allData}: { data: any } = await useRequest('/api/webv1/web/home/tag
         id: route.params.id,
     },
 })
-console.log(allData)
+useHead({
+    title: allData?.value?.data?.keys?.title + '-' + website.value.name,
+    meta: [
+        {name: 'description', content: allData?.value?.data?.keys?.des},
+    ],
+})
 </script>

@@ -29,13 +29,13 @@
             </template>
             <template v-if="item.key === '2'">
                 <template v-for="(todo,idx) in navData || []">
-                    <nuxt-link :to="'/fl'+toRouter(todo)" class="group flex h-[70px] mb-5 relative justify-center flex-col overflow-hidden">
+                    <a :href="'/fl'+toRouter(todo)" class="group flex h-[70px] mb-5 relative justify-center flex-col overflow-hidden">
                         <nuxt-img
                             class="blur-[2px] group-hover:blur-0 w-full absolute top-0 bottom-0  h-full rounded-md object-cover overflow-hidden"
                             :src="todo.cover"></nuxt-img>
                         <h3 class="relative z-10 text-[20px] text-white font-bold pl-[30px] flex">{{todo.title}}<span
                             class="text-[12px] ml-2">{{todo.content_count}}</span></h3>
-                    </nuxt-link>
+                    </a>
                 </template>
             </template>
         </template>

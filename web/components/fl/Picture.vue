@@ -1,9 +1,9 @@
 <template>
     <div class="flex group mt-5 flex-col relative w-full h-[300px] rounded-[20px] overflow-hidden">
-        <nuxt-link class="absolute top-0 left-0 w-full h-full inline-block bg-cover group-hover:scale-125 bg-no-repeat"
+        <a class="absolute top-0 left-0 w-full h-full inline-block bg-cover group-hover:scale-125 bg-no-repeat"
                    :style="{backgroundImage:`url(${compData?.content?.data?.cover})`}">
             <div class="absolute top-0 left-0 w-full h-full bg-[#20232b] opacity-40 hover:opacity-60"></div>
-        </nuxt-link>
+        </a>
         <div class="flex flex-col z-1 text-white relative p-[20px]">
             <div class="text-[64px] leading-none">{{ lunisolar(compData?.content?.data?.createdAt).format('lDn') }}
             </div>

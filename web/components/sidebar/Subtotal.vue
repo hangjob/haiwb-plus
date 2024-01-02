@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-12 gap-3">
-        <nuxt-link :to="'/fl'+toRouter(item)" v-for="item in contentData?.data || []"
+        <a :href="'/fl'+toRouter(item)" v-for="item in contentData?.data || []"
              class="hover:shadow-md cursor-pointer p-[15px] rounded-[10px] col-1 bg-white col-span-6 sm:col-span-12 md:col-span-4 2xl:col-span-6 xl:col-span-6 overflow-hidden">
             <div class="flex">
                 <svg class="bag-icon stroke-2 mr-[5px] text-[20px] group-hover:text-red-600" aria-hidden="true">
@@ -11,7 +11,7 @@
                     <span class="text-[#8a8a8a] text-[14px] mt-3">已发布<em>{{item.content_count}}</em>篇文章</span>
                 </div>
             </div>
-        </nuxt-link>
+        </a>
     </div>
 </template>
 <script setup lang="ts">

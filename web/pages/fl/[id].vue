@@ -3,24 +3,24 @@
         <template #default>
             <div class="flex  flex-row max-sm:flex-col max-md:flex-col">
                 <div class="flex flex-1 items-center max-sm:mb-3 max-md:mb-3 text-[14px]">
-                    <nuxt-link to="/">首页</nuxt-link>
+                    <a href="/">首页</a>
                     <template v-for="(item,idx) in allData?.data?.breadcrumb || []">
                         <span class="pl-1 pr-1 text-gray-300">/</span>
-                        <span class="text-gray-400" v-if="idx === allData?.data?.breadcrumb?.length-1">{{ item.title }}</span>
+                        <span class="text-gray-400" v-if="allData?.data?.breadcrumb?.length && (idx === allData?.data?.breadcrumb?.length-1)">{{ item.title }}</span>
                         <a v-else :href="toRouter(item)">{{ item.title }}</a>
                     </template>
                 </div>
             </div>
             <div class="mt-5 grid grid-cols-12 gap-4">
-                <div v-for="item in allData?.data?.navListData || []"
+                <div v-for="item in allData?.data?.flNavList || []"
                      class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">
-                    <nuxt-link :to="toRouter(item.classify_det) + toRouter(item)"
+                    <a :href="toRouter(item)"
                                class="cursor-pointer flex items-center justify-center w-full relative bg-white h-[50px]">
                         <nuxt-img fit="cover" class="blur-[3px] w-full h-full object-cover" loading="lazy"
                                   :src="item.cover"></nuxt-img>
                         <span
                             class="absolute text-[14px] font-bold text-white line-clamp-1 px-[5px]">{{ item.title }}</span>
-                    </nuxt-link>
+                    </a>
                 </div>
             </div>
             <template v-for="(item,idx) in compData?.content?.data?.rows || []">
@@ -82,7 +82,8 @@
 <script setup lang="ts">
 import {useRequest} from "~/composables/useRequest";
 import {toRouter} from "~/utils";
-
+import {useWebsite} from "~/composables/useWebsite";
+const website = useWebsite()
 const route = useRoute()
 const modelValue = ref(1);
 definePageMeta({
@@ -121,4 +122,11 @@ const hanlePageUpdate = async (page: any) => {
     await getContentPapge(page)
 }
 
+
+useHead({
+    title: allData?.value?.data?.breadcrumb[allData?.value?.data?.breadcrumb?.length - 1].title + '-' + website.value.name,
+    meta: [
+        {name: 'description', content: allData?.value?.data?.breadcrumb[allData?.value?.data?.breadcrumb?.length - 1].des},
+    ],
+})
 </script>

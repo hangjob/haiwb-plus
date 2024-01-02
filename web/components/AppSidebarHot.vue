@@ -8,7 +8,7 @@
             <span class="text-gray-300 text-[12px] flex-shrink-0">原创收录，最近添加</span>
         </div>
         <div class="pt-2 flex-1 flex flex-wrap justify-between">
-            <nuxt-link :to="'/fl' + toRouter(item)" v-for="item in data || []" :key="item.id"
+            <a :href="'/fl' + toRouter(item)" v-for="item in data || []" :key="item.id"
                        class="flex max-md:w-[50%] max-md:mb-2 px-[5px] text-center flex-col items-center justify-center">
                 <div
                     class="flex flex-col items-center justify-center text-[20px] rounded-[50%] bg-[#f9f9f9] h-[36px] w-[36px]">
@@ -17,7 +17,7 @@
                     </svg>
                 </div>
                 <span class="text-[12px] line-clamp-2 mt-1 text-gray-500">{{ item.title }}</span>
-            </nuxt-link>
+            </a>
         </div>
     </div>
 </template>

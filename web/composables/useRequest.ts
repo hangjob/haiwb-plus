@@ -1,4 +1,4 @@
-export const useRequest = (url: string, params: any) => {
+export const useRequest = async (url: string, params: any) => {
     return useFetch(url, {
         onRequest({options}) {
             options.headers = options.headers || {}
@@ -8,6 +8,6 @@ export const useRequest = (url: string, params: any) => {
             options.headers.sing = aesEncrypt({domain: 'itnvas', uid: getNanoid()})
         },
         ...params
-    })
+    });
 }
 

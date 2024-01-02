@@ -98,9 +98,9 @@ const hanlePageUpdate = async (page: any) => {
 const {data: allData}: { data: any } = await useRequest('/api/webv1/web/home/bannerlist', {
     method: 'POST',
 })
-console.log(allData)
+
 useOn('modify-nav', (item: any) => {
-    compData.search = item
+    compData.s = item
     getContentPapge(1)
 })
 

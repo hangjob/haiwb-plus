@@ -91,14 +91,17 @@ class Home extends BaseController {
     async fl() {
         const params = this.ctx.request.body;
         const list = [];
-        const classifyData = await this.ctx.model.Classify.findOne({where: {id: params.id}});
-        if (classifyData) {
-            list.push(classifyData);
-        } else {
-            const navFindData = await this.ctx.model.Nav.findOne({where: {id: params.id}});
-            if (navFindData) {
-                const classifyData = await this.ctx.model.Classify.findOne({where: {id: navFindData.pid}});
-                list.push(navFindData, classifyData);
+        let flNavList = [];
+        if (params.id) {
+            const classifyData = await this.ctx.model.Classify.findOne({where: {id: params.id}});
+            if (classifyData) {
+                list.push(classifyData);
+            } else {
+                const navFindData = await this.ctx.model.Nav.findOne({where: {id: params.id}});
+                if (navFindData) {
+                    const classifyData = await this.ctx.model.Classify.findOne({where: {id: navFindData.pid}});
+                    list.push(navFindData, classifyData);
+                }
             }
         }
         const picture = await this.app.model.Content.findOne({
@@ -123,12 +126,15 @@ class Home extends BaseController {
                 await this.setNavIdList(item);
             }
         }
-        const flNavList = await this.ctx.model.Nav.findAll({where: {pid: params.id}});
-        if (isArray(flNavList)) {
-            for (const item of flNavList) {
-                const det = await this.ctx.model.Classify.findOne({where: {id: item.pid}});
-                item.setDataValue('classify_det', det);
-                await this.setCount(item);
+        if (list.length) {
+            const pid = list[list.length - 1].pid || list[list.length - 1].id;
+            flNavList = await this.ctx.model.Nav.findAll({where: {pid}});
+            if (isArray(flNavList)) {
+                for (const item of flNavList) {
+                    const det = await this.ctx.model.Classify.findOne({where: {id: item.pid}});
+                    item.setDataValue('classify_det', det);
+                    await this.setCount(item);
+                }
             }
         }
 

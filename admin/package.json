@@ -16,6 +16,7 @@
     "naive-ui": "^2.35.0",
     "pm-utils": "^0.0.76",
     "vue": "^3.3.4",
+    "vue-bag-admin": "^4.2.0",
     "vue-cropper": "^1.1.1",
     "vue-router": "^4.2.5"
   },

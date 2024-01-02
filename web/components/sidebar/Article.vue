@@ -18,16 +18,16 @@
                     </span>
                 </nuxt-link>
                 <h2 class="text-[18px] text-gray-700 font-bold mt-3 leading-tight">
-                    <nuxt-link>{{ item.title }}</nuxt-link>
+                    <a>{{ item.title }}</a>
                 </h2>
                 <div class="flex flex-wrap mt-3">
-                    <nuxt-link :to="'/tag'+toRouter(item)" v-for="item in item.keys_list"
+                    <a :href="'/tag'+toRouter(item)" v-for="item in item.keys_list"
                                class="group flex mr-3 mb-2 items-center rounded-[5px] text-[12px] px-[5px] py-1 bg-gray-100 text-slate-900 cursor-pointer hover:bg-green-500">
                         <svg class="bag-icon stroke-2 mr-[2px] group-hover:text-white" aria-hidden="true">
                             <use xlink:href="#haiwb-biaoqian"></use>
                         </svg>
                         <span class="text-[12px] text-gray-500 group-hover:text-white">{{ item.title }}</span>
-                    </nuxt-link>
+                    </a>
                 </div>
                 <p class="line-clamp-3 text-[14px] text-gray-400 leading-normal">{{ item.des }}</p>
             </li>
@@ -43,8 +43,6 @@ type OptionsProp = Record<string, any>
 const props = defineProps({
     data:  Array as PropType<OptionsProp[]>,
 })
-
-console.log(props.data)
 
 const website = useWebsite()
 </script>
