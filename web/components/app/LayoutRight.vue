@@ -13,7 +13,7 @@
                         <p class="text-[12px] text-white mt-2 px-4 leading-tight">{{ website.minSubDescription }}</p>
                     </div>
                 </a>
-                <nuxt-link :to="toRouter(item)"
+                <a :href="toRouter(item)"
                            class="col-span-12 max-md:col-span-3 max-sm:col-span-6 max-lg:col-span-3 max-xl:col-span-2 my-4"
                            v-for="item in data">
                     <div class="flex flex-col items-center justify-center">
@@ -25,7 +25,7 @@
                             <span class="text-[14px] pt-2">{{ item.title }}</span>
                         </div>
                     </div>
-                </nuxt-link>
+                </a>
                 <div
                     class="col-span-12 max-md:col-span-3 max-sm:col-span-6 max-lg:col-span-3 max-xl:col-span-2 my-4">
                     <div class="flex justify-center flex-col items-center p-[10px] max-md:pt-0">

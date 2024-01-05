@@ -33,6 +33,8 @@ import 'vue-cropper/dist/index.css'
 import { VueCropper }  from "vue-cropper";
 import {file as pmFile} from "pm-utils"
 import apis from "@/api/app.js";
+import Compressor from 'compressorjs';
+import { shrinkImage } from "shrinkpng";
 export default defineComponent({
     components:{
         VueCropper
@@ -76,13 +78,16 @@ export default defineComponent({
             },
             getCropData(){
                 compData.loading = true;
-                cropper.value.getCropData((data)=>{
-                    const file = pmFile.base64ToFile(data,(+new Date())+'.png')
-                    let param = new FormData()
-                    param.append('file', file, file.name)
-                    apis[`/upload/images`](param).then((res)=>{
-                        emit('update:url', res.data.url)
-                        compHandle.clearCrop()
+                cropper.value.getCropBlob((data)=>{
+                    shrinkImage(data, {
+                        quality: 80
+                    }).then((result)=>{
+                        const param = new FormData();
+                        param.append('file', result, (+new Date())+'.png');
+                        apis[`/upload/images`](param).then((res)=>{
+                            emit('update:url', res.data.url)
+                            compHandle.clearCrop();
+                        })
                     })
                 })
             },
