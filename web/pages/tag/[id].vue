@@ -37,7 +37,7 @@
                 <SidebarTag :data="allData?.data?.hot"/>
             </div>
             <div class="bg-white rounded-[20px] p-[30px] mb-[30px] sticky top-0">
-                <sidebar-hot :data="allData?.data?.recommend"></sidebar-hot>
+                <SidebarHot :data="allData?.data?.recommend"></SidebarHot>
             </div>
         </template>
     </NuxtLayout>
@@ -53,7 +53,8 @@ const route = useRoute()
 const loadingButton = ref(false);
 const website = useWebsite()
 definePageMeta({
-    layout: false
+    layout: false,
+    keepalive: true,
 })
 
 const compData = reactive({

@@ -202,7 +202,15 @@ class Home extends BaseController {
         const params = this.ctx.request.body;
         const banner = await this.ctx.model.Banner.findAll({limit: 5, where: {type: 'home'}});
         const keys = await this.ctx.model.Keys.findAll({limit: 10, order: [[ 'createdAt', 'DESC' ]]});
-        const nav = await this.ctx.model.Nav.findAll({limit: 4});
+        const nav = await this.ctx.model.Nav.findAll({
+            limit: 4,
+            order: [[ 'createdAt', 'DESC' ]],
+            where: {
+                icon: {
+                    [this.app.Sequelize.Op.not]: '',
+                },
+            },
+        });
         this.ctx.body = this.ctx.resultData({data: {banner, keys, nav}});
     }
 }

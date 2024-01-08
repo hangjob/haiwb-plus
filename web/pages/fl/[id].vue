@@ -87,7 +87,8 @@ const website = useWebsite()
 const route = useRoute()
 const modelValue = ref(1);
 definePageMeta({
-    layout: false
+    layout: false,
+    keepalive: true,
 })
 const loadingButton = ref(false);
 

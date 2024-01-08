@@ -233,7 +233,8 @@ import {useTagColor} from "~/composables/useTagColor";
 import {useWebsite} from "~/composables/useWebsite";
 
 definePageMeta({
-    layout: false
+    layout: false,
+    keepalive: true,
 })
 const route = useRoute()
 const router = useRouter()

@@ -14,6 +14,16 @@
                         label-width="auto"
                         require-mark-placement="right-hanging"
                     >
+                        <n-form-item label="一级分类" path="classify_id">
+                            <n-select
+                                v-model:value="compData.from.classify_id"
+                                placeholder="选择一级分类"
+                                :options="compData.classify_idOptions"
+                                clearable
+                                @update:value="compHandle.handleClassify"
+                            >
+                            </n-select>
+                        </n-form-item>
                         <n-form-item label="二级分类" path="nav_id">
                             <n-select
                                 v-model:value="compData.from.nav_id"

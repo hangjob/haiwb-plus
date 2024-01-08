@@ -12,7 +12,7 @@ const createColumns = ({compHandle}) => {
             key: "id",
             align: "center",
             ellipsis: true,
-            width: 250
+            width: 120
         },
         {
             title: "关键词名称",
@@ -26,7 +26,7 @@ const createColumns = ({compHandle}) => {
             key: "nav_id_find",
             align: "center",
             ellipsis: true,
-            width: 300,
+            width: 200,
             render(row) {
                 return h(
                     NTag,
@@ -77,7 +77,7 @@ const createColumns = ({compHandle}) => {
             key: "shows",
             align: "center",
             ellipsis: true,
-            width: 200,
+            width: 120,
             render(row) {
                 return h(NSwitch, {
                     defaultValue: row.shows

@@ -14,8 +14,8 @@ export default function useComponent() {
             des: null,
             shows: true,
             label: null,
-            cover:null,
-            nav_id:null,
+            cover: null,
+            nav_id: null,
         },
         rules: {
             title: {
@@ -24,7 +24,9 @@ export default function useComponent() {
                 message: "请输入关键词名称"
             },
         },
-        nav_idOptions:[]
+        nav_idOptions: [],
+        nav_idOptions_source: [],
+        classify_idOptions: []
     })
     const compHandle = reactive({
         back() {
@@ -33,6 +35,21 @@ export default function useComponent() {
         coverCustomRequest({file, data, headers, withCredentials, action, onFinish, onError, onProgress}) {
             pmFile.fileToBase64(file.file, (img) => {
                 uploadImageRef.value.compHandle.open(true, {img})
+            })
+        },
+        getClassifyList() {
+            apis['/admin/classify/list']().then((res) => {
+                compData.classify_idOptions = res.data.map((item) => {
+                    return {
+                        ...item,
+                        label: item.title,
+                        value: item.id
+                    }
+                })
+                compData.classify_idOptions.unshift({
+                    label: '请选择',
+                    value: null
+                })
             })
         },
         getNavList() {
@@ -44,10 +61,20 @@ export default function useComponent() {
                         value: item.id
                     }
                 })
+                compData.nav_idOptions_source = JSON.parse(JSON.stringify(compData.nav_idOptions))
             })
         },
+        handleClassify(val) {
+            console.log(val)
+            if (val) {
+                compData.nav_idOptions = compData.nav_idOptions_source.filter((item) => item.pid === val)
+            } else {
+                compData.nav_idOptions = JSON.parse(JSON.stringify(compData.nav_idOptions_source))
+            }
+        }
     })
     compHandle.getNavList()
+    compHandle.getClassifyList()
     return {
         compData,
         compHandle,

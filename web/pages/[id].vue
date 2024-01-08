@@ -116,4 +116,7 @@ useHead({
     ],
 })
 
+definePageMeta({
+    keepalive: true,
+})
 </script>

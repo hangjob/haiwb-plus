@@ -107,4 +107,7 @@ useOn('modify-nav', (item: any) => {
 onBeforeUnmount(() => {
     useOff('modify-nav')
 })
+definePageMeta({
+    keepalive: true,
+})
 </script>

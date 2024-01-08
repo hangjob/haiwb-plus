@@ -35,6 +35,9 @@
                         <n-form-item label="描述" path="des">
                             <n-input type="textarea" v-model:value="compData.from.des" placeholder="请输入描述"/>
                         </n-form-item>
+                        <n-form-item label="icon" path="icon">
+                            <n-input v-model:value="compData.from.icon" placeholder="请输入icon"/>
+                        </n-form-item>
                         <n-form-item label="封面图" path="cover">
                             <n-input-group>
                                 <n-input v-model:value="compData.from.cover" placeholder="请输入封面图"/>
