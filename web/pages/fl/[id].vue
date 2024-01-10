@@ -16,7 +16,7 @@
                      class="col-1 col-span-3 2xl:col-span-2 xl:col-span-2 rounded-[6px] overflow-hidden">
                     <a :href="toRouter(item)"
                                class="cursor-pointer flex items-center justify-center w-full relative bg-white h-[50px]">
-                        <nuxt-img fit="cover" class="blur-[3px] w-full h-full object-cover" loading="lazy"
+                        <nuxt-img provider="strapi" fit="cover" class="blur-[3px] w-full h-full object-cover" loading="lazy"
                                   :src="item.cover"></nuxt-img>
                         <span
                             class="absolute text-[14px] font-bold text-white line-clamp-1 px-[5px]">{{ item.title }}</span>
@@ -97,7 +97,7 @@ const compData = reactive({
 })
 const getContentPapge = async (page:any) => {
     loadingButton.value = true
-    const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/page', {
+    const {data: contentData}: { data: any } = await useRequest('/api/webv1/web/home/contentPage', {
         method: 'POST',
         body: {
             page,

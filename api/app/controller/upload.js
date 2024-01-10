@@ -6,7 +6,7 @@ const fs = require('fs/promises');
 
 class UploadController extends Controller {
     async images() {
-        const { ctx } = this;
+        const {ctx} = this;
         const file = ctx.request.files[0];
         let result;
         try {
@@ -14,7 +14,8 @@ class UploadController extends Controller {
         } finally {
             await fs.unlink(file.filepath);
         }
-        ctx.body = ctx.resultData({ data: result });
+        result.url = '/static/' + result.name;
+        ctx.body = ctx.resultData({data: result});
     }
 }
 

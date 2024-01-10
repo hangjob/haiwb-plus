@@ -4,7 +4,7 @@
             <template v-if="item.key === '1'">
                 <template v-for="(todo,idx) in contentHot || []">
                     <nuxt-link :to="'/det'+toRouter(todo)" v-if="idx === 0" class="flex relative flex-col overflow-hidden">
-                        <nuxt-img class="w-full h-[150px] rounded-md"
+                        <nuxt-img provider="strapi" class="w-full h-[150px] rounded-md"
                                   :src="todo.cover"></nuxt-img>
                         <h3 class="text-[14px] font-bold mt-2">{{todo.title}}</h3>
                         <p class="text-[#657C98] font-[300] text-[12px]">{{ lunisolar(todo.createdAt).format('lYn年 lM lD T 星期dd A') }}</p>
@@ -14,7 +14,7 @@
                             }}</span>
                     </nuxt-link>
                     <nuxt-link :to="'/det'+toRouter(todo)" v-else class="flex relative flex-row overflow-hidden mt-5">
-                        <nuxt-img class="w-[110px] h-[70px] rounded-md object-cover mr-2"
+                        <nuxt-img provider="strapi" class="w-[110px] h-[70px] rounded-md object-cover mr-2"
                                   :src="todo.cover"></nuxt-img>
                         <div class="flex-1 flex  justify-around flex-col flex-shrink-0">
                             <h3>{{todo.title}}</h3>
@@ -30,7 +30,7 @@
             <template v-if="item.key === '2'">
                 <template v-for="(todo,idx) in navData || []">
                     <a :href="'/fl'+toRouter(todo)" class="group flex h-[70px] mb-5 relative justify-center flex-col overflow-hidden">
-                        <nuxt-img
+                        <nuxt-img provider="strapi"
                             class="blur-[2px] group-hover:blur-0 w-full absolute top-0 bottom-0  h-full rounded-md object-cover overflow-hidden"
                             :src="todo.cover"></nuxt-img>
                         <h3 class="relative z-10 text-[20px] text-white font-bold pl-[30px] flex">{{todo.title}}<span

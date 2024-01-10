@@ -2,7 +2,7 @@
     <div class="flex mt-[30px]" v-for="(item,idx) in data">
         <a :href="toRouter(item)"
                    class="basis-4/12 relative flex-shrink-0 mr-4 overflow-hidden rounded-[6px] bg-white h-[80px] md:h-[150px] lg:h-[120px] xl:h-[150px] 2xl:h-[100px]">
-            <nuxt-img fit="cover" class="w-full h-full object-cover" loading="lazy"
+            <nuxt-img provider="strapi" fit="cover" class="w-full h-full object-cover" loading="lazy"
                       :src="item.cover"></nuxt-img>
             <span :style="{backgroundColor:useColorWarm(idx).color}" :class="['absolute top-0 left-0 text-[12px] rounded-[3px] px-[6px]  text-white bg-amber-400 inline-block']">{{idx+1}}</span>
         </a>

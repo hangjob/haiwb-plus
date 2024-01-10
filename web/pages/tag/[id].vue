@@ -63,7 +63,7 @@ const compData = reactive({
 
 const getContentPapge = async (page:any) => {
     loadingButton.value = true
-    const {data: contentData}: { data: any } = await useRequest('/api/webv1/admin/content/page', {
+    const {data: contentData}: { data: any } = await useRequest('/api/webv1/web/home/contentPage', {
         method: 'POST',
         body: {
             page,

@@ -17,13 +17,18 @@ export default defineNuxtConfig({
         }
     },
     image: {
-        domains: ['www.vipbic.com']
+        strapi:{
+            baseURL: 'https://www.haiwb.com/'
+        }
+    },
+    site: {
+        url: 'https://www.haiwb.com/',
     },
     devtools: {enabled: true},
     modules: [
         "nuxt-bag-web",
         "nuxt-swiper",
-        "nuxt-lodash"
+        "nuxt-lodash",
     ],
     bagWeb: {
         name: 'bag',
@@ -61,11 +66,16 @@ export default defineNuxtConfig({
                 changeOrigin: true,
                 prependPath: true
             },
+            '/static':{
+                target: "https://static.haiwb.com",
+                changeOrigin: true,
+                prependPath: true
+            }
         },
         routeRules: {
             '/api/webv1/**': {
                 proxy: 'http://127.0.0.1:7010/**'
-            }
-        }
+            },
+        },
     }
 })

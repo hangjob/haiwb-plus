@@ -2,7 +2,7 @@
     <div class="flex flex-col rounded-lg border border-solid border-slate-100">
         <div class="overflow-hidden rounded-t-lg relative bg-white h-[100px] md:h-[180px] lg:h-[180px] xl:h-[180px] 2xl:h-[150px]">
             <nuxt-link class="inline-block w-full h-full" :to="'/det'+toRouter(content)">
-                <nuxt-img fit="cover" :alt="content?.title" class="w-full h-full object-cover" loading="lazy"
+                <nuxt-img provider="strapi" fit="cover" :alt="content?.title" class="w-full h-full object-cover" loading="lazy"
                           :src="content.cover"></nuxt-img>
             </nuxt-link>
             <div class="absolute top-3 left-3 flex flex-wrap">

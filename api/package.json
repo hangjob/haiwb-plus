@@ -1,58 +1,62 @@
 {
-  "name": "admin-itnavs-vip",
-  "version": "1.0.0",
-  "description": "",
-  "private": true,
-  "dependencies": {
-    "ali-oss": "^6.18.1",
-    "crypto-js": "^4.2.0",
-    "dayjs": "^1.11.10",
-    "egg": "^3",
-    "egg-jwt": "^3.1.7",
-    "egg-model": "^1.0.3",
-    "egg-mysql": "4",
-    "egg-redis": "~2.5.0",
-    "egg-scripts": "^2",
-    "egg-sequelize": "6",
-    "egg-socket.io": "^4.1.6",
-    "egg-validate": "^2.0.2",
-    "lodash": "^4.17.21",
-    "mysql2": "3.6",
-    "nanoid": "^3.3.6",
-    "node-jsencrypt": "^1.0.0"
-  },
-  "devDependencies": {
-    "egg-bin": "^5",
-    "egg-ci": "^2",
-    "egg-i18n": "^2.1.1",
-    "egg-mock": "^5",
-    "eslint": "^8",
-    "eslint-config-egg": "^12",
-    "i18n": "^0.15.1"
-  },
-  "engines": {
-    "node": ">=16.0.0"
-  },
-  "scripts": {
-    "start": "egg-scripts start --daemon --port=7010 --title=egg-server-admin-itnavs-vip",
-    "stop": "egg-scripts stop --title=egg-server-admin-itnavs-vip",
-    "dev": "egg-bin dev --sticky --port=7010",
-    "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
-    "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
-    "preinstall": "npx only-allow pnpm"
-  },
-  "ci": {
-    "version": "16, 18",
-    "type": "github"
-  },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "author": "",
-  "license": "MIT"
+    "name": "admin-itnavs-vip",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "egg": {
+        "framework": "egg-bag-framework"
+    },
+    "dependencies": {
+        "ali-oss": "^6.18.1",
+        "crypto-js": "^4.2.0",
+        "dayjs": "^1.11.10",
+        "egg": "^3",
+        "egg-bag-framework": "^1.1.1",
+        "egg-jwt": "^3.1.7",
+        "egg-model": "^1.0.3",
+        "egg-mysql": "4",
+        "egg-redis": "~2.5.0",
+        "egg-scripts": "^2",
+        "egg-sequelize": "6",
+        "egg-socket.io": "^4.1.6",
+        "egg-validate": "^2.0.2",
+        "lodash": "^4.17.21",
+        "mysql2": "3.6",
+        "nanoid": "^3.3.6",
+        "node-jsencrypt": "^1.0.0"
+    },
+    "devDependencies": {
+        "egg-bin": "^5",
+        "egg-ci": "^2",
+        "egg-i18n": "^2.1.1",
+        "egg-mock": "^5",
+        "eslint": "^8",
+        "eslint-config-egg": "^12",
+        "i18n": "^0.15.1"
+    },
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "scripts": {
+        "start": "egg-scripts start --daemon --port=7010 --title=egg-server-admin-itnavs-vip",
+        "stop": "egg-scripts stop --title=egg-server-admin-itnavs-vip",
+        "dev": "egg-bin dev --sticky --port=7010",
+        "debug": "egg-bin debug",
+        "test": "npm run lint -- --fix && npm run test-local",
+        "test-local": "egg-bin test",
+        "cov": "egg-bin cov",
+        "lint": "eslint .",
+        "ci": "npm run lint && npm run cov",
+        "preinstall": "npx only-allow pnpm"
+    },
+    "ci": {
+        "version": "16, 18",
+        "type": "github"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "author": "",
+    "license": "MIT"
 }

@@ -213,6 +213,51 @@ class Home extends BaseController {
         });
         this.ctx.body = this.ctx.resultData({data: {banner, keys, nav}});
     }
+
+    async contentPage() {
+        try {
+            const {page = 1, limit = 10, id, nav_id, search, keys, ...params} = this.ctx.request.body;
+            const offset = (page - 1) * limit;
+            const Op = this.app.Sequelize.Op;
+            const options = Object.assign({
+                limit,
+                offset,
+                where: {},
+            }, params);
+
+            if (id) {
+                options.where.classify_id = {[Op.eq]: id};
+            }
+            if (nav_id) {
+                options.where.nav_id = {[Op.like]: `%${nav_id}%`};
+            }
+            if (keys) {
+                options.where.keys = {[Op.like]: `%${keys}%`};
+            }
+            if (search) {
+                options.where[Op.or] = [
+                    {title: {[Op.like]: `%${search}%`}},
+                    {des: {[Op.like]: `%${search}%`}},
+                ];
+            }
+            if (options?.where?.url) {
+                options.where.url = {[Op.like]: `%${options?.where?.url}%`};
+            }
+            options.attributes = {exclude: [ 'content', 'html' ]};
+            options.order = [[ 'createdAt', 'DESC' ]];
+            const data = await this.app.model.Content.findAndCountAll(options);
+            if (isArray(data.rows)) {
+                for (const item of data.rows) {
+                    await this.setKeysList(item);
+                    await this.setNavIdList(item);
+                    await this.setClassifyIdItem(item);
+                }
+            }
+            this.ctx.body = this.ctx.resultData({data});
+        } catch (err) {
+            this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});
+        }
+    }
 }
 
 module.exports = Home;

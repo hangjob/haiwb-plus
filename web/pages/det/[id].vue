@@ -77,7 +77,7 @@
             </div>
             <div
                 class="mt-5 overflow-hidden rounded-md bg-white h-[300px] max-md:h-[150px] lg:h-[350px] xl:h-[300px] 2xl:h-[300px] text-center m-auto">
-                <nuxt-img fit="cover" class="w-full h-full object-cover" loading="lazy"
+                <nuxt-img provider="strapi" fit="cover" class="w-full h-full object-cover" loading="lazy"
                           :src="contentData?.data?.cover"></nuxt-img>
             </div>
             <div id="itnavsHtml" v-html="contentData?.data?.html"></div>

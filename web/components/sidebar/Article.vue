@@ -10,7 +10,7 @@
             <li v-if="idx <= 8" :class="['item-hot flex relative mt-6 flex-col','top_'+(idx+1)]">
                 <nuxt-link :to="'/det'+toRouter(item)"
                            class="overflow-hidden cursor-pointer relative rounded-[6px] bg-white h-[130px] md:h-[250px] lg:h-[170px] xl:h-[200px] 2xl:h-[150px]">
-                    <nuxt-img fit="cover" class="hover:blur-sm peer-blur-sm w-full h-full object-cover" loading="lazy"
+                    <nuxt-img provider="strapi" fit="cover" class="hover:blur-sm peer-blur-sm w-full h-full object-cover" loading="lazy"
                               :src="item.cover"></nuxt-img>
                     <span class="absolute text-[16px] font-bold text-white top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">{{website.name}}</span>
                     <span class="absolute text-[14px] text-white  bottom-1 right-1">

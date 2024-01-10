@@ -1,7 +1,7 @@
 <template>
     <div class="px-3 py-3 rounded-[5px] bg-white overflow-hidden flex flex-col">
         <a :href="'/det'+toRouter(content)" class="overflow-hidden rounded-[6px] bg-white h-[120px] md:h-[130px] lg:h-[180px] xl:h-[130px] 2xl:h-[160px]">
-            <nuxt-img fit="cover" :alt="content?.title" class="w-full h-full object-cover" loading="lazy"
+            <nuxt-img provider="strapi" fit="cover" :alt="content?.title" class="w-full h-full object-cover" loading="lazy"
                       :src="content.cover"></nuxt-img>
         </a>
         <div class="flex flex-col justify-between py-[4px]">

@@ -59,7 +59,7 @@
                     class="overflow-hidden rounded-[6px] bg-white sm-thumbnail md-thumbnail lg-thumbnail h-40"
                     :class="[compData.classFhumbnail]"
                 >
-                    <nuxt-img preload loading="lazy" :alt="content?.title" fit="cover" class="w-full h-full object-cover"
+                    <nuxt-img provider="strapi" preload loading="lazy" :alt="content?.title" fit="cover" class="w-full h-full object-cover"
                               :src="content.cover"></nuxt-img>
                 </div>
             </NuxtLink>

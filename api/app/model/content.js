@@ -10,7 +10,7 @@ module.exports = app => {
             nid: {
                 type: INTEGER(11),
                 autoIncrement: true,
-                primaryKey: true
+                primaryKey: true,
             },
             title: STRING(32),
             origin: STRING(32), // 源地址

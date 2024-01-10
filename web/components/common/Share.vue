@@ -20,12 +20,12 @@
             <h3 class="text-[14px] font-bold">{{ content.title }}</h3>
         </div>
         <div class="flex-1 px-[30px] py-[20px] relative overflow-hidden" ref="poster_container">
-            <nuxt-img class="absolute top-0 bottom-0 left-0 right-0 h-full  object-cover"
+            <nuxt-img provider="strapi" class="absolute top-0 bottom-0 left-0 right-0 h-full  object-cover"
                       :src="content.cover" alt=""></nuxt-img>
             <div class="flex mb-[20px] relative z-1 items-center">
                 <div
                     class="rounded-[50%] bg-white w-[36px] h-[36px] p-[6px] overflow-hidden flex justify-center items-center">
-                    <nuxt-img class="object-cover" src="/img/logo.png"></nuxt-img>
+                    <nuxt-img provider="strapi" class="object-cover" src="/img/logo.png"></nuxt-img>
                 </div>
                 <div class="text-white ml-2 text-[14px]">那些适用的工具</div>
             </div>

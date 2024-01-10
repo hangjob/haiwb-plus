@@ -3,7 +3,7 @@
         class="rounded-[5px] bg-white mb-4 overflow-hidden max-sm:h-[160px]  max-md:h-[180px] max-lg:h-[200px] max-xl:h-[220px] max-2xl:h-[220px] h-[220px] relative">
         <div class="flex absolute z-1 top-0 bottom-0 left-0 right-0">
             <div class="flex-1">
-                <nuxt-img fit="cover" class="w-full h-full object-cover" loading="lazy"
+                <nuxt-img provider="strapi" fit="cover" class="w-full h-full object-cover" loading="lazy"
                           src="https://www.vipbic.com/uploads/20230923/466ccd86b419fbd0da712aa7532bee06.jpg"></nuxt-img>
             </div>
         </div>

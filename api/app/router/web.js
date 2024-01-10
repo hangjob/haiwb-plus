@@ -15,4 +15,5 @@ module.exports = app => {
     app.router.post('/web/home/fl', app.controller.web.home.fl);
     app.router.post('/web/home/tag', app.controller.web.home.tag);
     app.router.post('/web/home/bannerlist', app.controller.web.home.bannerlist);
+    app.router.post('/web/home/contentPage', app.controller.web.home.contentPage);
 };
