@@ -12,7 +12,7 @@ module.exports = app => {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            title: STRING(32),
+            title: STRING(128),
             origin: STRING(32), // 源地址
             keys: {
                 type: STRING(255),

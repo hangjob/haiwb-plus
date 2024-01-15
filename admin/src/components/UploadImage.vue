@@ -57,7 +57,7 @@ export default defineComponent({
                 size: 1,
                 full: false,
                 info:true,
-                outputType: 'png',
+                outputType: 'jpeg',
                 canMove: true,
                 fixedBox: false,
                 original: false,
