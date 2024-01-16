@@ -65,7 +65,6 @@ export default function useComponent() {
             })
         },
         handleClassify(val) {
-            console.log(val)
             if (val) {
                 compData.nav_idOptions = compData.nav_idOptions_source.filter((item) => item.pid === val)
             } else {

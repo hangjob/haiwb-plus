@@ -38,7 +38,7 @@ const createColumns = ({compHandle}) => {
                         bordered: false
                     },
                     {
-                        default: () => row.nav_id_find.title
+                        default: () => row.nav_id_find && row.nav_id_find.title
                     }
                 )
             }
@@ -118,6 +118,7 @@ const createColumns = ({compHandle}) => {
                                         strong: true,
                                         size: "small",
                                         ghost: true,
+                                        disabled:import.meta.env.PROD
                                     },
                                     {default: () => "删除"}
                                 )

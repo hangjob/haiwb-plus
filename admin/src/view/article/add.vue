@@ -63,22 +63,17 @@
                         <n-form-item label="关键词" path="keys">
                             <n-select
                                 v-model:value="compData.from.keys"
+                                multiple
+                                filterable
                                 placeholder="输入关键词"
                                 :options="compData.keysOptions"
                                 :loading="compData.keysLoading"
-                                filterable
-                                multiple
-                                :filter="compHandle.keysFilter"
+                                clearable
+                                remote
+                                :clear-filter-after-select="false"
                                 @search="compHandle.keysHandleSearch"
                             />
-<!--                            <n-input-group style="margin-left: 5px">-->
-<!--                                <n-input v-model:value="compData.kyesTitle" placeholder="输入关键词"/>-->
-<!--                                <n-button type="primary" ghost @click="compHandle.keysHandleCreated">提交</n-button>-->
-<!--                            </n-input-group>-->
                         </n-form-item>
-<!--                        <n-form-item label="关键词描述">-->
-<!--                            <n-input type="textarea" v-model:value="compData.kyesDes" placeholder="请输入关键词描述"/>-->
-<!--                        </n-form-item>-->
                         <n-space>
                             <n-form-item label="点赞量" path="like">
                                 <n-input-number v-model:value="compData.from.like" placeholder="请输入点赞量"
@@ -153,7 +148,7 @@
                             <upload-image v-model:url="compData.from.cover" ref="uploadImageRef"></upload-image>
                         </n-form-item>
                         <n-form-item label="内容" path="content">
-                            <iframe style="border: 1px solid #dddddd;border-radius: 4px" height="1000px" width="100%"
+                            <iframe id="authIframe" style="border: 1px solid #dddddd;border-radius: 4px" height="1000px" width="100%"
                                     :src="compData.mdnice.src" frameborder="0"></iframe>
                         </n-form-item>
                         <n-form-item label="md源码" path="content">
@@ -193,6 +188,12 @@ export default defineComponent({
         const article_from = window.localStorage.getItem("article_from")
         if(article_from){
             compData.from = JSON.parse(article_from)
+            onMounted(()=>{
+                let authIframe = document.getElementById('authIframe')
+                authIframe.addEventListener('load', function (e) {
+                    authIframe.contentWindow.postMessage({content: compData.from.content}, compData.mdnice.src)
+                })
+            })
         }
         watch(compData.from, () => {
             window.localStorage.setItem("article_from", JSON.stringify(compData.from))

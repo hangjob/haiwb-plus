@@ -94,8 +94,15 @@ export default function useComponent() {
             })
         },
         keysHandleSearch: fun.throttle((query) => {
-            compData.keysQuery = query;
-            compHandle.getKeysList();
+            apis['/admin/keys/list']({title: query}).then((res) => {
+                compData.keysOptions = res.data.map((item) => {
+                    return {
+                        ...item,
+                        label: item.title,
+                        value: item.id
+                    }
+                })
+            })
         }, 200, {
             'leading': true,
             'trailing': true
@@ -150,7 +157,6 @@ export default function useComponent() {
                     const data = datas.find((item) => key === item.id)
                     data && new_keys.push(data.id)
                 })
-                console.log(new_keys, compData.from.keys, compData.keysOptions)
                 compData.from.keys = new_keys
             })
         },

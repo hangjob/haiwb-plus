@@ -18,8 +18,15 @@ class KeysController extends BaseController {
             if (params && params.nav_id) {
                 where.nav_id = params.nav_id;
             }
+            if (params && params.title) {
+                where.title = {
+                    [this.app.Sequelize.Op.like]: `%${params.title}%`,
+                };
+            }
             if (params.limit) {
                 params.limit = parseInt(params.limit);
+            } else {
+                params.limit = 30;
             }
             const data = await this.ctx.model[this.modelName].findAll({where, ...params});
             if (isArray(data)) {

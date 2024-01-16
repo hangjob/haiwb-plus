@@ -63,21 +63,17 @@
                         <n-form-item label="文章关键词" path="keys">
                             <n-select
                                 v-model:value="compData.from.keys"
+                                multiple
+                                filterable
                                 placeholder="输入关键词"
                                 :options="compData.keysOptions"
                                 :loading="compData.keysLoading"
-                                filterable
-                                multiple
+                                clearable
+                                remote
+                                :clear-filter-after-select="false"
                                 @search="compHandle.keysHandleSearch"
                             />
-<!--                            <n-input-group style="margin-left: 5px">-->
-<!--                                <n-input v-model:value="compData.kyesTitle" placeholder="输入关键词"/>-->
-<!--                                <n-button type="primary" ghost @click="compHandle.keysHandleCreated">提交</n-button>-->
-<!--                            </n-input-group>-->
                         </n-form-item>
-<!--                        <n-form-item label="关键词描述">-->
-<!--                            <n-input type="textarea" v-model:value="compData.kyesDes" placeholder="请输入关键词描述"/>-->
-<!--                        </n-form-item>-->
                         <n-space>
                             <n-form-item label="点赞量" path="like">
                                 <n-input-number v-model:value="compData.from.like" placeholder="请输入点赞量"
@@ -206,7 +202,7 @@ export default defineComponent({
                 compData.from[key] = res.data[key]
             })
             compHandle.getNavList(false)
-            compHandle.getKeysListAll(res.data.nav_id)
+            // compHandle.getKeysListAll(res.data.nav_id)
             let authIframe = document.getElementById('authIframe')
             authIframe.addEventListener('load', function (e) {
                 authIframe.contentWindow.postMessage({content: compData.from.content}, compData.mdnice.src)
