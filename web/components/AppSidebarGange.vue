@@ -40,7 +40,8 @@
                             <use xlink:href="#haiwb-xuexi"></use>
                         </svg>
                         <a :href="'/tag'+toRouter(todo)" class="text-gray-500 hover:underline text-[14px] hover:text-gray-700 flex-1 truncate mr-2">{{ todo.title }}</a>
-                        <a :href="'/fl'+toRouter(todo.nav_id_find)" class="bg-gradient-to-r from-[#00b2d1] cursor-pointer text-white to-[#79c692] hover:from-[#79c692] hover:to-[#79c692] rounded-[3px] inline-block bg-amber-50 text-[12px] px-[5px] py-[5px]">{{todo.nav_id_find.title}}</a>
+                        <a  v-if="todo.nav_id_find" :href="'/fl'+toRouter(todo.nav_id_find)" class="bg-gradient-to-r from-[#00b2d1] cursor-pointer text-white to-[#79c692] hover:from-[#79c692] hover:to-[#79c692] rounded-[3px] inline-block bg-amber-50 text-[12px] px-[5px] py-[5px]">{{todo.nav_id_find.title}}</a>
+                        <a v-else :href="'/tag'+toRouter(todo)" class="bg-gradient-to-r from-[#00b2d1] cursor-pointer text-white to-[#79c692] hover:from-[#79c692] hover:to-[#79c692] rounded-[3px] inline-block bg-amber-50 text-[12px] px-[5px] py-[5px]">立即查看</a>
                     </div>
                 </swiper-slide>
             </swiper>

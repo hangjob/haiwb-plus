@@ -32,9 +32,8 @@ class Keys extends Controller {
         try {
             const data = await this.ctx.model.Keys.findAll({
                 limit: 9,
-                order: [['createdAt', 'DESC']],
+                order: [[ 'createdAt', 'DESC' ]],
             });
-            await this.setRowItem(data);
             this.ctx.body = this.ctx.resultData({data});
         } catch (err) {
             this.ctx.body = this.ctx.resultData({msg: err.errors || err.toString()});

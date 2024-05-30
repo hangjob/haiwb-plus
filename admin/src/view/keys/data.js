@@ -22,28 +22,6 @@ const createColumns = ({compHandle}) => {
             width: 300
         },
         {
-            title: "二级菜单",
-            key: "nav_id_find",
-            align: "center",
-            ellipsis: true,
-            width: 200,
-            render(row) {
-                return h(
-                    NTag,
-                    {
-                        style: {
-                            marginRight: '6px'
-                        },
-                        type: 'success',
-                        bordered: false
-                    },
-                    {
-                        default: () => row.nav_id_find && row.nav_id_find.title
-                    }
-                )
-            }
-        },
-        {
             title: "标签",
             key: "label",
             align: "center",

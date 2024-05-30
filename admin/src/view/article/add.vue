@@ -18,10 +18,10 @@
                             <n-input v-model:value="compData.from.title" placeholder="请输入文章名称"/>
                         </n-form-item>
                         <n-form-item label="文章描述" path="des">
-                            <n-input type="textarea" maxlength="120" show-count v-model:value="compData.from.des" placeholder="请输入文章描述"/>
+                            <n-input type="textarea" maxlength="300" show-count v-model:value="compData.from.des" placeholder="请输入文章描述"/>
                         </n-form-item>
                         <n-form-item label="文章SEO" path="seo">
-                            <n-input type="textarea" maxlength="120" show-count v-model:value="compData.from.seo" placeholder="请输入文章SEO"/>
+                            <n-input type="textarea" maxlength="300" show-count v-model:value="compData.from.seo" placeholder="请输入文章SEO"/>
                         </n-form-item>
                         <n-form-item label="发布平台" path="origin">
                             <n-select

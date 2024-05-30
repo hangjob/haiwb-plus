@@ -13,7 +13,10 @@ class Home extends BaseController {
                 await this.setNavIdList(item);
             }
         }
-        const photoHorizontal = await this.ctx.model.Keys.findAll({where: {label: 1}, limit: 3});
+        const photoHorizontal = await this.ctx.model.Keys.findAll({where: {
+            label: 1, cover: {
+                [this.app.Sequelize.Op.not]: '',
+            }}, limit: 3});
         const gange = await this.ctx.model.Keys.findAll({limit: 9, order: [[ 'createdAt', 'DESC' ]]});
         if (isArray(gange)) {
             for (const item of gange) {

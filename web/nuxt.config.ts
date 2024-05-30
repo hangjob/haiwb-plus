@@ -1,9 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-
 export default defineNuxtConfig({
     // @ts-ignore
-    // ssr: process.env.NODE_ENV !== "development",
     debug: false,
     app: {
         "baseURL": "/",
@@ -26,26 +24,16 @@ export default defineNuxtConfig({
     },
     devtools: {enabled: true},
     modules: [
-        "nuxt-bag-web",
+        "nuxt-bag-framework",
         "nuxt-swiper",
         "nuxt-lodash",
     ],
-    bagWeb: {
-        name: 'bag',
-        seoMeta: {
-            title: '',
-            ogTitle: '',
-            description: '',
-            ogDescription: '',
-            ogImage: '',
-            twitterCard: '',
-        },
-        pinia: ['./stores/**']
+    nuxtBagFramework: {
+        baseURI:'https://www.haiwb.com/'
     },
     runtimeConfig: {
         tag: 'nuxt'
     },
-    // @ts-ignore
     vite: {
         css: {
             preprocessorOptions: {

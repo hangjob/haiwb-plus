@@ -23,6 +23,11 @@ export default function useComponent() {
                 trigger: ["blur", "input"],
                 message: "请输入关键词名称"
             },
+            des: {
+                required: true,
+                trigger: ["blur", "input"],
+                message: "请输入关键词描述"
+            },
         },
         nav_idOptions: [],
         nav_idOptions_source: [],

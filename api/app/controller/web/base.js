@@ -42,9 +42,11 @@ class BaseController extends Controller {
     }
 
     async setNavIdFind(item) {
-        const find = await this.ctx.model.Nav.findOne({where: {id: item.nav_id}});
-        if (find) {
-            item.setDataValue('nav_id_find', find);
+        if (item.nav_id) {
+            const find = await this.ctx.model.Nav.findOne({where: {id: item.nav_id}});
+            if (find) {
+                item.setDataValue('nav_id_find', find);
+            }
         }
     }
 
